@@ -7,7 +7,7 @@ public class User
     protected string address;
     protected string name;
     protected long money;
-    protected List<Property> properties;
+    protected List<PropertyData> properties;
     protected List<Card> cards;
     protected List<Token> tokens;
 
@@ -21,7 +21,7 @@ public class User
         tokens = null;
     }
 
-    public User(string _address, string _name, long _money, List<Property> _properties, List<Card> _cards, List<Token> _tokens)
+    public User(string _address, string _name, long _money, List<PropertyData> _properties, List<Card> _cards, List<Token> _tokens)
     {
         address = _address;
         name = _name;
@@ -67,7 +67,7 @@ public class User
         }
     }
 
-    public List<Property> Properties
+    public List<PropertyData> Properties
     {
         get
         {
