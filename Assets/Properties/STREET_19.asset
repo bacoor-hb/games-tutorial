@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: STREET_12
+  m_Name: STREET_19
   m_EditorClassIdentifier: 
   Model: {fileID: 0}
-  id: 
-  property_name: 
-  description: 
-  typeId: 0
-  cost: 0
-  cost_rent: 0
-  cost_rent_full: 0
-  cost_rent_one_house: 0
-  cost_rent_two_houses: 0
-  cost_rent_three_houses: 0
-  cost_rent_four_houses: 0
-  cost_rent_hotel: 0
-  cost_house: 0
-  cost_hotel: 0
-  cost_bid: 0
+  id: 19
+  property_name: Phu Quoc
+  description: Phu Quoc
+  typeId: 7
+  cost: 3200
+  cost_rent: 280
+  cost_rent_full: 560
+  cost_rent_one_house: 1500
+  cost_rent_two_houses: 4500
+  cost_rent_three_houses: 10000
+  cost_rent_four_houses: 12000
+  cost_rent_hotel: 14000
+  cost_house: 2000
+  cost_hotel: 2000
+  cost_bid: 1600

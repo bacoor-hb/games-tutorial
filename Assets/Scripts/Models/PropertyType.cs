@@ -44,4 +44,9 @@ public class PropertyType
         }
     }
 
+    public void getDetailsById(int id)
+    {   
+            
+    }
+
 }

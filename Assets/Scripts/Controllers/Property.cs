@@ -22,6 +22,9 @@ public class Property : MonoBehaviour
 
     void Update()
     {
-    
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(data.property_name);
+        }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
   m_Name: STREET_0
   m_EditorClassIdentifier: 
-  Model: {fileID: 0}
+  Model: {fileID: 8856345225622726159, guid: 5bc9fcbf348524533999cda4e478e782, type: 3}
   id: 0
   property_name: Lao Cai
   description: Lao Cai

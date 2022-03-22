@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: STREET_15
+  m_Name: STREET_10
   m_EditorClassIdentifier: 
   Model: {fileID: 0}
-  id: 
-  property_name: 
-  description: 
-  typeId: 0
-  cost: 0
-  cost_rent: 0
-  cost_rent_full: 0
-  cost_rent_one_house: 0
-  cost_rent_two_houses: 0
-  cost_rent_three_houses: 0
-  cost_rent_four_houses: 0
-  cost_rent_hotel: 0
-  cost_house: 0
-  cost_hotel: 0
-  cost_bid: 0
+  id: 10
+  property_name: Da Nang
+  description: Da Nang
+  typeId: 4
+  cost: 2000
+  cost_rent: 160
+  cost_rent_full: 320
+  cost_rent_one_house: 800
+  cost_rent_two_houses: 2200
+  cost_rent_three_houses: 6000
+  cost_rent_four_houses: 8000
+  cost_rent_hotel: 10000
+  cost_house: 1000
+  cost_hotel: 1000
+  cost_bid: 1000

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: STREET_7
+  m_Name: STREET_15
   m_EditorClassIdentifier: 
   Model: {fileID: 0}
-  id: 
-  property_name: 
-  description: 
-  typeId: 0
-  cost: 0
-  cost_rent: 0
-  cost_rent_full: 0
-  cost_rent_one_house: 0
-  cost_rent_two_houses: 0
-  cost_rent_three_houses: 0
-  cost_rent_four_houses: 0
-  cost_rent_hotel: 0
-  cost_house: 0
-  cost_hotel: 0
-  cost_bid: 0
+  id: 15
+  property_name: Vung Tau
+  description: Vung Tau
+  typeId: 6
+  cost: 2600
+  cost_rent: 220
+  cost_rent_full: 440
+  cost_rent_one_house: 1100
+  cost_rent_two_houses: 3300
+  cost_rent_three_houses: 8000
+  cost_rent_four_houses: 9750
+  cost_rent_hotel: 11500
+  cost_house: 1500
+  cost_hotel: 1500
+  cost_bid: 1300

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: STREET_11
+  m_Name: STREET_6
   m_EditorClassIdentifier: 
   Model: {fileID: 0}
-  id: 
-  property_name: 
-  description: 
-  typeId: 0
-  cost: 0
-  cost_rent: 0
-  cost_rent_full: 0
-  cost_rent_one_house: 0
-  cost_rent_two_houses: 0
-  cost_rent_three_houses: 0
-  cost_rent_four_houses: 0
-  cost_rent_hotel: 0
-  cost_house: 0
-  cost_hotel: 0
-  cost_bid: 0
+  id: 6
+  property_name: Thanh Hoa
+  description: Thanh Hoa
+  typeId: 3
+  cost: 1400
+  cost_rent: 100
+  cost_rent_full: 200
+  cost_rent_one_house: 500
+  cost_rent_two_houses: 1500
+  cost_rent_three_houses: 4500
+  cost_rent_four_houses: 6250
+  cost_rent_hotel: 7500
+  cost_house: 1000
+  cost_hotel: 1000
+  cost_bid: 700

@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: STREET_21
+  m_Name: STREET_7
   m_EditorClassIdentifier: 
   Model: {fileID: 0}
-  id: 
-  property_name: 
-  description: 
-  typeId: 0
-  cost: 0
-  cost_rent: 0
-  cost_rent_full: 0
-  cost_rent_one_house: 0
-  cost_rent_two_houses: 0
-  cost_rent_three_houses: 0
-  cost_rent_four_houses: 0
-  cost_rent_hotel: 0
-  cost_house: 0
-  cost_hotel: 0
-  cost_bid: 0
+  id: 7
+  property_name: Nghe An
+  description: Nghe An
+  typeId: 3
+  cost: 1600
+  cost_rent: 120
+  cost_rent_full: 240
+  cost_rent_one_house: 600
+  cost_rent_two_houses: 1800
+  cost_rent_three_houses: 5000
+  cost_rent_four_houses: 7000
+  cost_rent_hotel: 9000
+  cost_house: 1000
+  cost_hotel: 1000
+  cost_bid: 800
