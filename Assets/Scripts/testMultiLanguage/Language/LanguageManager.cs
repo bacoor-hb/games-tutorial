@@ -63,6 +63,18 @@ public class LanguageManager : Singleton<LanguageManager>
         return lang;
     }
 
+    public void ChangeLanguage()
+    {
+        if (lang.Value == Language.English.Value)
+        {
+            SetLanguage(Language.Japanese);
+        }
+        else
+        {
+            SetLanguage(Language.English);
+        }
+    }
+
     void OnStartLoadingLanguageFile()
     {
         Debug.Log("Loading language file...");
