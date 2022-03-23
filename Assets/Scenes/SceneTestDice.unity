@@ -235,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.12
+      value: 9.18
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -272,10 +272,6 @@ PrefabInstance:
     - target: {fileID: 4146371702651272969, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_Name
       value: Dice (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7433496215211079184, guid: 75e84af763385c043b142083694ffa32, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0.0001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75e84af763385c043b142083694ffa32, type: 3}
@@ -394,7 +390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.12
+      value: 9.18
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -552,7 +548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350485de7cf0e9042a3f32c3e2fc4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dices: []
 --- !u!4 &1776814948
 Transform:
   m_ObjectHideFlags: 0
@@ -601,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.12
+      value: 9.18
       objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_LocalPosition.z

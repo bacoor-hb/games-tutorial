@@ -21,6 +21,7 @@ public class MovementController : MonoBehaviour
         {
             time += Time.deltaTime / timeToTarget;
             transform.position = Vector3.Lerp(startPos, target, time);
+            transform.LookAt(target);
         }
 
         if (!inTarget && transform.position.Equals(target))
