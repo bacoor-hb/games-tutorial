@@ -7,7 +7,6 @@ public class DiceController : MonoBehaviour
     public delegate void OnEventCalled<T>(T data);
     public OnEventCalled<List<int>> OnResult;
     private bool isRoll = false;
-    [SerializeField]
     private List<Dice> dices = new List<Dice>();
     private List<int> diceValues = new List<int>();
 
@@ -37,7 +36,7 @@ public class DiceController : MonoBehaviour
         if (this.diceValues.Count.Equals(this.dices.Count))
         {
             this.isRoll = false;
-            OnResult.Invoke(this.diceValues);
+            OnResult?.Invoke(this.diceValues);
         }
     }
 }  
