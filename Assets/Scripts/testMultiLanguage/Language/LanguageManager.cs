@@ -25,11 +25,21 @@ public class LanguageManager : Singleton<LanguageManager>
             new LanguageReader(Path.Combine(Application.dataPath, langFilePath),
                 lang.Value,
                 false);
-    }    
+    }
+
+    void Start()
+    {
+        langReader.OnStartLoadingLanguageFile += OnStartLoadingLanguageFile;
+        langReader.OnEndLoadingLanguageFile += OnEndLoadingLanguageFile;
+        langReader.OnStartTranslating += OnStartTranslating;
+        langReader.OnEndTranslating += OnEndTranslating;
+    }
 
     public void SetLanguageFile(string filePath)
     {
-        langReader.setLanguage(Path.Combine(Application.dataPath, filePath), lang.Value);
+        langReader
+            .setLanguage(Path.Combine(Application.dataPath, filePath),
+            lang.Value);
         langFilePath = filePath;
     }
 
@@ -51,5 +61,25 @@ public class LanguageManager : Singleton<LanguageManager>
     public Language GetLanguage()
     {
         return lang;
+    }
+
+    void OnStartLoadingLanguageFile()
+    {
+        Debug.Log("Loading language file...");
+    }
+
+    void OnEndLoadingLanguageFile()
+    {
+        Debug.Log("Language file loaded!");
+    }
+
+    void OnStartTranslating()
+    {
+        Debug.Log("Translating...");
+    }
+
+    void OnEndTranslating()
+    {
+        Debug.Log("Translation complete!");
     }
 }

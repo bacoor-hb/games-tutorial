@@ -7,17 +7,25 @@ Created by Adam T. Ryder
 C# version by O. Glorieux
  
 */
-
 using System.Collections;
 using System.IO;
 using System.Xml;
-
 using UnityEngine;
 
 public class LanguageReader
 {
     private Hashtable Strings;
- 
+
+    public delegate void OnEventCalled();
+
+    public OnEventCalled OnStartLoadingLanguageFile;
+
+    public OnEventCalled OnEndLoadingLanguageFile;
+
+    public OnEventCalled OnStartTranslating;
+
+    public OnEventCalled OnEndTranslating;
+
     /*
     Initialize Lang class
     path = path to XML resource example:  Path.Combine(Application.dataPath, "lang.xml")
@@ -34,18 +42,18 @@ public class LanguageReader
      
     var LangClass : Lang = new Lang(wwwXML.text, currentLang, true)
     */
-    public LanguageReader ( string path, string language, bool web)
+    public LanguageReader(string path, string language, bool web)
     {
         if (!web)
         {
-            setLanguage(path, language);
+            setLanguage (path, language);
         }
         else
         {
-            setLanguageWeb(path, language);
+            setLanguageWeb (path, language);
         }
     }
- 
+
     /*
     Use the setLanguage function to swap languages after the Lang class has been initialized.
     This function is called automatically when the Lang class is initialized.
@@ -56,11 +64,13 @@ public class LanguageReader
     If the XML resource is stored on the web rather than on the local system use the
     setLanguageWeb function
     */
-    public void setLanguage ( string path, string language)
+    public void setLanguage(string path, string language)
     {
+        OnStartLoadingLanguageFile?.Invoke();
         var xml = new XmlDocument();
-        xml.Load(path);
-     
+        xml.Load (path);
+        OnEndLoadingLanguageFile?.Invoke();
+
         Strings = new Hashtable();
         var element = xml.DocumentElement[language];
         if (element != null)
@@ -68,16 +78,17 @@ public class LanguageReader
             var elemEnum = element.GetEnumerator();
             while (elemEnum.MoveNext())
             {
-                var xmlItem = (XmlElement)elemEnum.Current;
+                var xmlItem = (XmlElement) elemEnum.Current;
                 Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
             }
         }
         else
         {
-            Debug.LogError("The specified language does not exist: " + language);
+            Debug
+                .LogError("The specified language does not exist: " + language);
         }
     }
- 
+
     /*
     Use the setLanguageWeb function to swap languages after the Lang class has been initialized
     and the XML resource is stored on the web rather than locally.  This function is called automatically
@@ -91,11 +102,11 @@ public class LanguageReader
      
     var LangClass : Lang = new Lang(wwwXML.text, currentLang)
     */
-    public void setLanguageWeb ( string xmlText, string language)
+    public void setLanguageWeb(string xmlText, string language)
     {
         var xml = new XmlDocument();
         xml.Load(new StringReader(xmlText));
-     
+
         Strings = new Hashtable();
         var element = xml.DocumentElement[language];
         if (element != null)
@@ -103,16 +114,17 @@ public class LanguageReader
             var elemEnum = element.GetEnumerator();
             while (elemEnum.MoveNext())
             {
-                var xmlItem = (XmlElement)elemEnum.Current;
+                var xmlItem = (XmlElement) elemEnum.Current;
                 Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
             }
         }
         else
         {
-            Debug.LogError("The specified language does not exist: " + language);
+            Debug
+                .LogError("The specified language does not exist: " + language);
         }
     }
- 
+
     /*
     Access strings in the currently selected language by supplying this getString function with
     the name identifier for the string used in the XML resource.
@@ -133,15 +145,15 @@ public class LanguageReader
     JavaScript:
     var appName : String = langClass.getString("app_name");
     */
-    public string getString (string name)
+    public string getString(string name)
     {
         if (!Strings.ContainsKey(name))
         {
             Debug.LogError("The specified string does not exist: " + name);
-         
+
             return "";
         }
- 
-        return (string)Strings[name];
+
+        return (string) Strings[name];
     }
 }
