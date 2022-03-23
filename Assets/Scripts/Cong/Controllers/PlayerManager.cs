@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
         if (userManager.userPlaeyer.Address == _address)
         {
 
-            if (userManager.userPlaeyer.Money == 0)
+            if (userManager.userPlaeyer.Money <=0)
             {
 
             }
