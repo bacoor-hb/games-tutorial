@@ -7,7 +7,6 @@ public class DiceController : MonoBehaviour
     public delegate void OnEventCalled<T>(T data);
     public OnEventCalled<List<int>> OnResult;
     private bool isRoll = false;
-    [SerializeField]
     private List<Dice> dices = new List<Dice>();
     private List<int> diceValues = new List<int>();
 
