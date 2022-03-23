@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TurnBaseController : Singleton<TurnBaseController>
+public class TurnBaseController : MonoBehaviour
 {
     [SerializeField]
 #pragma warning disable CS0436 // Type conflicts with imported type
     public List<PlayersController> playerList;
 #pragma warning restore CS0436 // Type conflicts with imported type
-    private bool startGamge = false;
-    private int turnBase = 0;
+    public bool startGamge = false;
+    public int turnBase = 0;
 
 
     public void StartGame()
@@ -32,7 +32,7 @@ public class TurnBaseController : Singleton<TurnBaseController>
     private void Start()
     {
         startGamge = false;
-        startGamge();
+        //StartGame();
     }
 
     private void Update()
@@ -146,6 +146,7 @@ public class TurnBaseController : Singleton<TurnBaseController>
     {
         if (playerList[indexPlayer])
         {
+            playerList[indexPlayer]?.OnStartTurn();
             playerList[indexPlayer].OnStartTurn += StartTurn;
             playerList[indexPlayer].OnEndTurn += EndTurn;
             playerList[indexPlayer].OnAction += Action;

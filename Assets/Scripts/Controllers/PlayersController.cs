@@ -13,46 +13,24 @@ public class PlayersController : MonoBehaviour
     public Event OnActionEnd;
     public Event OnChangePlayer;
 
-
-    private int playerId;
-    private bool isPlayerTurn = false;
-
-    public void InitPlayer(int _playerId)
+    private void Start()
     {
-        playerId = _playerId;
+        OnStartTurn += StartTurn;
+        OnEndTurn += EndTurn;
     }
 
-    public void nextPlayerTurn()
+    void Update()
     {
-        isPlayerTurn = true;
-        StartTurn();
+
     }
 
-    private void StartTurn()
+    private void StartTurn ()
     {
-        Debug.Log("Start Turn" + playerId);
-        OnStartTurn?.Invoke(playerId);
+        gameObject.SetActive(true);
     }
 
     private void EndTurn()
     {
-        Debug.Log("End Turn" + playerId);
-        OnStartTurn?.Invoke(playerId);
-    }
-
-    private void OnChangePlayerEvent()
-    {
-        Debug.Log("OnChagnePlayer" + playerId);
-        //OnChangePlayer?.Invoke(playerId);
-    }
-
-
-
-    void Update()
-    {
-        if (isPlayerTurn)
-        {
-
-        }
+        gameObject.SetActive(false);
     }
 }
