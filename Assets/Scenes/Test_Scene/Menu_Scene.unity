@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 667884001}
   - component: {fileID: 667884000}
   m_Layer: 0
-  m_Name: GamePlayManager
+  m_Name: MenuManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 667883999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4de1e098f13754048a35d88f072e0485, type: 3}
+  m_Script: {fileID: 11500000, guid: bd56e34b70af04526a5ffd759de36531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MenuView: {fileID: 52908171}

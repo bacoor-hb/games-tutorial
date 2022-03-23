@@ -18,7 +18,7 @@ public class LoadingView : MonoBehaviour
     public float FillSpeed = 0.0002f;
     void Start()
     {
-        StartCoroutine(LoadScene_Async("Game_Scene"));
+        //StartCoroutine(LoadScene_Async("Game_Scene"));
     }
 
     void Update()
@@ -31,31 +31,19 @@ public class LoadingView : MonoBehaviour
     }
 
 
+    public void Init()
+    {
+
+    }
+
     public void IncrementProgess(float newProgess)
     {
         targetProgess = progressBar.value + newProgess;
         //targetProgess = newProgess;
     }
 
-    IEnumerator LoadScene_Async(string sceneName)
+    public void SetMessage(string _msg)
     {
-        yield return null;
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-        asyncOperation.allowSceneActivation = false;
-        while (!asyncOperation.isDone)
-        {
-            Debug.Log("ProgressB :" + asyncOperation.progress);
-            IncrementProgess(asyncOperation.progress);
-            MsgTxt.text = asyncOperation.progress * 100 + "%";
-            if (asyncOperation.progress >= 0.9f)
-            {
-                MsgTxt.text = "Press the SPACE bar to continue...";
-                if (Input.GetKeyDown(KeyCode.Space))
-                    asyncOperation.allowSceneActivation = true;
-            }
-
-            yield return null;
-        }
+        MsgTxt.text = _msg;
     }
 }
