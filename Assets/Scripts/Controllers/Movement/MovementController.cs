@@ -26,6 +26,7 @@ public class MovementController : MonoBehaviour
         if (!inTarget && transform.position.Equals(target))
         {
             this.inTarget = true;
+            this.isMoving = false;
             OnEndMoving?.Invoke();
         }
     }
