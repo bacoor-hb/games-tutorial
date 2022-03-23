@@ -7,9 +7,62 @@ public class Graph : MonoBehaviour
     private Transform[] Transforms;
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
 
-     void Start()
+    [SerializeField]
+    private List<GameObject> listDice;
+
+    [SerializeField]
+    private DiceController diceController;
+    [SerializeField]
+    private MovementController movementController;
+    private List<GameObject> nodeList = new List<GameObject>();
+
+
+    LinkedListNode<GameObject> currentNode;
+    int currentIndex = 0;
+
+    void Start()
     {
         GenerateBoard();
+        currentNode = nodes.First;
+        diceController.OnResult = LogResult;
+        movementController.OnStartMoving += LogStart;
+        movementController.OnEndMoving += LogEnd;
+    }
+
+    private void LogStart()
+    {
+        Debug.Log("Start moving");
+    }
+
+    private void LogEnd()
+    {
+        currentIndex++;
+        currentNode = GetNode(nodeList[currentIndex - 1]);
+        if (currentIndex < nodeList.Count)
+        {
+            movementController.SetTarget(nodeList[currentIndex].transform.position, 0.5f);
+            movementController.StartMoving();
+        } else
+        {
+            currentIndex = 0;
+            if (currentNode.Value.GetComponent<Property>().data != null)
+            {
+                Debug.Log(currentNode.Value.GetComponent<Property>().data.description);
+            }
+        }
+    }
+
+    public void LogResult(List<int> diceValues)
+    {
+        int totalValue = 0;
+        for(var i = 0; i < diceValues.Count; i++)
+        {
+            totalValue += diceValues[i];
+        }
+        nodeList = GetNodesByStep(currentNode, totalValue * -1);
+        Debug.Log(nodeList.Count);
+        movementController.SetTarget(nodeList[currentIndex].transform.position, 0.5f);
+        movementController.StartMoving();
     }
 
     public void GenerateBoard()
@@ -22,6 +75,14 @@ public class Graph : MonoBehaviour
             {
                 nodes.AddLast(Transforms[i].gameObject);
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            diceController.RollDice(listDice);
         }
     }
 
@@ -92,7 +153,7 @@ public class Graph : MonoBehaviour
         {
             int count = 0;
             LinkedListNode<GameObject> prevNode = currentNode;
-            while (count < step)
+            while (count < step * -1)
             {
                 if (prevNode.Previous != null)
                 {
