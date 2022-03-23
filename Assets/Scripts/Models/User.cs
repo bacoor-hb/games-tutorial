@@ -7,28 +7,28 @@ public class User
     protected string address;
     protected string name;
     protected long money;
-    protected List<PropertyData> properties;
+    protected List<Property> properties;
     protected List<Card> cards;
-    protected List<Token> tokens;
+    protected Token token;
 
     public User()
     {
         address = "";
         name = "";
         money = 0;
-        properties = null;
-        cards = null;
-        tokens = null;
+        properties = new List<Property>();
+        cards = new List<Card>();
+        token = new Token();
     }
 
-    public User(string _address, string _name, long _money, List<PropertyData> _properties, List<Card> _cards, List<Token> _tokens)
+    public User(string _address, string _name, long _money, List<Property> _properties, List<Card> _cards, Token _token)
     {
         address = _address;
         name = _name;
         money = _money;
         properties = _properties;
         cards = _cards;
-        tokens = _tokens;
+        token = _token;
     }
 
     public string Address
@@ -67,41 +67,22 @@ public class User
         }
     }
 
-    public List<PropertyData> Properties
+    public Token Token
     {
         get
         {
-            return properties;
+            return token;
         }
         set
         {
-            properties = value;
+            token = value;
         }
     }
 
-    public List<Card> Cards
-    {
-        get
-        {
-            return cards;
-        }
-        set
-        {
-            cards = value;
-        }
-    }
-
-    public List<Token> Tokens
-    {
-        get
-        {
-            return tokens;
-        }
-        set
-        {
-            tokens = value;
-        }
-    }
-
-
+    //Add Property
+    //Remove Properties
+    //Get Properties list
+    //Add Card
+    //Remove Card
+    //Get Card List
 }
