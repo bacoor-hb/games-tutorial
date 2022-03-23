@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GamePlayManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     [SerializeField]
     private MenuView MenuView;

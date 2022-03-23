@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GlobalManager : Singleton<GlobalManager>
 {
+    private void Awake()
+    {
+        LanguageManager languageManager;
+        languageManager = FindObjectOfType<LanguageManager>();
+    }
 
     void Start()
     {
@@ -13,6 +18,5 @@ public class GlobalManager : Singleton<GlobalManager>
 
     void Update()
     {
-        
     }
 }

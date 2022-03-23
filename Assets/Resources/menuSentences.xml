@@ -63,6 +63,10 @@ Você tem certeza de que deseja iniciar um novo jogo?</string>
 	</Spanish>
 
 	<English>
+		<string name="Start_Game">Start game</string>
+		<string name="Press_start_to_play_game">Press start to play game</string>
+
+
 		<string name="on">On</string>
 		<string name="off">Off</string>
 		<string name="exit">Quit game</string>
@@ -121,9 +125,13 @@ Are you sure you want to start a new game?</string>
 		<string name="Paying_Doctor">Paying Doctor</string>
 		<string name="Paying_for_medicine">Paying for medicine</string>
 		<string name="Move_3_steps_back-ward">Move 3 steps back-ward</string>
+			<string name="Change_Language">Change_Language_En</string>
 	</English>
 
 	<Japanese>
+		<string name="Start_Game">Start game jp</string>
+		<string name="Press_start_to_play_game">Press start to play game jp</string>
+
 		<string name="on">有効</string>
 		<string name="off">無効</string>
 		<string name="exit">終了</string>
@@ -147,6 +155,8 @@ Are you sure you want to start a new game?</string>
 		<string name="show_tips">ヒントを表示する</string>
 		<string name="keyboard">キーボード</string>
 		<string name="joystick">ジョイスティック</string>
+		<string name="Change_Language">Change_Language_Jp</string>
+
 		<string
       name="confirm_new_game"
     >新しいゲームが開始された場合、既に保存された進捗状況は失われます。
