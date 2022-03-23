@@ -8,7 +8,7 @@ public class User
     protected string name;
     protected long money;
     protected Dictionary<int, Property> properties;
-    protected List<Card> cards;
+    protected List<CardData> cards;
     protected Token token;
 
     public User()
@@ -17,11 +17,11 @@ public class User
         name = "";
         money = 0;
         properties = new Dictionary<int, Property>();
-        cards = new List<Card>();
+        cards = new List<CardData>();
         token = new Token();
     }
 
-    public User(string _address, string _name, long _money, Dictionary<int, Property> _properties, List<Card> _cards, Token _token)
+    public User(string _address, string _name, long _money, Dictionary<int, Property> _properties, List<CardData> _cards, Token _token)
     {
         address = _address;
         name = _name;
@@ -79,7 +79,7 @@ public class User
         }
     }
 
-    public List<Card> Cards
+    public List<CardData> Cards
     {
         get
         {
@@ -111,7 +111,7 @@ public class User
         return formatedPropertyList;
     }
 
-    public void AddCard(Card card)
+    public void AddCard(CardData card)
     {
         cards.Add(card);
     }  
