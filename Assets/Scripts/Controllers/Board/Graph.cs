@@ -92,7 +92,7 @@ public class Graph : MonoBehaviour
         {
             int count = 0;
             LinkedListNode<GameObject> prevNode = currentNode;
-            while (count < step)
+            while (count < step * -1)
             {
                 if (prevNode.Previous != null)
                 {

@@ -79,26 +79,40 @@ public class User
         }
     }
 
-    //Add Property
-    //Remove Properties
-    //Get Properties list
-    //Add Card
-    //Remove Card
-    //Get Card List
+    public List<Card> Cards
+    {
+        get
+        {
+            return cards;
+        }
+        set
+        {
+            cards = value;
+        }
+    }
+
     public void AddProperty(Property property)
     {
         properties.Add(property.propertyId, property);
     }
+
     public void RemoveProperty(Property property)
     {
         properties.Remove(property.propertyId);
     }
+
+    public List<Property> GetProperties()
+    {
+        List<Property> formatedPropertyList = new List<Property>();
+        foreach (var item in properties.Values)
+        {
+            formatedPropertyList.Add(item);
+        }
+        return formatedPropertyList;
+    }
+
     public void AddCard(Card card)
     {
         cards.Add(card);
-    }
-    public void GetProperties()
-    {
-        List<Property> formatedPropertyList = new List<Property>();
-    }   
+    }  
 }
