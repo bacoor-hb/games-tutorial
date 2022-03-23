@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
 
             if (userManager.userPlaeyer.Money <=0)
             {
-
+                ErrorPlusAndMinsEvent();
             }
             else
             {
@@ -36,14 +36,18 @@ public class PlayerManager : MonoBehaviour
 
                 else
                 {
-
+                    ErrorPlusAndMinsEvent();
                 }
             }
         }
         else
         {
-
+            ErrorPlusAndMinsEvent();
         }
+
+    }
+    private void ErrorPlusAndMinsEvent()
+    {
 
     }
     private  void PlusAndMinsEvent(long _money)
