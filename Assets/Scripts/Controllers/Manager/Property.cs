@@ -18,10 +18,16 @@ public class Property : MonoBehaviour
 
     void Start()
     {
+        
     }   
 
     void Update()
     {
-   
+        
+    }
+
+    void OnMouseDown()
+    {
+        Debug.Log(data.description);
     }
 }
