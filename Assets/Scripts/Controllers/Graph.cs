@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    private Transform[] list;
-    protected LinkedList<Vector3> vectors = new LinkedList<Vector3>();
+    private GameObject[] gameObjects;
+    protected LinkedList<GameObject> vectors = new LinkedList<GameObject>();
 
     private void Start()
     {
@@ -14,25 +14,25 @@ public class Graph : MonoBehaviour
 
     public void GenerateBoard()
     {
-        list = GetComponentsInChildren<Transform>();
+        gameObjects = GetComponentsInChildren<GameObject>();
 
-        for (var i = 0; i < list.Length; i++)
+        for (var i = 0; i < gameObjects.Length; i++)
         {
-            vectors.AddLast(list[i].position);
+            vectors.AddLast(gameObjects[i]);
         }
     }
 
-    public LinkedListNode<Vector3> GetNode(Vector3 node)
+    public LinkedListNode<GameObject> GetNode(GameObject node)
     {
         return vectors.Find(node);
     }
 
-    public List<Vector3> GetNodesByTargetNode(LinkedListNode<Vector3> currentNode, LinkedListNode<Vector3> targetNode, bool isClockWise)
+    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise)
     {
-        List<Vector3> listNodes = new List<Vector3>();
+        List<GameObject> listNodes = new List<GameObject>();
         if (isClockWise)
         {
-            LinkedListNode<Vector3> nextNode = currentNode.Next;
+            LinkedListNode<GameObject> nextNode = currentNode.Next;
             while (nextNode != targetNode.Next)
             {
                 listNodes.Add(nextNode.Value);
@@ -48,7 +48,7 @@ public class Graph : MonoBehaviour
         }
         else
         {
-            LinkedListNode<Vector3> prevNode = currentNode.Previous;
+            LinkedListNode<GameObject> prevNode = currentNode.Previous;
             while (prevNode != targetNode.Previous)
             {
                 listNodes.Add(prevNode.Value);
@@ -66,13 +66,13 @@ public class Graph : MonoBehaviour
         return listNodes;
     }
 
-    public List<Vector3> GetNodesByStep(LinkedListNode<Vector3> currentNode, int step)
+    public List<GameObject> GetNodesByStep(LinkedListNode<GameObject> currentNode, int step)
     {
-        List<Vector3> listNodes = new List<Vector3>();
+        List<GameObject> listNodes = new List<GameObject>();
         if (step > 0)
         {
             int count = 0;
-            LinkedListNode<Vector3> nextNode = currentNode;
+            LinkedListNode<GameObject> nextNode = currentNode;
             while (count < step)
             {
                 if (nextNode.Next != null)
@@ -88,7 +88,7 @@ public class Graph : MonoBehaviour
         } else if (step < 0)
         {
             int count = 0;
-            LinkedListNode<Vector3> prevNode = currentNode;
+            LinkedListNode<GameObject> prevNode = currentNode;
             while (count < step)
             {
                 if (prevNode.Previous != null)
