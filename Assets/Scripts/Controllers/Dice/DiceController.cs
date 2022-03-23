@@ -37,7 +37,7 @@ public class DiceController : MonoBehaviour
         if (this.diceValues.Count.Equals(this.dices.Count))
         {
             this.isRoll = false;
-            OnResult.Invoke(this.diceValues);
+            OnResult?.Invoke(this.diceValues);
         }
     }
 }  
