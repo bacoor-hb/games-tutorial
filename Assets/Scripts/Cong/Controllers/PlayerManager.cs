@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public UserManager userManager;
+    public List<UserManager> userManager;
 
     void Start()
     {
@@ -17,21 +17,21 @@ public class PlayerManager : MonoBehaviour
     {
         
     }
-    public void PlusAndMins(string _address, long _money)
+    public void PlusAndMins(int index, string _address, long _money)
     {
-        if (userManager.userPlaeyer.Address == _address)
+        if (userManager[index].userPlaeyer.Address == _address)
         {
 
-            if (userManager.userPlaeyer.Money <=0)
+            if (userManager[index].userPlaeyer.Money <=0)
             {
                 ErrorPlusAndMinsEvent();
             }
             else
             {
-                if (userManager.userPlaeyer.Money + _money >= 0)
+                if (userManager[index].userPlaeyer.Money + _money >= 0)
                 {
-                    userManager.userPlaeyer.Money += _money;
-                    userManager.OnPlusAndMins += PlusAndMinsEvent; 
+                    userManager[index].userPlaeyer.Money += _money;
+                    userManager[index].OnPlusAndMins += PlusAndMinsEvent; 
                 }
 
                 else

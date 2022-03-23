@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserManager : MonoBehaviour
+public class UserManager : Singleton<UserManager>
 {
     // Start is called before the first frame update 
     public delegate void OnEventCalled<T>(T data);
