@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/testMultiLanguage/testMultiLanguage.unity
-    guid: 5794504be442347b9a2e817acd592381
+    path: Assets/Scenes/Test_Scene/Splash_Scene.unity
+    guid: f33064eeb576b4dfe9733944d5f0968f
   - enabled: 1
-    path: Assets/Scenes/testMultiLanguage/testNextScenesMultiLanguage.unity
-    guid: 5fcb5f4c20db7404ba056aec7a92c9ea
+    path: Assets/Scenes/Test_Scene/Menu_Scene.unity
+    guid: ec02511ae77fb4d14b5ea9b056eb54ac
+  - enabled: 1
+    path: Assets/Scenes/Test_Scene/Game_Scene.unity
+    guid: ff217aec2a071473ca79d2e11cb90d99
+  - enabled: 1
+    path: Assets/Scenes/Test_Scene/Loading_Scene.unity
+    guid: 0a48c1e151e8c4de582e501389296619
   m_configObjects: {}
