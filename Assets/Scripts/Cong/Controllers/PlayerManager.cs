@@ -31,9 +31,7 @@ public class PlayerManager : MonoBehaviour
                 if (userManager.userPlaeyer.Money + _money >= 0)
                 {
                     userManager.userPlaeyer.Money += _money;
-                    userManager.OnPlusAndMins += PlusAndMinsEvent;
-                    userManager.OnPlusAndMinsEvent();
-                    userManager.OnPlusAndMinsInWeb3(_money);
+                    userManager.OnPlusAndMins += PlusAndMinsEvent; 
                 }
 
                 else
@@ -48,10 +46,15 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
-    private void PlusAndMinsEvent(long _money)
+    private  void PlusAndMinsEvent(long _money)
     {
-         
+        StartCoroutine( PlusAndMinsInWeb3(_money));
+    }
+    IEnumerator PlusAndMinsInWeb3(long _money)
+    {
+        yield return null;
     }
 
-    
+
+
 }
