@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    private GameObject[] gameObjects;
-    protected LinkedList<GameObject> vectors = new LinkedList<GameObject>();
+    private Transform[] Transforms;
+    protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
 
-    private void Start()
+     void Start()
     {
         GenerateBoard();
     }
 
     public void GenerateBoard()
     {
-        gameObjects = GetComponentsInChildren<GameObject>();
+        Transforms = GetComponentsInChildren<Transform>();
 
-        for (var i = 0; i < gameObjects.Length; i++)
+        for (var i = 0; i < Transforms.Length; i++)
         {
-            vectors.AddLast(gameObjects[i]);
+            if (Transforms[i].CompareTag("board_node"))
+            {
+                nodes.AddLast(Transforms[i].gameObject);
+            }
         }
     }
 
     public LinkedListNode<GameObject> GetNode(GameObject node)
     {
-        return vectors.Find(node);
+        return nodes.Find(node);
     }
 
     public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise)
@@ -42,7 +45,7 @@ public class Graph : MonoBehaviour
                 }
                 else
                 {
-                    nextNode = vectors.First;
+                    nextNode = nodes.First;
                 }
             }
         }
@@ -58,7 +61,7 @@ public class Graph : MonoBehaviour
                 }
                 else
                 {
-                    prevNode = vectors.Last;
+                    prevNode = nodes.Last;
                 }
 
             }
@@ -80,7 +83,7 @@ public class Graph : MonoBehaviour
                     nextNode = nextNode.Next;
                 } else
                 {
-                    nextNode = vectors.First;
+                    nextNode = nodes.First;
                 }
                 listNodes.Add(nextNode.Value);
                 count++;
@@ -96,7 +99,7 @@ public class Graph : MonoBehaviour
                     prevNode = prevNode.Previous;
                 }else
                 {
-                    prevNode = vectors.Last;
+                    prevNode = nodes.Last;
                 }
                 listNodes.Add(prevNode.Value);
                 count++;
