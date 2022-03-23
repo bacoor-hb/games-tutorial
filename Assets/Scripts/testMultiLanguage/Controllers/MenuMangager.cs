@@ -30,7 +30,7 @@ public class MenuMangager : MonoBehaviour
 
 
      public void UpDateText() {
-        text1.text = LanguageManager.Instance.GetSentence("main_menu"); // or LanguageManager.Instance.GetSentence("main_menu");
+        text1.text = LanguageManager.Instance.GetSentence("main_menu"); 
         text2.text = LanguageManager.Instance.GetSentence("continue");
         text3.text = LanguageManager.Instance.GetSentence("main_menu");
         btnStart.GetComponentInChildren<Text>().text =

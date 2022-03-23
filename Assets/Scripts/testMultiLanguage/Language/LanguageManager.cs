@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class LanguageManager : SingletonMonoBehaviour<LanguageManager>
+public class LanguageManager : Singleton<LanguageManager>
 {
     // Start is called before the first frame update
     //THE language manager
@@ -17,7 +17,7 @@ public class LanguageManager : SingletonMonoBehaviour<LanguageManager>
 
     protected override void Awake()
     {
-        base.isDontDestroy = true;
+        //base.isDontDestroy = true;
         base.Awake();
 
         //Initialize and set a default language
