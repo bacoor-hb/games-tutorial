@@ -6,43 +6,35 @@ public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<UserManager> userManager;
-
+    
     void Start()
     {
-         
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public void PlusAndMins(int index, string _address, long _money)
+    public void PlusAndMins(int index, long _money)
     {
-        if (userManager[index].userPlaeyer.Address == _address)
+        if (userManager[index].userPlayer.Money <= 0)
         {
-
-            if (userManager[index].userPlaeyer.Money <=0)
-            {
-                ErrorPlusAndMinsEvent();
-            }
-            else
-            {
-                if (userManager[index].userPlaeyer.Money + _money >= 0)
-                {
-                    userManager[index].userPlaeyer.Money += _money;
-                    userManager[index].OnPlusAndMins += PlusAndMinsEvent; 
-                }
-
-                else
-                {
-                    ErrorPlusAndMinsEvent();
-                }
-            }
+            ErrorPlusAndMinsEvent();
         }
         else
         {
-            ErrorPlusAndMinsEvent();
+            if (userManager[index].userPlayer.Money + _money >= 0)
+            {
+                userManager[index].userPlayer.Money += _money;
+                userManager[index].OnPlusAndMins += PlusAndMinsEvent;
+            }
+
+            else
+            {
+                ErrorPlusAndMinsEvent();
+            }
         }
 
     }
@@ -50,9 +42,9 @@ public class PlayerManager : MonoBehaviour
     {
 
     }
-    private  void PlusAndMinsEvent(long _money)
+    private void PlusAndMinsEvent(long _money)
     {
-        StartCoroutine( PlusAndMinsInWeb3(_money));
+        StartCoroutine(PlusAndMinsInWeb3(_money));
     }
     IEnumerator PlusAndMinsInWeb3(long _money)
     {
