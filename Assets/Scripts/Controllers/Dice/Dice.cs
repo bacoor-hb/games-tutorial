@@ -14,15 +14,6 @@ public class Dice : MonoBehaviour
     private DiceDataSet diceDataSet;
 
     [SerializeField]
-    private float test1 = 1;
-
-    [SerializeField]
-    private float test2 = 1;
-
-    [SerializeField]
-    private float test3 = 1;
-
-    [SerializeField]
     Vector3 initPos;
     
     [SerializeField]
@@ -61,7 +52,7 @@ public class Dice : MonoBehaviour
             hasLanded = false;
             thrown = true;
             rb.useGravity = true;
-            rb.AddTorque(test1, test2, test3);
+            rb.AddTorque(Random.Range(0, 500), Random.Range(0, 500), Random.Range(0, 500));
         }
     }
 
