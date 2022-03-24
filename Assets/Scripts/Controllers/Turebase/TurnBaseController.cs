@@ -12,13 +12,13 @@ public class TurnBaseController : MonoBehaviour
     public delegate void Event<T>(T data);
     public static Event<int> OnStartTurn;
     public static Event<int> OnEndTurn;
-    public static Event<int> OnActionStart;
-    public static Event<int> OnActionEnd;
+    public static Event<ActionTureBase> OnActionStart;
+    public static Event<ActionTureBase> OnActionEnd;
     public static Event<int> OnChangePlayer;
 
 
     public static bool startGamge = false;
-    public static List<object> playerList;
+    public static List<int> playerList = new List<int>();
     private static List<ActionTureBase> historyActionList;
     private static ActionTureBase currentAction;
     private static int turnBase = 0;
@@ -40,25 +40,29 @@ public class TurnBaseController : MonoBehaviour
         startGamge = false;
     }
 
-    public static int Register(p)
+    public static int Register(int playerId)
     {
         if (startGamge)
         {
             throw new System.Exception("Game start");
         }
-        playerList.Add(playerList.Count);
-        return playerList.Count - 1;
+        playerList.Add(playerId);
+        return playerId;
     }
 
     private void Start()
     {
         startGamge = false;
-        playerList = new List<int>();
     }
 
-    private static void AddAction(ActionTureBase action)
+    public static bool AddAction(ActionTureBase action)
     {
-        currentAction = action;
+        if (currentAction == null)
+        {
+            currentAction = action;
+            return true;
+        }
+        return false;
     }
 
     private void Update()
@@ -72,7 +76,8 @@ public class TurnBaseController : MonoBehaviour
                     status = TurnBaseStatus.START_ACTION;
                     break;
                 case TurnBaseStatus.START_ACTION:
-                    if(currentAction != null) {
+                    if (currentAction != null)
+                    {
                         ActionStart(currentAction);
                         status = TurnBaseStatus.ON_ACTION;
                     }
@@ -95,18 +100,29 @@ public class TurnBaseController : MonoBehaviour
                     break;
 
             }
+        }
 
+        if (Input.GetKeyDown("space"))
+        {
+            if (startGamge)
+            {
+                EndGame();
+            }
+            else
+            {
+                StartGame();
+            }
         }
     }
 
-    // Xu ly trong luat choi
+    // handle law in game
     private static void OnAction(ActionTureBase action)
     {
-
+        Debug.Log("Action");
     }
 
-    // Kiem tra xem luot choi cua player co duoc doi
-    private static void CheckChangePlayer()
+    // check change player when return true
+    private static bool CheckChangePlayer()
     {
         return true;
     }
@@ -128,6 +144,8 @@ public class TurnBaseController : MonoBehaviour
         {
             OnEndTurn(turnBase);
         }
+        historyActionList.Add(currentAction);
+        currentAction = null;
     }
 
     // script change player
@@ -150,7 +168,7 @@ public class TurnBaseController : MonoBehaviour
     {
         if (OnActionStart != null)
         {
-            OnActionStart(turnBase);
+            OnActionStart(action);
         }
     }
 
@@ -159,7 +177,7 @@ public class TurnBaseController : MonoBehaviour
     {
         if (OnActionEnd != null)
         {
-            OnActionEnd(turnBase);
+            OnActionEnd(action);
         }
     }
 }
