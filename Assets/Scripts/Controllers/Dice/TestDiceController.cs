@@ -1,12 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TestDiceController : MonoBehaviour
 {
+    // List xí ngầu
     [SerializeField]
     private List<GameObject> listDice;
 
+    // List Value cơ cấu ứng với xí ngầu
+    // Chỉ cơ cấu đúng theo với những điều kiện cho trước y = 10 rotate (0, 0, 0)
     [SerializeField]
     private List<int> valuesDice;
 
