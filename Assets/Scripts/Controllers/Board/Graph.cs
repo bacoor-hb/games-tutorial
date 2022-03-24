@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public class Graph : MonoBehaviour
+    public class Graph : Singleton<Graph>
 {
-    private Transform[] transforms;
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
@@ -17,7 +16,7 @@ using UnityEngine;
 
     public void GenerateBoard() 
     {
-        transforms = GetComponentsInChildren<Transform>();
+        Transform[] transforms = GetComponentsInChildren<Transform>();
 
         for (var i = 0; i < transforms.Length; i++)
         {
@@ -81,7 +80,7 @@ using UnityEngine;
             LinkedListNode<GameObject> nextNode = currentNode;
             while (count < step)
             {
-                if (nextNode.Next != null)
+                    if (nextNode.Next != null)
                 {
                     nextNode = nextNode.Next;
                 } else
@@ -118,6 +117,14 @@ using UnityEngine;
     
     public void GetOnEnterNode(string address, GameObject node)
     {
+        if (node.GetComponent<Property>().data != null)
+        {
+            Debug.Log(node.GetComponent<Property>().data.description);
+        }
+        else
+        {
+            Debug.Log(node.GetComponent<Property>().name);
+        }
         if (node != null) {
             currentNodes[address] = node;
         }else
