@@ -4,53 +4,45 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public List<UserManager> userManager;
-    
+    //// Start is called before the first frame update
+    public List<UserManager> listUserManager= new List<UserManager>();
+    [Range(1, 3)]
+    public int numberPlayer = 0;
     void Start()
     {
+         for(int i = 0; i< numberPlayer; i++)
+         {
 
+         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlusAndMins(string _address, long _money)
     {
-
-    }
-    public void PlusAndMins(int index, long _money)
-    {
-        if (userManager[index].userPlayer.Money <= 0)
+        
+       if(UserManager.Instance.user.Address== _address)
         {
-            ErrorPlusAndMinsEvent();
-        }
-        else
-        {
-            if (userManager[index].userPlayer.Money + _money >= 0)
+            if(UserManager.Instance.user.Money +_money >= 0)
             {
-                userManager[index].userPlayer.Money += _money;
-                userManager[index].OnPlusAndMins += PlusAndMinsEvent;
+                UserManager.Instance.OnPlusAndMins += PlusAndMinsEvent;
             }
-
             else
             {
-                ErrorPlusAndMinsEvent();
+                Debug.Log("Error");
             }
-        }
+       }
 
     }
-    private void ErrorPlusAndMinsEvent()
+    public void OnBuyHouse(PropertyData _propertyData)
     {
+        if (_propertyData.cost_house < UserManager.Instance.user.Money)
+        {
 
+        }
     }
     private void PlusAndMinsEvent(long _money)
     {
-        StartCoroutine(PlusAndMinsInWeb3(_money));
-    }
-    IEnumerator PlusAndMinsInWeb3(long _money)
-    {
-        yield return null;
-    }
 
+    }
 
 
 }
