@@ -8,6 +8,9 @@ public class TestDiceController : MonoBehaviour
     private List<GameObject> listDice;
 
     [SerializeField]
+    private List<int> valuesDice;
+
+    [SerializeField]
     private DiceController diceController;
 
     private void Start()
@@ -20,6 +23,11 @@ public class TestDiceController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             diceController.RollDice(listDice);
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            diceController.RollDiceWithValue(listDice, valuesDice);
         }
     }
 

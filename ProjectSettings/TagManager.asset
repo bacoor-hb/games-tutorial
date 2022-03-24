@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - board_node
   layers:
   - Default
   - TransparentFX
