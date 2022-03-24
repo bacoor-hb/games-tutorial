@@ -5,15 +5,29 @@ using UnityEngine;
 public class PropertyManager : MonoBehaviour
 {
     [SerializeField]
-    private List<PropertyData> prefabList;
+    private List<Property> properties;
     [SerializeField]
 
-    void Start()
+    public List<Property> Properties
     {
+        get
+        {
+            return properties;
+        }
+        set
+        {
+            properties = value;
+        }
+    }
+
+    void Start()
+    {       
     }
 
     void Update()
     {
     }
+
+
 
 }

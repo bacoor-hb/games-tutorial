@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Graph : MonoBehaviour
+    public class Graph : MonoBehaviour
 {
-    private Transform[] Transforms;
+    private Transform[] transforms;
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
      void Start()
     {
+        EventManager.onEnterNode += GetOnEnterNode;
         GenerateBoard();
     }
 
-    public void GenerateBoard()
-    {
-        Transforms = GetComponentsInChildren<Transform>();
 
-        for (var i = 0; i < Transforms.Length; i++)
+    public void GenerateBoard() 
+    {
+        transforms = GetComponentsInChildren<Transform>();
+
+        for (var i = 0; i < transforms.Length; i++)
         {
-            if (Transforms[i].CompareTag("board_node"))
+            if (transforms[i].CompareTag("board_node"))
             {
-                nodes.AddLast(Transforms[i].gameObject);
+                nodes.AddLast(transforms[i].gameObject);
             }
         }
     }
@@ -106,6 +109,21 @@ public class Graph : MonoBehaviour
             }
         }
         return listNodes;
+    }
+
+    public GameObject GetCurrentNodeByAddress(string address)
+    {
+        return currentNodes[address];
+    }
+    
+    public void GetOnEnterNode(string address, GameObject node)
+    {
+        if (node != null) {
+            currentNodes[address] = node;
+        }else
+        {
+            currentNodes[address] = nodes.First.Value;
+        }
     }
 
 }
