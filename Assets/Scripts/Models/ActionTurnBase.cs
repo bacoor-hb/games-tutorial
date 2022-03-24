@@ -1,5 +1,9 @@
-﻿public class ActionTureBase
+﻿using System.Collections;
+using System.Collections.Generic;
+
+
+public class ActionTureBase
 {
-    int action;
-    object param;
+    public int action;
+    public Dictionary<string, string> param;
 }

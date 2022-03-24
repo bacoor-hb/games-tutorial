@@ -10,15 +10,15 @@ class TurnBaseStatus
 public class TurnBaseController : MonoBehaviour
 {
     public delegate void Event<T>(T data);
-    public static Event<int> OnStartTurn;
-    public static Event<int> OnEndTurn;
+    public static Event<PlayerTestController> OnStartTurn;
+    public static Event<PlayerTestController> OnEndTurn;
     public static Event<ActionTureBase> OnActionStart;
     public static Event<ActionTureBase> OnActionEnd;
-    public static Event<int> OnChangePlayer;
+    public static Event<PlayerTestController> OnChangePlayer;
 
 
     public static bool startGamge = false;
-    public static List<int> playerList = new List<int>();
+    public static List<PlayerTestController> playerList = new List<PlayerTestController>();
     private static List<ActionTureBase> historyActionList;
     private static ActionTureBase currentAction;
     private static int turnBase = 0;
@@ -40,14 +40,13 @@ public class TurnBaseController : MonoBehaviour
         startGamge = false;
     }
 
-    public static int Register(int playerId)
+    public static void Register(PlayerTestController player)
     {
         if (startGamge)
         {
             throw new System.Exception("Game start");
         }
-        playerList.Add(playerId);
-        return playerId;
+        playerList.Add(player);
     }
 
     private void Start()
@@ -118,7 +117,7 @@ public class TurnBaseController : MonoBehaviour
     // handle law in game
     private static void OnAction(ActionTureBase action)
     {
-        Debug.Log("Action");
+        Debug.Log("Action:" + action.ToString());
     }
 
     // check change player when return true
@@ -132,7 +131,7 @@ public class TurnBaseController : MonoBehaviour
     {
         if (OnStartTurn != null)
         {
-            OnStartTurn(turnBase);
+            OnStartTurn(playerList[turnBase]);
         }
         historyActionList = new List<ActionTureBase>();
     }
@@ -142,7 +141,7 @@ public class TurnBaseController : MonoBehaviour
     {
         if (OnEndTurn != null)
         {
-            OnEndTurn(turnBase);
+            OnEndTurn(playerList[turnBase]);
         }
         historyActionList.Add(currentAction);
         currentAction = null;
@@ -153,7 +152,7 @@ public class TurnBaseController : MonoBehaviour
     {
         if (OnChangePlayer != null)
         {
-            OnChangePlayer(NextPlayer());
+            OnChangePlayer(playerList[NextPlayer()]);
         }
         turnBase = NextPlayer();
     }

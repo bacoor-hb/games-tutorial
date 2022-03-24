@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerTestController : MonoBehaviour
 {
     static int count = 0;
-    int id;
+    public int id;
     // Use this for initialization
     void Start()
     {
         id = count;
-        TurnBaseController.Register(id);
+        TurnBaseController.Register(this);
         count++;
         TurnBaseController.OnStartTurn += StartTurn;
         TurnBaseController.OnEndTurn += EndTurn;
@@ -23,15 +24,21 @@ public class PlayerTestController : MonoBehaviour
     {
         if (Input.GetKeyDown("a"))
         {
-            ActionTureBase action = new ActionTureBase();
+            ActionTureBase action = new ActionTureBase() {
+                action = 1,
+                param = new Dictionary<string, string>()
+                {
+                    { "test", "1" }
+                }
+            };
             TurnBaseController.AddAction(action);
         }
     }
 
-    void StartTurn(int playerId)
+    void StartTurn(PlayerTestController player)
     {
         Material myMaterial = GetComponent<Renderer>().material;
-        if (playerId == id)
+        if (player == this)
         {
             myMaterial.color = Color.red;
 
@@ -40,12 +47,12 @@ public class PlayerTestController : MonoBehaviour
         {
             myMaterial.color = Color.grey;
         }
-        Debug.Log("StartTurn: id: " + id + ", player: " + playerId);
+        Debug.Log("StartTurn: id: " + id + ", player: " + player.id);
     }
 
-    void EndTurn(int playerId)
+    void EndTurn(PlayerTestController player)
     {
-        Debug.Log("EndTurn: id: " + id + ", player: " + playerId);
+        Debug.Log("EndTurn: id: " + id + ", player: " + player.id);
 
     }
     void ActionStart(ActionTureBase action)
@@ -58,10 +65,8 @@ public class PlayerTestController : MonoBehaviour
         Debug.Log("ActionEnd: id: " + id);
     }
 
-    void ChangePlayer(int playerId)
+    void ChangePlayer(PlayerTestController player)
     {
-        Debug.Log("ChangePlayer: id: " + id + ", player: " + playerId);
-
-
+        Debug.Log("ChangePlayer: id: " + id + ", player: " + player.id);
     }
 }
