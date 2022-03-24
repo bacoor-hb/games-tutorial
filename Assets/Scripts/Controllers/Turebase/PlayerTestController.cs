@@ -30,7 +30,16 @@ public class PlayerTestController : MonoBehaviour
 
     void StartTurn(int playerId)
     {
+        Material myMaterial = GetComponent<Renderer>().material;
+        if (playerId == id)
+        {
+            myMaterial.color = Color.red;
 
+        }
+        else
+        {
+            myMaterial.color = Color.grey;
+        }
         Debug.Log("StartTurn: id: " + id + ", player: " + playerId);
     }
 
