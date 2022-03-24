@@ -12,6 +12,8 @@ public class Property : MonoBehaviour
 
     public List<MeshRenderer> renderers;
     public List<Collider> colliders;
+    protected bool isBought;
+    protected int status;
 
     [HideInInspector]
     public int propertyId;
@@ -23,11 +25,16 @@ public class Property : MonoBehaviour
 
     void Update()
     {
-        
+      
     }
 
     void OnMouseDown()
     {
         Debug.Log(data.description);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        var name = collision.gameObject.GetComponent<UserManager>().user.Name;
+        Debug.Log(name);
     }
 }
