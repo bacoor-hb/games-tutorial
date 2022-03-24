@@ -15,7 +15,7 @@ using UnityEngine;
     }
 
 
-    public void GenerateBoard()
+    public void GenerateBoard() 
     {
         transforms = GetComponentsInChildren<Transform>();
 
@@ -110,10 +110,20 @@ using UnityEngine;
         }
         return listNodes;
     }
+
+    public GameObject GetCurrentNodeByAddress(string address)
+    {
+        return currentNodes[address];
+    }
     
     public void GetOnEnterNode(string address, GameObject node)
     {
-        currentNodes[address] = node;
+        if (node != null) {
+            currentNodes[address] = node;
+        }else
+        {
+            currentNodes[address] = nodes.First.Value;
+        }
     }
 
 }
