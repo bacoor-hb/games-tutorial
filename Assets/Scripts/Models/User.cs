@@ -7,8 +7,8 @@ public class User
     protected string address;
     protected string name;
     protected long money;
-    protected List<Property> properties;
-    protected List<Card> cards;
+    protected Dictionary<int, Property> properties;
+    protected List<CardData> cards;
     protected Token token;
 
     public User()
@@ -16,12 +16,12 @@ public class User
         address = "";
         name = "";
         money = 0;
-        properties = new List<Property>();
-        cards = new List<Card>();
+        properties = new Dictionary<int, Property>();
+        cards = new List<CardData>();
         token = new Token();
     }
 
-    public User(string _address, string _name, long _money, List<Property> _properties, List<Card> _cards, Token _token)
+    public User(string _address, string _name, long _money, Dictionary<int, Property> _properties, List<CardData> _cards, Token _token)
     {
         address = _address;
         name = _name;
@@ -79,10 +79,40 @@ public class User
         }
     }
 
-    //Add Property
-    //Remove Properties
-    //Get Properties list
-    //Add Card
-    //Remove Card
-    //Get Card List
+    public List<CardData> Cards
+    {
+        get
+        {
+            return cards;
+        }
+        set
+        {
+            cards = value;
+        }
+    }
+
+    public void AddProperty(Property property)
+    {
+        properties.Add(property.propertyId, property);
+    }
+
+    public void RemoveProperty(Property property)
+    {
+        properties.Remove(property.propertyId);
+    }
+
+    public List<Property> GetProperties()
+    {
+        List<Property> formatedPropertyList = new List<Property>();
+        foreach (var item in properties.Values)
+        {
+            formatedPropertyList.Add(item);
+        }
+        return formatedPropertyList;
+    }
+
+    public void AddCard(CardData card)
+    {
+        cards.Add(card);
+    }  
 }
