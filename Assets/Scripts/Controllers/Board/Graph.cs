@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public class Graph : MonoBehaviour
+    public class Graph : Singleton<Graph>
 {
-    private Transform[] transforms;
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
      void Start()
@@ -17,13 +17,25 @@ using UnityEngine;
 
     public void GenerateBoard() 
     {
-        transforms = GetComponentsInChildren<Transform>();
+        Transform[] transforms = GetComponentsInChildren<Transform>();
 
         for (var i = 0; i < transforms.Length; i++)
         {
             if (transforms[i].CompareTag("board_node"))
             {
                 nodes.AddLast(transforms[i].gameObject);
+                if (transforms[i].gameObject.GetComponent<Property>().data != null)
+                {
+                    int typeId = transforms[i].gameObject.GetComponent<Property>().data.typeId;
+                    if (!totalType.ContainsKey(typeId))
+                    {
+                        totalType.Add(typeId, 1);
+                    }
+                    else
+                    {
+                        totalType[typeId] += 1;
+                    }
+                }
             }
         }
     }
@@ -81,7 +93,7 @@ using UnityEngine;
             LinkedListNode<GameObject> nextNode = currentNode;
             while (count < step)
             {
-                if (nextNode.Next != null)
+                    if (nextNode.Next != null)
                 {
                     nextNode = nextNode.Next;
                 } else
@@ -118,12 +130,32 @@ using UnityEngine;
     
     public void GetOnEnterNode(string address, GameObject node)
     {
+        if (node.GetComponent<Property>().data != null)
+        {
+            Debug.Log(node.GetComponent<Property>().data.description);
+        }
+        else
+        {
+            Debug.Log(node.GetComponent<Property>().name);
+        }
         if (node != null) {
             currentNodes[address] = node;
         }else
         {
             currentNodes[address] = nodes.First.Value;
         }
+    }
+
+    public int GetTotalPropertiesByType(int typeId)
+    {
+        int total;
+        if (totalType.ContainsKey(typeId)) { 
+            total = totalType[typeId];
+        } else
+        {
+            total = 0;
+        }
+        return total;
     }
 
 }
