@@ -15,6 +15,13 @@ GameObject:
   - component: {fileID: 8697225212352171742}
   m_Layer: 0
   m_Name: 01
+  - component: {fileID: 7165705113381196923}
+  - component: {fileID: 9086168584446552291}
+  - component: {fileID: 3695712038536982042}
+  - component: {fileID: 860794355481907530}
+  - component: {fileID: 6819516861300820240}
+  m_Layer: 10
+  m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,6 +124,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 3081087698981750425}
   - component: {fileID: 5887777194155660363}
   - component: {fileID: 8450959233005096203}
@@ -124,6 +132,15 @@ GameObject:
   - component: {fileID: 8697225212352171715}
   m_Layer: 0
   m_Name: 04
+=======
+  - component: {fileID: 4530156395818008253}
+  - component: {fileID: 8207629352084879598}
+  - component: {fileID: 2831923040494192258}
+  - component: {fileID: 40999196745970105}
+  - component: {fileID: 6819516861300820241}
+  m_Layer: 10
+  m_Name: 02
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,6 +243,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 1499704726613074559}
   - component: {fileID: 2558007297556098522}
   - component: {fileID: 331904474360633616}
@@ -234,6 +252,15 @@ GameObject:
   - component: {fileID: 4699540675766530525}
   m_Layer: 0
   m_Name: Dice
+=======
+  - component: {fileID: 8474208343464353297}
+  - component: {fileID: 4047001642167143773}
+  - component: {fileID: 1156223083564172866}
+  - component: {fileID: 3933961823007801220}
+  - component: {fileID: 6819516861300820242}
+  m_Layer: 10
+  m_Name: 01
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,6 +507,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 4999198866109928375}
   - component: {fileID: 6343746805201497903}
   - component: {fileID: 1538195536051202518}
@@ -487,6 +515,15 @@ GameObject:
   - component: {fileID: 8697225212352171740}
   m_Layer: 0
   m_Name: 03
+=======
+  - component: {fileID: 924138166270542165}
+  - component: {fileID: 8621187238384276359}
+  - component: {fileID: 6005229671675742919}
+  - component: {fileID: 7874945775382385136}
+  - component: {fileID: 6819516861300820239}
+  m_Layer: 10
+  m_Name: 04
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -589,6 +626,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 1787738877188897137}
   - component: {fileID: 6338342984963817250}
   - component: {fileID: 97963411973554510}
@@ -596,6 +634,16 @@ GameObject:
   - component: {fileID: 8697225212352171741}
   m_Layer: 0
   m_Name: 02
+=======
+  - component: {fileID: 3657221641424004531}
+  - component: {fileID: 391483458108385814}
+  - component: {fileID: 2488840675503447772}
+  - component: {fileID: 7433496215211079184}
+  - component: {fileID: 7433496215211079189}
+  - component: {fileID: 7433496215211079185}
+  m_Layer: 10
+  m_Name: Dice
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -689,8 +737,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed1fcecb658b33544bd77b9ed43faaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   value: 2
 --- !u!1 &6694511672876304118
+=======
+  diceValues:
+  - {fileID: 6819516861300820242}
+  - {fileID: 6819516861300820241}
+  - {fileID: 6819516861300820240}
+  - {fileID: 6819516861300820239}
+  - {fileID: 6819516861300820238}
+  - {fileID: 6819516861300820237}
+--- !u!1 &6171160391202193382
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -698,6 +757,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 3902292626920970919}
   - component: {fileID: 7819140671654085890}
   - component: {fileID: 7858185101612172994}
@@ -705,6 +765,15 @@ GameObject:
   - component: {fileID: 8697225212352171714}
   m_Layer: 0
   m_Name: 05
+=======
+  - component: {fileID: 1011862345488751637}
+  - component: {fileID: 5137805094910381955}
+  - component: {fileID: 8023949210261107009}
+  - component: {fileID: 7725078883731934178}
+  - component: {fileID: 6819516861300820237}
+  m_Layer: 10
+  m_Name: 06
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -807,6 +876,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:Assets/Assets/Dice/Prefabs/Dice.prefab
   - component: {fileID: 2890133681114880985}
   - component: {fileID: 7015531485085993039}
   - component: {fileID: 5281527740521936525}
@@ -814,6 +884,15 @@ GameObject:
   - component: {fileID: 8697225212352171713}
   m_Layer: 0
   m_Name: 06
+=======
+  - component: {fileID: 1168314993898020203}
+  - component: {fileID: 5373393827368108750}
+  - component: {fileID: 5412459800612143374}
+  - component: {fileID: 8922061539553898996}
+  - component: {fileID: 6819516861300820238}
+  m_Layer: 10
+  m_Name: 05
+>>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8:Assets/Prefabs/DIce Module/Dice.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

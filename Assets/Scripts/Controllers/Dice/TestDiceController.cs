@@ -6,7 +6,7 @@ public class TestDiceController : MonoBehaviour
 {
     // List xí ngầu
     [SerializeField]
-    private List<GameObject> listDice;
+    private List<Dice> listDice;
 
     // List Value cơ cấu ứng với xí ngầu
     // Chỉ cơ cấu đúng theo với những điều kiện cho trước y = 10 rotate (0, 0, 0)
@@ -18,14 +18,20 @@ public class TestDiceController : MonoBehaviour
 
     private void Start()
     {
-        diceController.OnResult = LodResult;
+        diceController.OnResult = LogResult;
+        diceController.OnRoll = LogRolling;
+        diceController.SetDice(listDice);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+        {            
+            diceController.RollDice();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            diceController.RollDice(listDice);
+            diceController.SetDice(listDice);
         }
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -34,7 +40,7 @@ public class TestDiceController : MonoBehaviour
         }
     }
 
-    private void LodResult (List<int> result)
+    private void LogResult (List<int> result)
     {
         string stringArray = "[";
         for (int i = 0; i < result.Count; i++)
@@ -50,4 +56,9 @@ public class TestDiceController : MonoBehaviour
         stringArray += "]";
         Debug.Log(stringArray);
     } 
+
+    private void LogRolling(int diceID)
+    {
+        Debug.Log("DIce " + diceID + " is rolling...");
+    }
 }
