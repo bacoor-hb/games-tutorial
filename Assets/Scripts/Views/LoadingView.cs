@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
-
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadingView : MonoBehaviour
 {
-
     [SerializeField]
     private Slider progressBar;
+
     [SerializeField]
     private TextMeshProUGUI MsgTxt;
 
     private float targetProgess = 0;
+
     public float FillSpeed = 0.0002f;
+
     void Start()
     {
         //StartCoroutine(LoadScene_Async("Game_Scene"));
@@ -23,17 +24,15 @@ public class LoadingView : MonoBehaviour
 
     void Update()
     {
-        if(progressBar.value < targetProgess)
+        if (progressBar.value < targetProgess)
         {
             Debug.Log("Progress :" + progressBar.value);
             progressBar.value += FillSpeed + Time.deltaTime;
         }
     }
 
-
     public void Init()
     {
-
     }
 
     public void IncrementProgess(float newProgess)
@@ -44,6 +43,6 @@ public class LoadingView : MonoBehaviour
 
     public void SetMessage(string _msg)
     {
-        MsgTxt.text = _msg;
+        MsgTxt.text = LanguageManager.Instance.GetSentence(_msg);
     }
 }

@@ -7,6 +7,7 @@ public class LoadingManager : MonoBehaviour
 {
     [SerializeField]
     private LoadingView LoadingView;
+
     void Start()
     {
         if (LoadingView != null)
@@ -18,7 +19,6 @@ public class LoadingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     IEnumerator LoadScene_Async(string sceneName)
@@ -31,10 +31,11 @@ public class LoadingManager : MonoBehaviour
         {
             Debug.Log("ProgressB :" + asyncOperation.progress);
             LoadingView.IncrementProgess(asyncOperation.progress);
-            LoadingView.SetMessage(asyncOperation.progress * 100 + "%");
+
+            // LoadingView.SetMessage(asyncOperation.progress * 100 + "%");
             if (asyncOperation.progress >= 0.9f)
             {
-                LoadingView.SetMessage("Press the space bar to continue...");
+                LoadingView.SetMessage("Press_the_space_bar_to_continue");
                 if (Input.GetKeyDown(KeyCode.Space))
                     asyncOperation.allowSceneActivation = true;
             }
