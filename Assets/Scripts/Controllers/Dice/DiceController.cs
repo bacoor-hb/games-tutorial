@@ -5,26 +5,70 @@ using UnityEngine;
 public class DiceController : MonoBehaviour
 {
     public delegate void OnEventCalled<T>(T data);
+    public OnEventCalled<int> OnRoll;
     public OnEventCalled<List<int>> OnResult;
-    private bool isRoll = false;
+
+    private bool isRolling = false;
     private List<Dice> dices = new List<Dice>();
     private List<int> diceValues = new List<int>();
 
-    public void RollDice(List<GameObject> dices)
+    [SerializeField]
+    private List<Transform> diceSpawnPos;
+    private void Start()
     {
-        if (!isRoll)
+        Init();
+    }
+
+    private void Init()
+    {
+        diceValues = new List<int>();
+        isRolling = false;
+    }
+
+    /// <summary>
+    /// Initialize the dice Instance
+    /// </summary>
+    /// <param name="_dices"></param>
+    public bool SetDice(List<Dice> _dices)
+    {
+        if(_dices.Count != diceSpawnPos.Count)
         {
-            this.isRoll = true;
-            this.dices.Clear();
-            this.diceValues.Clear();
-            foreach (var item in dices)
+            Debug.LogError("Number of dices is different than the number of spawning position...");
+            return false;
+        }
+
+        dices.Clear();
+        diceValues.Clear();
+        for(int i = 0; i < _dices.Count; i++)
+        {
+            _dices[i].Init(diceSpawnPos[i]);
+            _dices[i].OnValueChange = SetDiceValue;
+            dices.Add(_dices[i]);
+        }
+
+        //Hide all Dice
+        SetActiveAllDice(false);
+        return true;
+    }
+
+    /// <summary>
+    /// Roll Action
+    /// </summary>
+    public void RollDice()
+    {
+        if (!isRolling)
+        {
+            //Show All dice
+            SetActiveAllDice(true);
+            diceValues.Clear();
+            isRolling = true;
+            for(int i = 0; i < dices.Count; i++)
             {
-                Dice dice = item.gameObject.GetComponent<Dice>();
-                dice.OnValueChange = SetDiceValue;
-                dice.RollDice();
-                this.dices.Add(dice);
+                OnRoll?.Invoke(i);
+                dices[i].RollDice();
             }
-        } else
+        } 
+        else
         {
             Debug.Log("Dice is rolling");
         }
@@ -32,11 +76,26 @@ public class DiceController : MonoBehaviour
 
     private void SetDiceValue (int value)
     {
-        this.diceValues.Add(value);
-        if (this.diceValues.Count.Equals(this.dices.Count))
+        diceValues.Add(value);
+        if (diceValues.Count.Equals(dices.Count))
         {
-            this.isRoll = false;
-            OnResult?.Invoke(this.diceValues);
+            isRolling = false;
+            OnResult?.Invoke(diceValues);
+        }
+    }
+
+    /// <summary>
+    /// Set the dice enable/disable
+    /// </summary>
+    /// <param name="state">false = Hide all Dice</param>
+    public void SetActiveAllDice(bool state)
+    {
+        if(dices != null && dices.Count > 0)
+        {
+            for(int i = 0; i < dices.Count; i++)
+            {
+                dices[i].gameObject.SetActive(state);
+            }
         }
     }
 }  

@@ -567,6 +567,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c3a02168cadc14ebdf8dc9f85bc25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceValues:
+  - {fileID: 6819516861300820242}
+  - {fileID: 6819516861300820241}
+  - {fileID: 6819516861300820240}
+  - {fileID: 6819516861300820239}
+  - {fileID: 6819516861300820238}
+  - {fileID: 6819516861300820237}
 --- !u!1 &6171160391202193382
 GameObject:
   m_ObjectHideFlags: 0

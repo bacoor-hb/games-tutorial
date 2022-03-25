@@ -5,25 +5,31 @@ using UnityEngine;
 public class TestDiceController : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> listDice;
+    private List<Dice> listDice;
 
     [SerializeField]
     private DiceController diceController;
 
     private void Start()
     {
-        diceController.OnResult = LodResult;
+        diceController.OnResult = LogResult;
+        diceController.OnRoll = LogRolling;
+        diceController.SetDice(listDice);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+        {            
+            diceController.RollDice();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            diceController.RollDice(listDice);
+            diceController.SetDice(listDice);
         }
     }
 
-    private void LodResult (List<int> result)
+    private void LogResult (List<int> result)
     {
         string stringArray = "[";
         for (int i = 0; i < result.Count; i++)
@@ -39,4 +45,9 @@ public class TestDiceController : MonoBehaviour
         stringArray += "]";
         Debug.Log(stringArray);
     } 
+
+    private void LogRolling(int diceID)
+    {
+        Debug.Log("DIce " + diceID + " is rolling...");
+    }
 }
