@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public class Graph : Singleton<Graph>
+public class Graph : Singleton<Graph>
 {
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
     protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
-     void Start()
+    void Start()
     {
         GenerateBoard();
         GraphEventManager.onEnterNode += GetOnEnterNode;
     }
-
 
     public void GenerateBoard() 
     {
@@ -45,7 +44,7 @@ using UnityEngine;
         return nodes.Find(node);
     }
 
-    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise)
+    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise = true)
     {
         List<GameObject> listNodes = new List<GameObject>();
         if (isClockWise)
@@ -157,5 +156,4 @@ using UnityEngine;
         }
         return total;
     }
-
 }
