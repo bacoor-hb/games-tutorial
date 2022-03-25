@@ -10,8 +10,8 @@ using UnityEngine;
 
      void Start()
     {
-        EventManager.onEnterNode += GetOnEnterNode;
         GenerateBoard();
+        GraphEventManager.onEnterNode += GetOnEnterNode;
     }
 
 
