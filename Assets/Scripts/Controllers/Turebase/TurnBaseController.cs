@@ -2,23 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class TurnBaseConstants
-{
-    public const int START_TURN = 1,
-        START_ACTION = 2,
-        ON_ACTION = 3,
-        END_ACTION = 4,
-        END_TURN = 5;
-
-    public const int ACTION_RELEASE_CARD = 1,
-        ACTION_ROLL_DICE = 2,
-        ACTION_RUN_THE_CELL = 3,
-        ACTION_PUNCHARE = 4,
-        ACTION_BUILDING = 5,
-        ACTION_AUCTION = 6,
-        ACTION_END_TURN = 10;
-}
-
 public class TurnBaseController : MonoBehaviour
 {
     public delegate void Event<T>(T data);
@@ -69,9 +52,9 @@ public class TurnBaseController : MonoBehaviour
 
     public static void AddAction(int action)
     {
-        if (startGamge)
+        if (!startGamge)
         {
-            throw new System.Exception("Game start");
+            throw new System.Exception("Run StartGame to AddAction");
         }
         if (queueActionList != null)
         {
@@ -216,9 +199,9 @@ public class TurnBaseController : MonoBehaviour
     // script run before excute action
     private static void ActionStart()
     {
-        currentAction = queueActionList.Dequeue();
-        if (currentAction != null)
+        if (queueActionList.Count > 0)
         {
+            currentAction = queueActionList.Dequeue();
             if (OnActionStart != null)
             {
                 OnActionStart(currentAction);
@@ -240,7 +223,8 @@ public class TurnBaseController : MonoBehaviour
         if (currentAction == TurnBaseConstants.ACTION_END_TURN)
         {
             status = TurnBaseConstants.END_TURN;
-        } else
+        }
+        else
         {
             status = TurnBaseConstants.START_ACTION;
         }

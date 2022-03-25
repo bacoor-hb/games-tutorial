@@ -26,7 +26,7 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         if (Input.GetKeyDown("a"))
         {
-            TurnBaseController.AddAction(1);
+            TurnBaseController.AddAction(TurnBaseConstants.ACTION_END_TURN);
         }
     }
 
