@@ -21,13 +21,10 @@ public class UserManager : Singleton<UserManager>
     }
     public void OnPlusAndMinsEvent(long _money)
     {
+        if(OnPlusAndMins!=null)
         {
             OnPlusAndMins?.Invoke(_money);
         }
-    }
-    public void OnBuyHouse(Property _property)
-    {
-
     }
     public bool isCheckAmountPlaneHasBuildHouse(Property _property)
     {
@@ -43,8 +40,7 @@ public class UserManager : Singleton<UserManager>
                 count++;
             }
         }
-        // get count list colors in board
-
+        // get count colors in board
         int countColor = Graph.Instance.GetTotalPropertiesByType(_property.data.typeId);
         if (countColor == count) return true;
         return false;

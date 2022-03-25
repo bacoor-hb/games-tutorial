@@ -32,13 +32,6 @@ public class PlayerManager : MonoBehaviour
        }
 
     }
-    public void OnBuyHouse(PropertyData _propertyData)
-    {
-        if (_propertyData.cost_house < UserManager.Instance.user.Money)
-        {
-
-        }
-    }
     private void PlusAndMinsEvent(long _money)
     {
         UserManager.Instance.user.Money += _money;
