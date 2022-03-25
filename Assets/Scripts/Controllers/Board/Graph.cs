@@ -5,6 +5,7 @@ using UnityEngine;
     public class Graph : Singleton<Graph>
 {
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
      void Start()
@@ -23,6 +24,18 @@ using UnityEngine;
             if (transforms[i].CompareTag("board_node"))
             {
                 nodes.AddLast(transforms[i].gameObject);
+                if (transforms[i].gameObject.GetComponent<Property>().data != null)
+                {
+                    int typeId = transforms[i].gameObject.GetComponent<Property>().data.typeId;
+                    if (!totalType.ContainsKey(typeId))
+                    {
+                        totalType.Add(typeId, 1);
+                    }
+                    else
+                    {
+                        totalType[typeId] += 1;
+                    }
+                }
             }
         }
     }
@@ -131,6 +144,18 @@ using UnityEngine;
         {
             currentNodes[address] = nodes.First.Value;
         }
+    }
+
+    public int GetTotalPropertiesByType(int typeId)
+    {
+        int total;
+        if (totalType.ContainsKey(typeId)) { 
+            total = totalType[typeId];
+        } else
+        {
+            total = 0;
+        }
+        return total;
     }
 
 }
