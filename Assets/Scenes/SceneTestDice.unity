@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 3993877}
   - component: {fileID: 3993876}
   - component: {fileID: 3993875}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Plane
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -653,6 +653,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1262393804001491549, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280063876512769596, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2432281438275209461, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3056212163145556716, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3657221641424004531, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -700,6 +716,18 @@ PrefabInstance:
     - target: {fileID: 4146371702651272969, guid: 75e84af763385c043b142083694ffa32, type: 3}
       propertyPath: m_Name
       value: Dice
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146371702651272969, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6171160391202193382, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860450537509896506, guid: 75e84af763385c043b142083694ffa32, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75e84af763385c043b142083694ffa32, type: 3}
