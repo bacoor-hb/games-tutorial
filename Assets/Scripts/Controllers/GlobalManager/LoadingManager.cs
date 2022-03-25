@@ -11,7 +11,7 @@ public class LoadingManager : MonoBehaviour
     {
         if (LoadingView != null)
         {
-            StartCoroutine(LoadScene_Async("BoardTest"));
+            StartCoroutine(LoadScene_Async("Game_Scene"));
         }
     }
 

@@ -74,27 +74,6 @@ public class DiceController : MonoBehaviour
         }
     }
 
-    public void RollDiceWithValue(List<GameObject> dices, List<int> values)
-    {
-        if (!isRoll)
-        {
-            this.isRoll = true;
-            this.dices.Clear();
-            this.diceValues.Clear();
-            for (int i = 0; i < dices.Count; i++)
-            {
-                Dice dice = dices[i].gameObject.GetComponent<Dice>();
-                dice.OnValueChange = SetDiceValue;
-                dice.RollDiceWithValue(values[i]);
-                this.dices.Add(dice);
-            }
-        }
-        else
-        {
-            Debug.Log("Dice is rolling");
-        }
-    }
-
     private void SetDiceValue (int value)
     {
         diceValues.Add(value);

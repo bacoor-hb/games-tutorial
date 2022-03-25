@@ -1,8 +1,18 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 8adc3a8a1a4984bb19516ee3ef6339cf
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
+=======
+<<<<<<< HEAD:Assets/Scenes/Main Scene/Splash_Scene.unity.meta
+guid: f33064eeb576b4dfe9733944d5f0968f
+=======
+guid: ff217aec2a071473ca79d2e11cb90d99
+>>>>>>> 1ab7d0589acdaa33ef12afe1a8ac4d265d05cd76:Assets/Scenes/Main Scene/Game_Scene.unity.meta
+DefaultImporter:
+  externalObjects: {}
+>>>>>>> 1ab7d0589acdaa33ef12afe1a8ac4d265d05cd76
   userData: 
   assetBundleName: 
   assetBundleVariant: 

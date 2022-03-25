@@ -1,8 +1,18 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: a40dcc1d9d5924b1291620361cd20dcf
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
+=======
+<<<<<<< HEAD:Assets/Scenes/Main Scene/Menu_Scene.unity.meta
+guid: ec02511ae77fb4d14b5ea9b056eb54ac
+=======
+guid: 41d98b24c449b4700954889f6eb8c9f3
+>>>>>>> 1ab7d0589acdaa33ef12afe1a8ac4d265d05cd76:Assets/Scenes/Main Scene/Credit_Scene.unity.meta
+DefaultImporter:
+  externalObjects: {}
+>>>>>>> 1ab7d0589acdaa33ef12afe1a8ac4d265d05cd76
   userData: 
   assetBundleName: 
   assetBundleVariant: 
