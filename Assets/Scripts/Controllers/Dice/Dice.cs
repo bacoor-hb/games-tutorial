@@ -12,18 +12,7 @@ public class Dice : MonoBehaviour
     private bool hasLanded = false;
     private bool thrown = false;
 
-<<<<<<< HEAD
-    [SerializeField]
-    private DiceDataSet diceDataSet;
-
-    [SerializeField]
-    Vector3 initPos;
-    
-    [SerializeField]
-    Quaternion initRota;
-=======
     TransformValue initTransform;
->>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8
 
     private int diceValue;
 
@@ -42,12 +31,6 @@ public class Dice : MonoBehaviour
     public void Init(Transform dicePos = null)
     {
         rb = GetComponent<Rigidbody>();
-<<<<<<< HEAD
-        initPos = transform.position;
-        initRota = transform.rotation;
-        rb.useGravity = false;
-        diceValues = GetComponentsInChildren<DiceValue>();
-=======
 
         if (dicePos != null)
         {
@@ -60,7 +43,6 @@ public class Dice : MonoBehaviour
         
         //rb.useGravity = false;
         diceValue = -1;
->>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8
     }
 
     private void Update()
@@ -78,12 +60,7 @@ public class Dice : MonoBehaviour
     {
         if (!thrown)
         {
-<<<<<<< HEAD
-            transform.position = initPos;
-            transform.rotation = initRota;
-=======
             transform.position = initTransform.position;
->>>>>>> 0d386a7117f08362cd3573ead178ade74a56c2c8
             hasLanded = false;
             thrown = true;
             //rb.useGravity = true;
