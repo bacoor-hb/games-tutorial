@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerTestController : MonoBehaviour
+
+
+public class PlayerTestController : MonoBehaviour, IPlayer
 {
     static int count = 0;
     public int id;
@@ -24,20 +26,14 @@ public class PlayerTestController : MonoBehaviour
     {
         if (Input.GetKeyDown("a"))
         {
-            ActionTureBase action = new ActionTureBase() {
-                action = 1,
-                param = new Dictionary<string, string>()
-                {
-                    { "test", "1" }
-                }
-            };
-            TurnBaseController.AddAction(action);
+            TurnBaseController.AddAction(1);
         }
     }
 
-    void StartTurn(PlayerTestController player)
+    void StartTurn(IPlayer iplayer)
     {
         Material myMaterial = GetComponent<Renderer>().material;
+        PlayerTestController player = iplayer as PlayerTestController;
         if (player == this)
         {
             myMaterial.color = Color.red;
@@ -50,23 +46,34 @@ public class PlayerTestController : MonoBehaviour
         Debug.Log("StartTurn: id: " + id + ", player: " + player.id);
     }
 
-    void EndTurn(PlayerTestController player)
+    void EndTurn(IPlayer iplayer)
     {
+        PlayerTestController player = iplayer as PlayerTestController;
+
         Debug.Log("EndTurn: id: " + id + ", player: " + player.id);
 
     }
-    void ActionStart(ActionTureBase action)
+    void ActionStart(int action)
     {
         Debug.Log("ActionStart: id: " + id);
     }
 
-    void ActionEnd(ActionTureBase action)
+    void ActionEnd(int action)
     {
         Debug.Log("ActionEnd: id: " + id);
     }
 
-    void ChangePlayer(PlayerTestController player)
+    void ChangePlayer(IPlayer iplayer)
     {
+        PlayerTestController player = iplayer as PlayerTestController;
+
         Debug.Log("ChangePlayer: id: " + id + ", player: " + player.id);
     }
+
+    public void OnReleaseCard() { }
+    public void OnRollDice() { }
+    public void OnActionCell() { }
+    public void OnPurchase() { }
+    public void OnBuilding() { }
+    public void OnAuctions() { }
 }

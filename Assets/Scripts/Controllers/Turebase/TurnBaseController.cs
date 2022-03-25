@@ -2,27 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class TurnBaseStatus
+class TurnBaseConstants
 {
-    public const int START_TURN = 1, START_ACTION = 2, ON_ACTION = 3, END_ACTION = 4, END_TURN = 5;
+    public const int START_TURN = 1,
+        START_ACTION = 2,
+        ON_ACTION = 3,
+        END_ACTION = 4,
+        END_TURN = 5;
+
+    public const int ACTION_RELEASE_CARD = 1,
+        ACTION_ROLL_DICE = 2,
+        ACTION_RUN_THE_CELL = 3,
+        ACTION_PUNCHARE = 4,
+        ACTION_BUILDING = 5,
+        ACTION_AUCTION = 6,
+        ACTION_END_TURN = 10;
 }
 
 public class TurnBaseController : MonoBehaviour
 {
     public delegate void Event<T>(T data);
-    public static Event<PlayerTestController> OnStartTurn;
-    public static Event<PlayerTestController> OnEndTurn;
-    public static Event<ActionTureBase> OnActionStart;
-    public static Event<ActionTureBase> OnActionEnd;
-    public static Event<PlayerTestController> OnChangePlayer;
+    public static Event<IPlayer> OnStartTurn;
+    public static Event<IPlayer> OnEndTurn;
+    public static Event<int> OnActionStart;
+    public static Event<int> OnActionEnd;
+    public static Event<IPlayer> OnChangePlayer;
 
 
     public static bool startGamge = false;
-    public static List<PlayerTestController> playerList = new List<PlayerTestController>();
-    private static List<ActionTureBase> historyActionList;
-    private static ActionTureBase currentAction;
+    public static List<IPlayer> playerList = new List<IPlayer>();
+    private static List<int> historyActionList;
+    private static Queue<int> queueActionList;
+    private static int currentAction;
     private static int turnBase = 0;
-    private static int status = TurnBaseStatus.START_TURN;
+    private static int status = TurnBaseConstants.START_TURN;
 
 
     public static void StartGame()
@@ -31,7 +44,7 @@ public class TurnBaseController : MonoBehaviour
         {
             startGamge = true;
             turnBase = 0;
-            status = TurnBaseStatus.START_TURN;
+            status = TurnBaseConstants.START_TURN;
         }
     }
 
@@ -40,7 +53,7 @@ public class TurnBaseController : MonoBehaviour
         startGamge = false;
     }
 
-    public static void Register(PlayerTestController player)
+    public static void Register(IPlayer player)
     {
         if (startGamge)
         {
@@ -54,14 +67,16 @@ public class TurnBaseController : MonoBehaviour
         startGamge = false;
     }
 
-    public static bool AddAction(ActionTureBase action)
+    public static void AddAction(int action)
     {
-        if (currentAction == null)
+        if (startGamge)
         {
-            currentAction = action;
-            return true;
+            throw new System.Exception("Game start");
         }
-        return false;
+        if (queueActionList != null)
+        {
+            queueActionList.Enqueue(action);
+        }
     }
 
     private void Update()
@@ -70,37 +85,26 @@ public class TurnBaseController : MonoBehaviour
         {
             switch (status)
             {
-                case TurnBaseStatus.START_TURN:
+                case TurnBaseConstants.START_TURN:
                     StartTurn();
-                    status = TurnBaseStatus.START_ACTION;
                     break;
-                case TurnBaseStatus.START_ACTION:
-                    if (currentAction != null)
-                    {
-                        ActionStart(currentAction);
-                        status = TurnBaseStatus.ON_ACTION;
-                    }
+                case TurnBaseConstants.START_ACTION:
+                    ActionStart();
                     break;
-                case TurnBaseStatus.ON_ACTION:
-                    OnAction(currentAction);
-                    status = TurnBaseStatus.END_ACTION;
+                case TurnBaseConstants.ON_ACTION:
+                    OnAction();
                     break;
-                case TurnBaseStatus.END_ACTION:
-                    ActionEnd(currentAction);
-                    status = TurnBaseStatus.END_TURN;
+                case TurnBaseConstants.END_ACTION:
+                    ActionEnd();
                     break;
-                case TurnBaseStatus.END_TURN:
+                case TurnBaseConstants.END_TURN:
                     EndTurn();
-                    if (CheckChangePlayer())
-                    {
-                        ChangePlayer();
-                    }
-                    status = TurnBaseStatus.START_TURN;
                     break;
 
             }
         }
 
+        // this code to test to start game
         if (Input.GetKeyDown("space"))
         {
             if (startGamge)
@@ -115,9 +119,47 @@ public class TurnBaseController : MonoBehaviour
     }
 
     // handle law in game
-    private static void OnAction(ActionTureBase action)
+    private static void OnAction()
     {
-        Debug.Log("Action:" + action.ToString());
+        Debug.Log("Action:" + currentAction.ToString());
+        switch (currentAction)
+        {
+            // action su dung the ra tu
+            case TurnBaseConstants.ACTION_RELEASE_CARD:
+                playerList[turnBase].OnReleaseCard();
+                break;
+
+            // action gieo xuc xac
+            case TurnBaseConstants.ACTION_ROLL_DICE:
+                playerList[turnBase].OnRollDice();
+                break;
+
+            case TurnBaseConstants.ACTION_RUN_THE_CELL:
+                playerList[turnBase].OnActionCell();
+                break;
+
+            // action mua dat
+            case TurnBaseConstants.ACTION_PUNCHARE:
+                playerList[turnBase].OnPurchase();
+                break;
+
+            // action xay nha
+            case TurnBaseConstants.ACTION_BUILDING:
+                playerList[turnBase].OnBuilding();
+                break;
+
+            // action dau gia
+            case TurnBaseConstants.ACTION_AUCTION:
+                playerList[turnBase].OnAuctions();
+                break;
+
+            // action ket thuc luot
+            case TurnBaseConstants.ACTION_END_TURN:
+                //
+                break;
+        }
+
+        status = TurnBaseConstants.END_ACTION;
     }
 
     // check change player when return true
@@ -133,7 +175,11 @@ public class TurnBaseController : MonoBehaviour
         {
             OnStartTurn(playerList[turnBase]);
         }
-        historyActionList = new List<ActionTureBase>();
+        // init history action in one turn
+        historyActionList = new List<int>();
+        queueActionList = new Queue<int>();
+        // chanage status
+        status = TurnBaseConstants.START_ACTION;
     }
 
     // Script run after end turn
@@ -143,8 +189,13 @@ public class TurnBaseController : MonoBehaviour
         {
             OnEndTurn(playerList[turnBase]);
         }
-        historyActionList.Add(currentAction);
-        currentAction = null;
+
+        // handle change player
+        if (CheckChangePlayer())
+        {
+            ChangePlayer();
+        }
+        status = TurnBaseConstants.START_TURN;
     }
 
     // script change player
@@ -163,20 +214,35 @@ public class TurnBaseController : MonoBehaviour
     }
 
     // script run before excute action
-    private static void ActionStart(ActionTureBase action)
+    private static void ActionStart()
     {
-        if (OnActionStart != null)
+        currentAction = queueActionList.Dequeue();
+        if (currentAction != null)
         {
-            OnActionStart(action);
+            if (OnActionStart != null)
+            {
+                OnActionStart(currentAction);
+            }
+            status = TurnBaseConstants.ON_ACTION;
         }
     }
 
     // script run after excute action
-    private static void ActionEnd(ActionTureBase action)
+    private static void ActionEnd()
     {
         if (OnActionEnd != null)
         {
-            OnActionEnd(action);
+            OnActionEnd(currentAction);
+        }
+        // add history excuted action
+        historyActionList.Add(currentAction);
+        // check action end to pass turn
+        if (currentAction == TurnBaseConstants.ACTION_END_TURN)
+        {
+            status = TurnBaseConstants.END_TURN;
+        } else
+        {
+            status = TurnBaseConstants.START_ACTION;
         }
     }
 }
