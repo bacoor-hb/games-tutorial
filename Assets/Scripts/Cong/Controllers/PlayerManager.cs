@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     }
     private void PlusAndMinsEvent(long _money)
     {
-
+        UserManager.Instance.user.Money += _money;
     }
 
 
