@@ -14,7 +14,7 @@ public class Graph : Singleton<Graph>
         GraphEventManager.onEnterNode += GetOnEnterNode;
     }
 
-    public void GenerateBoard() 
+    public void GenerateBoard()
     {
         Transform[] transforms = GetComponentsInChildren<Transform>();
 
@@ -92,17 +92,19 @@ public class Graph : Singleton<Graph>
             LinkedListNode<GameObject> nextNode = currentNode;
             while (count < step)
             {
-                    if (nextNode.Next != null)
+                if (nextNode.Next != null)
                 {
                     nextNode = nextNode.Next;
-                } else
+                }
+                else
                 {
                     nextNode = nodes.First;
                 }
                 listNodes.Add(nextNode.Value);
                 count++;
             }
-        } else if (step < 0)
+        }
+        else if (step < 0)
         {
             int count = 0;
             LinkedListNode<GameObject> prevNode = currentNode;
@@ -111,7 +113,8 @@ public class Graph : Singleton<Graph>
                 if (prevNode.Previous != null)
                 {
                     prevNode = prevNode.Previous;
-                }else
+                }
+                else
                 {
                     prevNode = nodes.Last;
                 }
@@ -126,7 +129,7 @@ public class Graph : Singleton<Graph>
     {
         return currentNodes[address];
     }
-    
+
     public void GetOnEnterNode(string address, GameObject node)
     {
         if (node.GetComponent<Property>().data != null)
@@ -137,9 +140,11 @@ public class Graph : Singleton<Graph>
         {
             Debug.Log(node.GetComponent<Property>().name);
         }
-        if (node != null) {
+        if (node != null)
+        {
             currentNodes[address] = node;
-        }else
+        }
+        else
         {
             currentNodes[address] = nodes.First.Value;
         }
@@ -148,9 +153,11 @@ public class Graph : Singleton<Graph>
     public int GetTotalPropertiesByType(int typeId)
     {
         int total;
-        if (totalType.ContainsKey(typeId)) { 
+        if (totalType.ContainsKey(typeId))
+        {
             total = totalType[typeId];
-        } else
+        }
+        else
         {
             total = 0;
         }
