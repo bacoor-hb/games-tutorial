@@ -11,3 +11,11 @@ public enum SCENE_NAME
     Loading_Scene,
     Credit_Scene
 }
+public class TEXT_UI
+{
+    public const string LANGUAGE = "Language";
+    public const string ENGLISH = "English";
+    public const string JAPANESE = "Japanese";
+    
+}
+
