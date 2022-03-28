@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 
-public class PlayerTestController : MonoBehaviour, IPlayer
+public class PlayerTestController : MonoBehaviour
 {
     static int count = 0;
     public int id;
@@ -26,11 +26,23 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         if (Input.GetKeyDown("a"))
         {
-            TurnBaseController.AddAction(TurnBaseConstants.ACTION_END_TURN);
+            TurnBaseController.AddAction(new ActionEndTurn());
+        }
+
+        if (id == 0 && Input.GetKeyDown("space"))
+        {
+            if (TurnBaseController.isStarting)
+            {
+                TurnBaseController.EndGame();
+            }
+            else
+            {
+                TurnBaseController.StartGame();
+            }
         }
     }
 
-    void StartTurn(IPlayer iplayer)
+    void StartTurn(Object iplayer)
     {
         Material myMaterial = GetComponent<Renderer>().material;
         PlayerTestController player = iplayer as PlayerTestController;
@@ -46,34 +58,27 @@ public class PlayerTestController : MonoBehaviour, IPlayer
         Debug.Log("StartTurn: id: " + id + ", player: " + player.id);
     }
 
-    void EndTurn(IPlayer iplayer)
+    void EndTurn(Object iplayer)
     {
         PlayerTestController player = iplayer as PlayerTestController;
 
         Debug.Log("EndTurn: id: " + id + ", player: " + player.id);
 
     }
-    void ActionStart(int action)
+    void ActionStart(IAction action)
     {
         Debug.Log("ActionStart: id: " + id);
     }
 
-    void ActionEnd(int action)
+    void ActionEnd(IAction action)
     {
         Debug.Log("ActionEnd: id: " + id);
     }
 
-    void ChangePlayer(IPlayer iplayer)
+    void ChangePlayer(Object iplayer)
     {
         PlayerTestController player = iplayer as PlayerTestController;
 
         Debug.Log("ChangePlayer: id: " + id + ", player: " + player.id);
     }
-
-    public void OnReleaseCard() { }
-    public void OnRollDice() { }
-    public void OnActionCell() { }
-    public void OnPurchase() { }
-    public void OnBuilding() { }
-    public void OnAuctions() { }
 }
