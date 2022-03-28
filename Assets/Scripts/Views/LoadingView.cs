@@ -8,7 +8,8 @@ using TMPro;
 
 public class LoadingView : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject LoadingCanvas;
     [SerializeField]
     private Slider progressBar;
     [SerializeField]
@@ -18,14 +19,14 @@ public class LoadingView : MonoBehaviour
     public float FillSpeed = 0.0002f;
     void Start()
     {
-        //StartCoroutine(LoadScene_Async("Game_Scene"));
+        
     }
 
     void Update()
     {
         if(progressBar.value < targetProgess)
         {
-            Debug.Log("Progress :" + progressBar.value);
+            //Debug.Log("Progress :" + progressBar.value);
             progressBar.value += FillSpeed + Time.deltaTime;
         }
     }
@@ -45,5 +46,13 @@ public class LoadingView : MonoBehaviour
     public void SetMessage(string _msg)
     {
         MsgTxt.text = _msg;
+    }
+
+    public void SetCanvasStatus(bool status)
+    {
+        if(LoadingCanvas != null)
+        {
+            LoadingCanvas.SetActive(status);
+        }
     }
 }

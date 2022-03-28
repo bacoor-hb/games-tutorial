@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GlobalView : MonoBehaviour
 {
+    [SerializeField]
+    private LoadingView loadingView;
+
     // Start is called before the first frame update
     void Start()
     {

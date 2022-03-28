@@ -5,10 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GlobalManager : Singleton<GlobalManager>
 {
+    public LoadingManager loadingManager { get; private set; }
 
     void Start()
     {
-        SceneManager.LoadScene("Scenes/Test_Scene/Menu_Scene");
+        loadingManager = GetComponentInChildren<LoadingManager>();
+        if(loadingManager != null)
+        {
+            loadingManager.LoadWithLoadingScene(SCENE_NAME.Menu_Scene);
+        }
+        else
+        {
+            Debug.LogError("Loading Manager cannot be found...");
+        }
     }
 
     void Update()
