@@ -32,7 +32,7 @@ public class UserManager : MonoBehaviour
         walletManager.setWalletUer(id, user.Address, user.Money);
 
     }
-    public bool isCheckEnoughtMoney(long money)
+    public bool isCheckEnoughMoney(long money)
     {
 
         long total = userData.Money + money;
@@ -67,43 +67,46 @@ public class UserManager : MonoBehaviour
         yield return null;
     }
 
-    //public bool isCheckBuildHouse(Property _property)
-    //{
-    //    int count = 0;
-    //    if (userData.GetProperties().Count < 2) return false;
+    public bool isCheckBuildHouse(Property _property)
+    {
+        int count = 0;
+        if (userData.GetProperties().Count < 2) return false;
 
-    //    for (int i = 0; i < userData.GetProperties().Count; i++)
-    //    {
-    //        Property property = userData.GetProperties()[i];
-    //        if (_property.data.typeId == property.data.typeId)
-    //        {
-    //            count++;
-    //        }
-    //    }
-
-
-    //    // get count colors in board
-    //    //int countColor = graph.GetType();
-    //    int countColor = 2;
-    //    if (countColor == count) return true;
-    //    return false;
-    //}
-
-    //public Property GetPropertyUser(Property _property)
-    //{
-    //    foreach(Property temp in user.GetProperties())
-    //    {
-    //        if(temp.data.id == _property.data.id)
-    //        {
-    //            return temp;
-    //        }
-    //    }
-    //    return null;
-    //}  
-    //public bool checkIsMyProperty(Property property)
-    //{
-    //    return user.GetProperties().Contains(property);
-    //}
+        for (int i = 0; i < userData.GetProperties().Count; i++)
+        {
+            Property property = userData.GetProperties()[i];
+            if (_property.data.typeId == property.data.typeId)
+            {
+                count++;
+            }
+        }
+        //int countColor = graph.GetType();
+        //int countColor = graph.GetTotalPropertiesByType(_property.data.typeId)
+        int countColor = 2;
+        if (countColor == count) return true;
+        return false;
+    }
+    public bool isCheckBuildHotel(Property _property)
+    {
+       // if (_property.status >= 4) return true;
+        return false;
+    }
+    
+    public bool checkIsMyProperty(Property property)
+    {
+        return userData.GetProperties().Contains(property);
+    }
+    public Property GetPropertyUser(Property _property)
+    {
+        foreach (Property temp in userData.GetProperties())
+        {
+            if (temp.data.id == _property.data.id)
+            {
+                return temp;
+            }
+        }
+        return null;
+    }
 
 
 
