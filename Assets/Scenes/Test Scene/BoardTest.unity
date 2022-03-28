@@ -432,10 +432,10 @@ MonoBehaviour:
   useTargetNode: 0
   player1: {fileID: 1642290228}
   player2: {fileID: 189506268}
-  step1: 20
-  targetNodeGameObj1: {fileID: 1255516306}
-  step2: 10
-  targetNodeGameObj2: {fileID: 1690044496}
+  step1: 2
+  targetNodeGameObj1: {fileID: 39027244}
+  step2: 1
+  targetNodeGameObj2: {fileID: 613161334}
 --- !u!1 &488952314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8675660419491173655, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}
