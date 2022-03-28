@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Graph : Singleton<Graph>
+public class Graph : MonoBehaviour
 {
-    protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    public LinkedList<GameObject> nodes = new LinkedList<GameObject>();
     protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
+
     void Start()
     {
-        GenerateBoard();
         GraphEventManager.onEnterNode += GetOnEnterNode;
     }
 
-    public void GenerateBoard()
+    public void GenerateBoard(Transform[] transforms)
     {
-        Transform[] transforms = GetComponentsInChildren<Transform>();
-
         for (var i = 0; i < transforms.Length; i++)
         {
             if (transforms[i].CompareTag("board_node"))
@@ -132,14 +130,6 @@ public class Graph : Singleton<Graph>
 
     public void GetOnEnterNode(string address, GameObject node)
     {
-        if (node.GetComponent<Property>().data != null)
-        {
-            Debug.Log(node.GetComponent<Property>().data.description);
-        }
-        else
-        {
-            Debug.Log(node.GetComponent<Property>().name);
-        }
         if (node != null)
         {
             currentNodes[address] = node;
@@ -147,6 +137,13 @@ public class Graph : Singleton<Graph>
         else
         {
             currentNodes[address] = nodes.First.Value;
+        }
+        if (currentNodes[address].GetComponent<Property>().data != null)
+        {
+            Debug.Log(currentNodes[address].GetComponent<Property>().data.description);
+        }
+        {
+            Debug.Log(currentNodes[address].GetComponent<Property>().name);
         }
     }
 
