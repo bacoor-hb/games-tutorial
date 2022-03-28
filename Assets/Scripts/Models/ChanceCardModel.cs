@@ -24,5 +24,5 @@ public class ChanceCard : ScriptableObject
     public int Value1;
 
     [Tooltip("Card Value2")]
-    public string Value2;
+    public int Value2;
 }
