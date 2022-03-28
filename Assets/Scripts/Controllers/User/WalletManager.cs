@@ -7,7 +7,7 @@ public class WalletManager : MonoBehaviour
     public delegate void EventHaveProps<T>(T data);
     public EventHaveProps<long> OnChangeMoney;
     public EventHaveProps<long> OnChangeMoneyWeb3;
-    private WalletData _walletData = new WalletData(); 
+    public WalletData _walletData = new WalletData(); 
     void Start()
     {
         
@@ -18,10 +18,11 @@ public class WalletManager : MonoBehaviour
     {
         
     }
-    void OnChangeMoneyEvent(long money)
+    public void OnChangeMoneyEvent(long money)
     {
         if (OnChangeMoney!=null)
         {
+            _walletData.Money += money;
             OnChangeMoney?.Invoke(money);
         }
     }
