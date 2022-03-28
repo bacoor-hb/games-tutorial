@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    public LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
     protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
@@ -40,6 +40,11 @@ public class Graph : MonoBehaviour
     public LinkedListNode<GameObject> GetNode(GameObject node)
     {
         return nodes.Find(node);
+    }
+
+    public LinkedList<GameObject> GetNodes()
+    {
+        return nodes;
     }
 
     public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise = true)
