@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Chance", menuName = "Chance Card", order = 51)]
+[CreateAssetMenu(fileName = "New Card", menuName = "Scriptable Objects/Opportunity Card", order = 52)]
 public class ChanceCard : ScriptableObject
 {
     [Header("Model Chance Card")]
