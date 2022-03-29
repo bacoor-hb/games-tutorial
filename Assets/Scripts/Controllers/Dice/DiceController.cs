@@ -62,10 +62,40 @@ public class DiceController : MonoBehaviour
             SetActiveAllDice(true);
             diceValues.Clear();
             isRolling = true;
-            for(int i = 0; i < dices.Count; i++)
+            for (int i = 0; i < dices.Count; i++)
             {
                 OnRoll?.Invoke(i);
                 dices[i].RollDice();
+            }
+        }
+        else
+        {
+            Debug.Log("Dice is rolling");
+        }
+    }
+
+    /// <summary>
+    /// Roll Action
+    /// </summary>
+    public void RollDice(List<int> values)
+    {
+        if (!isRolling)
+        {
+            //Show All dice
+            SetActiveAllDice(true);
+            diceValues.Clear();
+            isRolling = true;
+            for(int i = 0; i < dices.Count; i++)
+            {
+                OnRoll?.Invoke(i);
+                if (values.Count == dices.Count)
+                {
+                    dices[i].RollDice(values[i]);
+                } else
+                {
+                    Debug.LogError("Number of values is different than the number of dices...");
+                    return;
+                }
             }
         } 
         else
