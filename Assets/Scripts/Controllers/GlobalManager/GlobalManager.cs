@@ -25,7 +25,7 @@ public class GlobalManager : Singleton<GlobalManager>
         languageManager = GetComponentInChildren<LanguageManager>();
         if (languageManager != null)
         {
-            // base.Awake();
+            languageManager.languageView.SetCanvasStatus(false);
         }
         else
         {

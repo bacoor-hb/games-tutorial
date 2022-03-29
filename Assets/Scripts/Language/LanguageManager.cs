@@ -6,8 +6,7 @@ using UnityEngine;
 //
 public class LanguageManager : MonoBehaviour
 {
-    [SerializeField]
-    private LanguageView languageView;
+    public LanguageView languageView;
     //THE language manager
     LanguageReader langReader;
 

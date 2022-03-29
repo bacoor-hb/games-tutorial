@@ -18,6 +18,10 @@ private Button BtnEnglish;
     [SerializeField]
 
     private Button BtnJapanese;
+    [SerializeField]
+
+    private Button BtnClose;
+
     void Start()
     {
         
@@ -54,6 +58,8 @@ private Button BtnEnglish;
         BtnEnglish.onClick.AddListener(OnEnglish);
         BtnJapanese.onClick.RemoveAllListeners();
         BtnJapanese.onClick.AddListener(OnJapanese);
+        BtnClose.onClick.RemoveAllListeners();
+        BtnClose.onClick.AddListener(OnClose);
     }
     void OnEnglish(){
         GlobalManager.Instance.languageManager.SetLanguage(Language.English);
@@ -62,5 +68,9 @@ private Button BtnEnglish;
     void OnJapanese(){
         GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
         UpdateUI();
+    }
+    void OnClose()
+    {
+        SetCanvasStatus(false);
     }
 }
