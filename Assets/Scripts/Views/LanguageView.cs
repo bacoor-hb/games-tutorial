@@ -35,6 +35,7 @@ private Button BtnEnglish;
     public void Init()
     {
         SetBtnEvent();
+        UpdateUI();
     }
 
     
@@ -60,6 +61,7 @@ private Button BtnEnglish;
         BtnJapanese.onClick.AddListener(OnJapanese);
         BtnClose.onClick.RemoveAllListeners();
         BtnClose.onClick.AddListener(OnClose);
+       
     }
     void OnEnglish(){
         GlobalManager.Instance.languageManager.SetLanguage(Language.English);
