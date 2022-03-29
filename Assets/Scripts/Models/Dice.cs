@@ -18,9 +18,6 @@ public class Dice : MonoBehaviour
     private int diceValue;
 
     [SerializeField]
-    private DiceDataSet dataSet;
-
-    [SerializeField]
     private DiceValue[] diceValues;
 
     private void Start()
@@ -65,6 +62,7 @@ public class Dice : MonoBehaviour
     {
         if (value == -1)
         {
+            animator.enabled = false;
             if (!thrown)
             {
                 transform.position = initTransform.position;
@@ -76,6 +74,7 @@ public class Dice : MonoBehaviour
         }
         else
         {
+            animator.enabled = true;
             if (!thrown)
             {
                 StartCoroutine(RollDiceWithValue(value));
