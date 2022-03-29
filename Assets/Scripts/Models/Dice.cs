@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,7 @@ public class Dice : MonoBehaviour
     public OnEventCalled<int> OnValueChange;
 
     Rigidbody rb;
+    Animator animator;
     private bool hasLanded = false;
     private bool thrown = false;
 
@@ -34,6 +35,7 @@ public class Dice : MonoBehaviour
     public void Init(Transform dicePos = null)
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
         if (dicePos != null)
         {
@@ -61,30 +63,36 @@ public class Dice : MonoBehaviour
 
     public void RollDice(int value = -1)
     {
-        if (!thrown)
+        if (value == -1)
         {
-            transform.position = initTransform.position;
-            transform.rotation = initTransform.rotation;
-            hasLanded = false;
-            thrown = true;
-            DiceForce diceForce = GetDiceForceFromValue(value);
-            //rb.useGravity = true;
-            rb.AddTorque(diceForce.x, diceForce.y, diceForce.z);
+            if (!thrown)
+            {
+                transform.position = initTransform.position;
+                transform.rotation = initTransform.rotation;
+                hasLanded = false;
+                thrown = true;
+                rb.AddTorque(Random.Range(0, 500), Random.Range(0, 500), Random.Range(0, 500));
+            }
+        }
+        else
+        {
+            if (!thrown)
+            {
+                StartCoroutine(RollDiceWithValue(value));
+            }
         }
     }
 
-    private DiceForce GetDiceForceFromValue(int value)
+    public IEnumerator RollDiceWithValue(int value)
     {
-        return value switch
-        {
-            1 => dataSet.diceForces1[Random.Range(0, dataSet.diceForces1.Count -1)],
-            2 => dataSet.diceForces2[Random.Range(0, dataSet.diceForces2.Count -1)],
-            3 => dataSet.diceForces3[Random.Range(0, dataSet.diceForces3.Count -1)],
-            4 => dataSet.diceForces4[Random.Range(0, dataSet.diceForces4.Count -1)],
-            5 => dataSet.diceForces5[Random.Range(0, dataSet.diceForces5.Count -1)],
-            6 => dataSet.diceForces6[Random.Range(0, dataSet.diceForces6.Count -1)],
-            _ => new DiceForce(Random.Range(0, 500), Random.Range(0, 500), Random.Range(0, 500)),
-        };
+        thrown = true;
+        animator.SetInteger("diceValue", 0);
+        yield return new WaitForSeconds(1);
+        animator.SetInteger("diceValue", value);
+        yield return new WaitForSeconds(4);
+        OnValueChange?.Invoke(value);
+        thrown = false;
+        yield return null;
     }
 
     void DiceValueCheck()
