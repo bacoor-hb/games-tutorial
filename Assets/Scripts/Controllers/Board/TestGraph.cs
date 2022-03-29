@@ -41,7 +41,7 @@ public class TestGraph : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (useStep == true) {
             useTargetNode = false;
