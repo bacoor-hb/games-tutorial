@@ -31,7 +31,7 @@ public enum ACTION
     AUCTION,
     END_TURN,
 }
-}
+
 public class TEXT_UI
 {
     public const string LANGUAGE = "Language";
