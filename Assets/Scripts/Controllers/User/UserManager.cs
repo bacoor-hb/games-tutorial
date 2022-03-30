@@ -96,8 +96,70 @@ public class UserManager : MonoBehaviour
     {
         return userData.GetProperties().Contains(property);
     }
+    public Property GetPropertyUser(Property _property)
+    {
+        foreach (Property temp in userData.GetProperties())
+        {
+            if (temp.data.id == _property.data.id)
+            {
+                return temp;
+            }
+        }
+        return null;
+    }
+    public bool isCheckBuyPlane(Property plane)
+    {
+        return plane.level == 0;
+    }
+    public void OnBuyNewProperty(Property property)
+    {
+        if(isCheckEnoughMoney(property.data.cost) && isCheckBuyPlane(property) && !property.IsCheckPropertyOwned())
+        {
+            OnChangeMoney(-property.data.cost);
+            property.isBought = true;
+            userData.GetProperties().Add(property);
+        }
+        else
+        {
+            // thong nao khong mua duoc dat
+        }
+    }
+    public void OnBuilding(Property property)
+    {
+        if (isCheckBuildHouse(property))
+        {
+            int price=property.GetPriceBuyProperty();
+            if (isCheckEnoughMoney(price))
+            {
+            OnChangeMoney(-price);
+            property.level++;     
+            }
+        }
+        else
+        {
+            // thong bao khong mua dc nha
+        }
+        
 
-
-
-
+    }
+    public void OnBuilding(Property property, int levelWantToBuy)
+    {
+        if (isCheckBuildHouse(property)&& levelWantToBuy>property.level )
+        {
+            int loop=levelWantToBuy-property.level;
+            for (int i = 0; i < loop; i++)
+            {
+                int price = property.GetPriceBuyProperty();
+                if (isCheckEnoughMoney(price))
+                {
+                    OnChangeMoney(-price);
+                    property.level++;
+                }
+            }
+        }
+        else
+        {
+            // thong bao khong mua dc nha
+        }
+        } 
 }
