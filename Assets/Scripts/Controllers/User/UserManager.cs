@@ -83,12 +83,12 @@ public class UserManager : MonoBehaviour
     }
     public bool isCheckBuildHotel(Property _property)
     {
-       // if (_property.level == 4) return true;
+        if (_property.level == 4) return true;
         return false;
     }
     public bool isCheckSellPlane(Property property)
     {
-        //  if (property.level == 0) return true;
+        if (property.level == 0) return true;
         return false;
     }
     public int PriceSellForBank(int price){
@@ -122,7 +122,7 @@ public class UserManager : MonoBehaviour
                 price += property.GetPriceBuyProperty();
                 property.level--;
             }
-            if (property.level == levelWantToSell)
+            if (property.level == 0)
             {
                 userData.RemoveProperty(property);
             }
@@ -135,7 +135,6 @@ public class UserManager : MonoBehaviour
         }
 
     }
-
 
     public bool IsCheckMyProperty(Property property)
     {
@@ -192,7 +191,7 @@ public class UserManager : MonoBehaviour
                     property.level++;
                 }
             }
-            OnChangeMoney(-totalPrices);
+            OnChangeMoney(-totalPrice);
         }
         else
         {
