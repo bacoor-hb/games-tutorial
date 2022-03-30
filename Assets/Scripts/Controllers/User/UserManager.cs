@@ -172,16 +172,18 @@ public class UserManager : MonoBehaviour
     {
         if (isCheckBuildHouse(property)&& levelWantToBuy>property.level )
         {
+            int totalPrice=0;
             int loop=levelWantToBuy-property.level;
             for (int i = 0; i < loop; i++)
             {
                 int price = property.GetPriceBuyProperty();
                 if (isCheckEnoughMoney(price))
                 {
-                    OnChangeMoney(-price);
+                    totalPrice += price;
                     property.level++;
                 }
             }
+            OnChangeMoney(-totalPrices);
         }
         else
         {
