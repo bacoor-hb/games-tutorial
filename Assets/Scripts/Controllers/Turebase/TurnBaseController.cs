@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class TurnBaseController : MonoBehaviour
 {
-    public delegate void Event<T>(T data);
-    public static Event<Object> OnStartTurn;
-    public static Event<Object> OnEndTurn;
-    public static Event<IAction> OnActionStart;
-    public static Event<IAction> OnActionEnd;
-    public static Event<Object> OnChangePlayer;
+    //public delegate void Event<T>(T data);
+    //public static Event<Object> OnStartTurn;
+    //public static Event<Object> OnEndTurn;
+    //public static Event<IAction> OnActionStart;
+    //public static Event<IAction> OnActionEnd;
+    //public static Event<Object> OnChangePlayer;
 
 
     public static bool isStarting = false;
-    public static List<Object> playerList = new List<Object>();
+    public static List<IPlayer> playerList = new List<IPlayer>();
     private static List<IAction> historyActionList;
     private static Queue<IAction> queueActionList;
     private static IAction currentAction;
@@ -36,7 +36,7 @@ public class TurnBaseController : MonoBehaviour
         isStarting = false;
     }
 
-    public static void Register(Object player)
+    public static void Register(IPlayer player)
     {
         if (isStarting)
         {
@@ -50,13 +50,13 @@ public class TurnBaseController : MonoBehaviour
         isStarting = false;
     }
 
-    public static void AddAction(IAction action)
+    public static void AddAction(IPlayer player, IAction action)
     {
         if (!isStarting)
         {
             throw new System.Exception("Run StartGame to AddAction");
         }
-        if (queueActionList != null)
+        if (queueActionList != null && player == playerList[turnBase])
         {
             queueActionList.Enqueue(action);
         }
@@ -108,10 +108,12 @@ public class TurnBaseController : MonoBehaviour
     // Script run before start turn
     private static void StartTurn()
     {
-        if (OnStartTurn != null)
-        {
-            OnStartTurn(playerList[turnBase]);
-        }
+        //if (OnStartTurn != null)
+        //{
+        //    OnStartTurn(playerList[turnBase]);
+        //}
+        playerList[turnBase].StartTurn();
+
         // init history action in one turn
         historyActionList = new List<IAction>();
         queueActionList = new Queue<IAction>();
@@ -122,10 +124,11 @@ public class TurnBaseController : MonoBehaviour
     // Script run after end turn
     private static void EndTurn()
     {
-        if (OnEndTurn != null)
-        {
-            OnEndTurn(playerList[turnBase]);
-        }
+        //if (OnEndTurn != null)
+        //{
+        //    OnEndTurn(playerList[turnBase]);
+        //}
+        playerList[turnBase].EndTurn();
 
         // handle change player
         if (CheckChangePlayer())
@@ -138,10 +141,10 @@ public class TurnBaseController : MonoBehaviour
     // script change player
     private static void ChangePlayer()
     {
-        if (OnChangePlayer != null)
-        {
-            OnChangePlayer(playerList[NextPlayer()]);
-        }
+        //if (OnChangePlayer != null)
+        //{
+        //    OnChangePlayer(playerList[NextPlayer()]);
+        //}
         turnBase = NextPlayer();
     }
 
@@ -156,10 +159,12 @@ public class TurnBaseController : MonoBehaviour
         if (queueActionList.Count > 0)
         {
             currentAction = queueActionList.Dequeue();
-            if (OnActionStart != null)
-            {
-                OnActionStart(currentAction);
-            }
+            //if (OnActionStart != null)
+            //{
+            //    OnActionStart(currentAction);
+            //}
+            playerList[turnBase].ActionStart();
+
             status = CYCLE_TURN.ON_ACTION;
         }
     }
@@ -167,10 +172,12 @@ public class TurnBaseController : MonoBehaviour
     // script run after excute action
     private static void ActionEnd()
     {
-        if (OnActionEnd != null)
-        {
-            OnActionEnd(currentAction);
-        }
+        //if (OnActionEnd != null)
+        //{
+        //    OnActionEnd(currentAction);
+        //}
+        playerList[turnBase].ActionEnd();
+
         // add history excuted action
         historyActionList.Add(currentAction);
         // check action end to pass turn
