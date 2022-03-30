@@ -55,17 +55,15 @@ public class UserManager : MonoBehaviour
         
         userData.Money += money;
     }
-
     public void OnCangeMoneyWeb3Event(long money)
     {
 
-         
+        StartCoroutine(OnChangeMoneyWeb3(money));
     }
-    IEnumerable OnChangeMoneyWeb3(long money)
+    IEnumerator OnChangeMoneyWeb3(long money)
     {
         yield return null;
     }
-
     public bool isCheckBuildHouse(Property _property)
     {
         int count = 0;
@@ -79,7 +77,6 @@ public class UserManager : MonoBehaviour
                 count++;
             }
         }
-        //int countColor = graph.GetType();
         //int countColor = graph.GetTotalPropertiesByType(_property.data.typeId)
         int countColor = 2;
         if (countColor == count) return true;
@@ -90,8 +87,12 @@ public class UserManager : MonoBehaviour
        // if (_property.status >= 4) return true;
         return false;
     }
-    
-    public bool checkIsMyProperty(Property property)
+    public bool isCheckSellPlane(Property property)
+    {
+        //  if (property.level == 0) return true;
+        return false;
+    }
+    public bool IsCheckMyProperty(Property property)
     {
         return userData.GetProperties().Contains(property);
     }
