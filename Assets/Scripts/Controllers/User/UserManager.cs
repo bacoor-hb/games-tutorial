@@ -69,10 +69,9 @@ public class UserManager : MonoBehaviour
         int count = 0;
         if (userData.GetProperties().Count < 2) return false;
 
-        for (int i = 0; i < userData.GetProperties().Count; i++)
+        foreach (Property item in userData.GetProperties())
         {
-            Property property = userData.GetProperties()[i];
-            if (_property.data.typeId == property.data.typeId)
+            if (item.data.typeId == _property.data.typeId)
             {
                 count++;
             }
@@ -84,7 +83,7 @@ public class UserManager : MonoBehaviour
     }
     public bool isCheckBuildHotel(Property _property)
     {
-       // if (_property.status >= 4) return true;
+       // if (_property.level == 4) return true;
         return false;
     }
     public bool isCheckSellPlane(Property property)
@@ -92,74 +91,46 @@ public class UserManager : MonoBehaviour
         //  if (property.level == 0) return true;
         return false;
     }
+    public int PriceSellForBank(int price){
+        return price / 2;
+    }
+    public void SellPlaneWhenAuction(Property property,long money){
+        userData.RemoveProperty(property);
+        OnChangeMoney(money);
+    }
+    public void SellForBank(Property property){
+        int price =0;
+        //switch (property.data.level)
+        switch (4)
+        {
+            case 0:
+                price = property.data.cost;
+                break;
+            case 1:
+                price = property.data.cost_house ;
+                break;
+            case 2:
+                price = property.data.cost_house * 2;
+                break;
+            case 3:
+                price = property.data.cost_house *  3;
+                break;
+            case 4:
+                price = property.data.cost_house * 4;
+                break; 
+            case 5:
+                price = property.data.cost_hotel ;
+                break;
+        }
+        price=PriceSellForBank(price);
+        userData.RemoveProperty(property);
+        OnChangeMoney(price);
+    }
+
+
     public bool IsCheckMyProperty(Property property)
     {
         return userData.GetProperties().Contains(property);
     }
-    public Property GetPropertyUser(Property _property)
-    {
-        foreach (Property temp in userData.GetProperties())
-        {
-            if (temp.data.id == _property.data.id)
-            {
-                return temp;
-            }
-        }
-        return null;
-    }
-    public bool isCheckBuyPlane(Property plane)
-    {
-        return plane.level == 0;
-    }
-    public void OnBuyNewProperty(Property property)
-    {
-        if(isCheckEnoughMoney(property.data.cost) && isCheckBuyPlane(property) && !property.IsCheckPropertyOwned())
-        {
-            OnChangeMoney(-property.data.cost);
-            property.isBought = true;
-            userData.GetProperties().Add(property);
-        }
-        else
-        {
-            // thong nao khong mua duoc dat
-        }
-    }
-    public void OnBuilding(Property property)
-    {
-        if (isCheckBuildHouse(property))
-        {
-            int price=property.GetPriceBuyProperty();
-            if (isCheckEnoughMoney(price))
-            {
-            OnChangeMoney(-price);
-            property.level++;     
-            }
-        }
-        else
-        {
-            // thong bao khong mua dc nha
-        }
-        
-
-    }
-    public void OnBuilding(Property property, int levelWantToBuy)
-    {
-        if (isCheckBuildHouse(property)&& levelWantToBuy>property.level )
-        {
-            int loop=levelWantToBuy-property.level;
-            for (int i = 0; i < loop; i++)
-            {
-                int price = property.GetPriceBuyProperty();
-                if (isCheckEnoughMoney(price))
-                {
-                    OnChangeMoney(-price);
-                    property.level++;
-                }
-            }
-        }
-        else
-        {
-            // thong bao khong mua dc nha
-        }
-        } 
+    
 }
