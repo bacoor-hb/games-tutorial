@@ -39,7 +39,6 @@ public class UserManager : MonoBehaviour
         Debug.Log("total : " + total);
         if (total >= 0)
         {
-            OnChangeMoney(money);
             return true;
         }
         return false;
