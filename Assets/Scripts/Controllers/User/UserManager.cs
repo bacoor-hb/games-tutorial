@@ -45,17 +45,17 @@ public class UserManager : MonoBehaviour
     }
     public void OnChangeMoney(long money)
     {
-        walletManager.OnChangeMoney = OnCangeMoneyEnevt;
-        walletManager.OnChangeMoneyWeb3 = OnCangeMoneyWeb3Event;
+        walletManager.OnChangeMoney = OnChangeMoneyEvent;
+        walletManager.OnChangeMoneyWeb3 = OnChangeMoneyWeb3Event;
         walletManager.OnChangeMoneyEvent(money);
 
     }
-    public void OnCangeMoneyEnevt(long money)
+    public void OnChangeMoneyEvent(long money)
     {
         
         userData.Money += money;
     }
-    public void OnCangeMoneyWeb3Event(long money)
+    public void OnChangeMoneyWeb3Event(long money)
     {
 
         StartCoroutine(OnChangeMoneyWeb3(money));
@@ -95,17 +95,6 @@ public class UserManager : MonoBehaviour
     public bool IsCheckMyProperty(Property property)
     {
         return userData.GetProperties().Contains(property);
-    }
-    public Property GetPropertyUser(Property _property)
-    {
-        foreach (Property temp in userData.GetProperties())
-        {
-            if (temp.data.id == _property.data.id)
-            {
-                return temp;
-            }
-        }
-        return null;
     }
 
 

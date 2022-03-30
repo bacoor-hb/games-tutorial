@@ -1262,7 +1262,7 @@ MonoBehaviour:
   btnChange: {fileID: 1098490301}
   inputField: {fileID: 404601810}
   result: {fileID: 1868558887}
-  moneyUserStart: {fileID: 0}
+  moneyUserStart: {fileID: 505255581}
 --- !u!1 &1819410553
 GameObject:
   m_ObjectHideFlags: 0
