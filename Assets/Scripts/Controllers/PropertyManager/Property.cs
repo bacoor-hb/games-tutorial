@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,11 @@ public class Property : MonoBehaviour
 
     [HideInInspector]
     public int propertyId;
+    public bool isBought=false;
+    public int level = 0;
+
+    
+
 
     void Start()
     {
@@ -24,6 +29,42 @@ public class Property : MonoBehaviour
     void Update()
     {
         
+    }
+    // check property has owner
+    public bool IsCheckPropertyOwned()
+    {
+        return isBought;
+    }
+    public bool isLevelCorrect(int level){
+        if(level >=0 && level <=5){
+            return true;
+        }
+        return false;
+    }
+    // get price following level of property
+    public int GetPriceBuyProperty()
+    {
+        int price =data.cost_house;
+        switch (level)
+        {
+            case 0:
+                price = price;
+                break;
+            case 1:
+                price = price * 2;
+                break;
+            case 2:
+                price = price * 3;
+                break;
+            case 3:
+                price = price * 4;
+                break;
+            case 4:
+                price = data.cost_hotel;
+                break;
+
+        }
+        return price ;
     }
 
     void OnMouseDown()
