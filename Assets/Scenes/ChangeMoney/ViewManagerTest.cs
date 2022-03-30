@@ -35,6 +35,7 @@ public class ViewManagerTest : MonoBehaviour
         long moneyChange = long.Parse(money);
         if (userManager.isCheckEnoughtMoney(moneyChange))
         {
+            userManager.OnChangeMoney(moneyChange);
             moneyUserStart.text = userManager.walletManager._walletData.Money.ToString();
             result.text = "true";
         }
