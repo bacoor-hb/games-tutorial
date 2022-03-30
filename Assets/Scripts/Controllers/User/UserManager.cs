@@ -98,33 +98,42 @@ public class UserManager : MonoBehaviour
         userData.RemoveProperty(property);
         OnChangeMoney(money);
     }
-    public void SellForBank(Property property){
-        int price =0;
-        //switch (property.data.level)
-        switch (4)
+     public void SellForBank(Property property)
+    { 
+        int price = PriceSellForBank(property.GetPriceBuyProperty());
+        if (property.level > 0)
         {
-            case 0:
-                price = property.data.cost;
-                break;
-            case 1:
-                price = property.data.cost_house ;
-                break;
-            case 2:
-                price = property.data.cost_house * 2;
-                break;
-            case 3:
-                price = property.data.cost_house *  3;
-                break;
-            case 4:
-                price = property.data.cost_house * 4;
-                break; 
-            case 5:
-                price = property.data.cost_hotel ;
-                break;
+            property.level--;
         }
-        price=PriceSellForBank(price);
-        userData.RemoveProperty(property);
+        else
+        {
+            userData.RemoveProperty(property);
+        }
         OnChangeMoney(price);
+    }
+    public void SellForBank(Property property, int levelWantToSell)
+    {
+        int price = 0;
+        if (property.level >= levelWantToSell && levelWantToSell>0)
+        {
+
+            for (int i = levelWantToSell; i >= 0; i--)
+            {
+                price += property.GetPriceBuyProperty();
+                property.level--;
+            }
+            if (property.level == levelWantToSell)
+            {
+                userData.RemoveProperty(property);
+            }
+            price = PriceSellForBank(price);
+            OnChangeMoney(price);
+        }
+        else
+        {
+            Debug.Log("Not enough level");
+        }
+
     }
 
 
