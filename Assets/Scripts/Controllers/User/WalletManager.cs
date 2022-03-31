@@ -33,9 +33,14 @@ public class WalletManager : MonoBehaviour
             OnChangeMoney?.Invoke(money);
         }
     }
-    public void setWalletUer(string iduser, string addressWallet, long money)
+    public void setWalletUer(string idUser, string addressWallet, long money)
     {
-        _walletData.IDUser = iduser;
+        _walletData.IDUser = idUser;
+        _walletData.AddressWallet = addressWallet;
+        _walletData.Money = money;
+    }
+     public void setWalletUer(string addressWallet, long money)
+    { 
         _walletData.AddressWallet = addressWallet;
         _walletData.Money = money;
     }
