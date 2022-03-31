@@ -6,24 +6,25 @@ public class UserManager : MonoBehaviour
 {
     public delegate void EventHaveProp<T>(T data);
     public string id;
-    public User userData;
-    public WalletManager walletManager = new WalletManager(); 
-    
-    
+    public User userData = new User();
+    public WalletManager walletManager;
+
+
     // Start is called before the first frame update
     private void Awake()
-    { 
-        walletManager.setWalletUer(id, userData.Address, userData.Money);
+    {
+        walletManager.setWalletUer(id, Random.Range(1, 500000).ToString(), 5000);
+        userData.Money = walletManager._walletData.Money;
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-         
+
     }
 
     public void setUserManager(User user)
@@ -35,13 +36,7 @@ public class UserManager : MonoBehaviour
     public bool isCheckEnoughMoney(long money)
     {
 
-        long total = userData.Money + money;
-        Debug.Log("total : " + total);
-        if (total >= 0)
-        {
-            return true;
-        }
-        return false;
+        return userData.Money >= money;
     }
     public void OnChangeMoney(long money)
     {
@@ -52,7 +47,7 @@ public class UserManager : MonoBehaviour
     }
     public void OnChangeMoneyEvent(long money)
     {
-        
+
         userData.Money += money;
     }
     public void OnChangeMoneyWeb3Event(long money)
@@ -91,16 +86,18 @@ public class UserManager : MonoBehaviour
         if (property.level == 0) return true;
         return false;
     }
-    public int PriceSellForBank(int price){
+    public int PriceSellForBank(int price)
+    {
         return price / 2;
     }
-    public void SellPlaneWhenAuction(Property property,long money){
+    public void SellPlaneWhenAuction(Property property, long money)
+    {
         userData.RemoveProperty(property);
         OnChangeMoney(money);
     }
-     public void SellForBank(Property property)
-    { 
-        int price = PriceSellForBank(property.GetPriceBuyProperty());
+    public void SellForBank(Property property)
+    {
+        int price = PriceSellForBank(property.GetPriceSellProperty());
         if (property.level > 0)
         {
             property.level--;
@@ -109,17 +106,17 @@ public class UserManager : MonoBehaviour
         {
             userData.RemoveProperty(property);
         }
-        OnChangeMoney(price);
+        OnChangeMoney(PriceSellForBank(price));
     }
     public void SellForBank(Property property, int levelWantToSell)
     {
         int price = 0;
-        if (property.level >= levelWantToSell && levelWantToSell>0)
+        if (property.level >= levelWantToSell && levelWantToSell > 0)
         {
 
             for (int i = levelWantToSell; i >= 0; i--)
             {
-                price += property.GetPriceBuyProperty();
+                price += property.GetPriceSellProperty();
                 property.level--;
             }
             if (property.level == 0)
@@ -140,14 +137,14 @@ public class UserManager : MonoBehaviour
     {
         return userData.GetProperties().Contains(property);
     }
-   
+
     public bool isCheckBuyPlane(Property plane)
     {
         return plane.level == 0;
     }
     public void OnBuyNewProperty(Property property)
     {
-        if(isCheckEnoughMoney(property.data.cost) && isCheckBuyPlane(property) && !property.IsCheckPropertyOwned())
+        if (isCheckEnoughMoney(property.data.cost) && isCheckBuyPlane(property) && !property.IsCheckPropertyOwned())
         {
             OnChangeMoney(-property.data.cost);
             property.isBought = true;
@@ -163,26 +160,28 @@ public class UserManager : MonoBehaviour
     {
         if (isCheckBuildHouse(property))
         {
-            int price=property.GetPriceBuyProperty();
+            int price = property.GetPriceBuyProperty();
             if (isCheckEnoughMoney(price))
             {
-            OnChangeMoney(-price);
-            property.level++;     
+                OnChangeMoney(-price);
+                property.level++;
+                Debug.Log("level : " + property.level);
+
             }
         }
         else
         {
             // thong bao khong mua dc nha
         }
-        
+
 
     }
     public void OnBuilding(Property property, int levelWantToBuy)
     {
-        if (isCheckBuildHouse(property)&& levelWantToBuy>property.level )
+        if (isCheckBuildHouse(property) && levelWantToBuy > property.level)
         {
-            int totalPrice=0;
-            int loop=levelWantToBuy-property.level;
+            int totalPrice = 0;
+            int loop = levelWantToBuy - property.level;
             for (int i = 0; i < loop; i++)
             {
                 int price = property.GetPriceBuyProperty();
@@ -198,6 +197,6 @@ public class UserManager : MonoBehaviour
         {
             // thong bao khong mua dc nha
         }
-        } 
-    
+    }
+
 }
