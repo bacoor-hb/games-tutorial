@@ -503,7 +503,9 @@ MonoBehaviour:
   step2: 8
   targetNodeGameObj2: {fileID: 613161334}
   userManager: {fileID: 1642290234}
-  userManager2: {fileID: 0}
+  listUserManager:
+  - {fileID: 1642290234}
+  - {fileID: 189506274}
 --- !u!1 &488952314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8675660419491173655, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}
