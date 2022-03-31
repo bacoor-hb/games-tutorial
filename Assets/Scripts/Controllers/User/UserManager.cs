@@ -143,6 +143,7 @@ public class UserManager : MonoBehaviour
         {
             OnChangeMoney(-property.data.cost);
             property.isBought = true;
+            property.level = 0;
             userData.GetProperties().Add(property);
         }
         else
@@ -183,7 +184,7 @@ public class UserManager : MonoBehaviour
                     property.level++;
                 }
             }
-            OnChangeMoney(-totalPrices);
+            OnChangeMoney(-totalPrice);
         }
         else
         {
