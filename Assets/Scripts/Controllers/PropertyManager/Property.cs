@@ -48,8 +48,7 @@ public class Property : MonoBehaviour
         switch (level)
         {
             case 0:
-                price=data.cost;
-                break;
+            
             case 1:
   
             case 2:
