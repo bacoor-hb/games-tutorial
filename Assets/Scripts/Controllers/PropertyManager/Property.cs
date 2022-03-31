@@ -15,8 +15,8 @@ public class Property : MonoBehaviour
 
     [HideInInspector]
     public int propertyId;
-    public bool isBought = false;
-    public int level = 0;
+    public bool isBought=false;
+    public int level = -1;
 
 
 
@@ -64,6 +64,27 @@ public class Property : MonoBehaviour
 
         }
         return price;
+    }
+    public int GetPriceSellProperty()
+    {
+        int price = data.cost_house;
+        switch (level)
+        {
+            case 0:
+            
+            case 1:
+  
+            case 2:
+       
+            case 3:
+                price = price;
+                break;
+            case 4:
+                price = data.cost_hotel;
+                break;
+
+        }
+        return price ;
     }
     public int GetPriceSellProperty()
     {

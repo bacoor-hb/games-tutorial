@@ -25,7 +25,8 @@ public class TestGraph : MonoBehaviour
     private IEnumerator coroutine1;
     private IEnumerator coroutine2;
     private Graph board;
-
+    public UserManager userManager;
+    public List<UserManager> listUserManager = new List<UserManager>();
     private void Start()
     {
         board = GetComponent<Graph>();
@@ -67,8 +68,8 @@ public class TestGraph : MonoBehaviour
     {
         var nodes = board.GetNodes();
         List<GameObject> listNodes1 = board.GetNodesByStep(nodes.First, step1);
-        listNodes1.Insert(0, nodes.First.Value);
-        coroutine1 = Move1(0.5f, listNodes1);
+        listNodes1.Insert(0, nodes.First.Value); 
+        coroutine1 = Move1(0.5f, listNodes1); 
         yield return StartCoroutine(coroutine1);
         List<GameObject> listNodes2 = board.GetNodesByStep(nodes.First, step2);
         listNodes2.Insert(0, nodes.First.Value);
@@ -84,6 +85,18 @@ public class TestGraph : MonoBehaviour
             player1.transform.position = new Vector3(nodePosition.x, 3f, nodePosition.z);
             GraphEventManager.RaiseOnEnterNode("address1", nodes[currentIndex1]);
             currentIndex1++;
+            if(currentIndex1 == nodes.Count)
+            {
+                GameObject temp = nodes[currentIndex1 - 1];
+                Property propertyTemp = temp.GetComponent<Property>();
+                if (propertyTemp.isBought)
+                {
+                    Debug.Log("price rent");
+
+                }
+                ProcessMoney(listUserManager[0], propertyTemp,4);
+
+            }
             yield return new WaitForSeconds(waitTime);
         }
     }
@@ -96,7 +109,32 @@ public class TestGraph : MonoBehaviour
             player2.transform.position = new Vector3(nodePosition.x, 3f, nodePosition.z);
             GraphEventManager.RaiseOnEnterNode("address2", nodes[currentIndex2]);
             currentIndex2++;
+            if (currentIndex2 == nodes.Count)
+            { 
+                GameObject temp = nodes[currentIndex2-1];
+                Property propertyTemp = temp.GetComponent<Property>();
+                if (propertyTemp.isBought)
+                {
+                    Debug.Log("price rent");
+
+                }
+                ProcessMoney(listUserManager[1], propertyTemp,2);
+
+            }
             yield return new WaitForSeconds(waitTime);
         }
+    }
+    public void ProcessMoney(UserManager _userManager, Property _Property, int level)
+    { 
+        
+        Debug.Log(_Property.data.name);
+        _userManager.OnBuyNewProperty(_Property);
+        _userManager.OnBuilding(_Property);
+        Debug.Log(_userManager.userData.Money);
+        Debug.Log(_Property.level);
+        _userManager.SellForBank(_Property);
+        Debug.Log(_userManager.userData.Money);
+        Debug.Log(_Property.level);
+        //Debug.Log(true); 
     }
 }

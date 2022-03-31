@@ -1,3 +1,4 @@
+ 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,12 @@ public class UserManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        walletManager.setWalletUer(id, Random.Range(1, 500000).ToString(), 5000);
-        userData.Money = walletManager._walletData.Money;
+
     }
     void Start()
     {
+        walletManager.setWalletUer(id, Random.Range(1, 500000).ToString(), 5000); 
+        userData.Money = walletManager._walletData.Money; 
 
     }
 
@@ -35,7 +37,6 @@ public class UserManager : MonoBehaviour
     }
     public bool isCheckEnoughMoney(long money)
     {
-
         return userData.Money >= money;
     }
     public void OnChangeMoney(long money)
@@ -61,20 +62,21 @@ public class UserManager : MonoBehaviour
     }
     public bool isCheckBuildHouse(Property _property)
     {
-        int count = 0;
-        if (userData.GetProperties().Count < 2) return false;
+        //int count = 0;
+        //if (userData.GetProperties().Count < 2) return false;
 
-        foreach (Property item in userData.GetProperties())
-        {
-            if (item.data.typeId == _property.data.typeId)
-            {
-                count++;
-            }
-        }
-        //int countColor = graph.GetTotalPropertiesByType(_property.data.typeId)
-        int countColor = 2;
-        if (countColor == count) return true;
-        return false;
+        //foreach (Property item in userData.GetProperties())
+        //{
+        //    if (item.data.typeId == _property.data.typeId)
+        //    {
+        //        count++;
+        //    }
+        //}
+        ////int countColor = graph.GetTotalPropertiesByType(_property.data.typeId)
+        //int countColor = 2;
+        //if (countColor == count) return true;
+        //return false;
+        return true;
     }
     public bool isCheckBuildHotel(Property _property)
     {
