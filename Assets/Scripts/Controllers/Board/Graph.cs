@@ -127,7 +127,11 @@ public class Graph : MonoBehaviour
         }
         return listNodes;
     }
+    public Property GetProperty(int index)
+    {
 
+        return null;
+    }
     public GameObject GetCurrentNodeByAddress(string address)
     {
         return currentNodes[address];
@@ -145,10 +149,13 @@ public class Graph : MonoBehaviour
         }
         if (currentNodes[address].GetComponent<Property>().data != null)
         {
-            Debug.Log(currentNodes[address].GetComponent<Property>().data.description);
+            //Debug.Log(currentNodes[address].GetComponent<Property>().data.description);
         }
         {
-            Debug.Log(currentNodes[address].GetComponent<Property>().name);
+            //Debug.Log(address);
+
+
+            //Debug.Log(currentNodes[address].GetComponent<Property>().name);
         }
     }
 

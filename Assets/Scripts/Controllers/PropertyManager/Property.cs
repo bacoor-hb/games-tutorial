@@ -48,6 +48,27 @@ public class Property : MonoBehaviour
         switch (level)
         {
             case 0:
+            
+            case 1:
+  
+            case 2:
+       
+            case 3:
+                price = price;
+                break;
+            case 4:
+                price = data.cost_hotel;
+                break;
+
+        }
+        return price ;
+    }
+    public int GetPriceSellProperty()
+    {
+        int price = data.cost_house;
+        switch (level)
+        {
+            case 0:
                 price = price;
                 break;
             case 1:
@@ -64,9 +85,8 @@ public class Property : MonoBehaviour
                 break;
 
         }
-        return price ;
+        return price;
     }
-
     void OnMouseDown()
     {
         Debug.Log(data.description);
