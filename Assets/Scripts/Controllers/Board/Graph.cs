@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    private Transform[] Transforms;
     protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected Dictionary<int, int> totalType = new Dictionary<int, int>();
+    protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
 
-     void Start()
+
+    void Start()
     {
-        GenerateBoard();
+        GraphEventManager.onEnterNode += GetOnEnterNode;
     }
 
-    public void GenerateBoard()
+    public void GenerateBoard(Transform[] transforms)
     {
-        Transforms = GetComponentsInChildren<Transform>();
-
-        for (var i = 0; i < Transforms.Length; i++)
+        for (var i = 0; i < transforms.Length; i++)
         {
-            if (Transforms[i].CompareTag("board_node"))
+            if (transforms[i].CompareTag("board_node"))
             {
-                nodes.AddLast(Transforms[i].gameObject);
+                nodes.AddLast(transforms[i].gameObject);
+                if (transforms[i].gameObject.GetComponent<Property>().data != null)
+                {
+                    int typeId = transforms[i].gameObject.GetComponent<Property>().data.typeId;
+                    if (!totalType.ContainsKey(typeId))
+                    {
+                        totalType.Add(typeId, 1);
+                    }
+                    else
+                    {
+                        totalType[typeId] += 1;
+                    }
+                }
             }
         }
     }
@@ -30,7 +42,12 @@ public class Graph : MonoBehaviour
         return nodes.Find(node);
     }
 
-    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise)
+    public LinkedList<GameObject> GetNodes()
+    {
+        return nodes;
+    }
+
+    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise = true)
     {
         List<GameObject> listNodes = new List<GameObject>();
         if (isClockWise)
@@ -81,14 +98,16 @@ public class Graph : MonoBehaviour
                 if (nextNode.Next != null)
                 {
                     nextNode = nextNode.Next;
-                } else
+                }
+                else
                 {
                     nextNode = nodes.First;
                 }
                 listNodes.Add(nextNode.Value);
                 count++;
             }
-        } else if (step < 0)
+        }
+        else if (step < 0)
         {
             int count = 0;
             LinkedListNode<GameObject> prevNode = currentNode;
@@ -97,7 +116,8 @@ public class Graph : MonoBehaviour
                 if (prevNode.Previous != null)
                 {
                     prevNode = prevNode.Previous;
-                }else
+                }
+                else
                 {
                     prevNode = nodes.Last;
                 }
@@ -108,4 +128,41 @@ public class Graph : MonoBehaviour
         return listNodes;
     }
 
+    public GameObject GetCurrentNodeByAddress(string address)
+    {
+        return currentNodes[address];
+    }
+
+    public void GetOnEnterNode(string address, GameObject node)
+    {
+        if (node != null)
+        {
+            currentNodes[address] = node;
+        }
+        else
+        {
+            currentNodes[address] = nodes.First.Value;
+        }
+        if (currentNodes[address].GetComponent<Property>().data != null)
+        {
+            Debug.Log(currentNodes[address].GetComponent<Property>().data.description);
+        }
+        {
+            Debug.Log(currentNodes[address].GetComponent<Property>().name);
+        }
+    }
+
+    public int GetTotalPropertiesByType(int typeId)
+    {
+        int total;
+        if (totalType.ContainsKey(typeId))
+        {
+            total = totalType[typeId];
+        }
+        else
+        {
+            total = 0;
+        }
+        return total;
+    }
 }
