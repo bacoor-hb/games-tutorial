@@ -79,14 +79,12 @@ public class UserManager : MonoBehaviour
         return true;
     }
     public bool isCheckBuildHotel(Property _property)
-    {
-        if (_property.level == 4) return true;
-        return false;
+    { 
+        return _property.level == 4;
     }
     public bool isCheckSellPlane(Property property)
-    {
-        if (property.level == 0) return true;
-        return false;
+    { 
+        return property.level == 0;
     }
     public int PriceSellForBank(int price)
     {
@@ -113,19 +111,19 @@ public class UserManager : MonoBehaviour
     public void SellForBank(Property property, int levelWantToSell)
     {
         int price = 0;
-        if (property.level >= levelWantToSell )
+        if (property.level >= levelWantToSell-1 )
         {
 
-            for (int i = levelWantToSell; i >= 0; i--)
+            for (int i = levelWantToSell-1; i >= 0; i--)
             {
                 price += property.GetPriceSellProperty();
                 property.level--;
             }
-            if (property.level == 0)
+            if (property.level == -1)
             {
                 userData.RemoveProperty(property);
             }
-            price = PriceSellForBank(price);
+            price = PriceSellForBank(price); 
             OnChangeMoney(price);
         }
         else
@@ -151,7 +149,7 @@ public class UserManager : MonoBehaviour
             OnChangeMoney(-property.data.cost);
             property.isBought = true;
             property.level = 0;
-            userData.GetProperties().Add(property);
+            userData.AddProperty(property);
         }
         else
         {
@@ -167,7 +165,6 @@ public class UserManager : MonoBehaviour
             {
                 OnChangeMoney(-price);
                 property.level++;
-                Debug.Log("level : " + property.level);
 
             }
         }

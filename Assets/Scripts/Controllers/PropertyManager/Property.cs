@@ -56,7 +56,6 @@ public class Property : MonoBehaviour
             case 2:
 
             case 3:
-                price = price;
                 break;
             case 4:
                 price = data.cost_hotel;
@@ -72,18 +71,17 @@ public class Property : MonoBehaviour
         switch (level)
         {
             case 0:
-                price = price;
+                price = data.cost;
                 break;
             case 1:
-                price *= 2;
-                break;
+                
             case 2:
-                price *= 3;
-                break;
+                
             case 3:
-                price *= 4;
-                break;
+                
             case 4:
+                break;
+            case 5:
                 price = data.cost_hotel;
                 break;
 

@@ -129,12 +129,14 @@ public class TestGraph : MonoBehaviour
         
         Debug.Log(_Property.data.name);
         _userManager.OnBuyNewProperty(_Property);
-        _userManager.OnBuilding(_Property);
+        _userManager.OnBuilding(_Property,3);
         Debug.Log(_userManager.userData.Money);
         Debug.Log(_Property.level);
-        _userManager.SellForBank(_Property);
+        Debug.Log("list count:" + _userManager.userData.GetProperties().Count);
+        _userManager.SellForBank(_Property,4);
         Debug.Log(_userManager.userData.Money);
-        Debug.Log(_Property.level);
+        Debug.Log("_Property.level:"+ _Property.level);
+        Debug.Log("list count:" + _userManager.userData.GetProperties().Count);
         //Debug.Log(true); 
     }
 }
