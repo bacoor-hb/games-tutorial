@@ -183,7 +183,7 @@ public class UserManager : MonoBehaviour
                     property.level++;
                 }
             }
-            OnChangeMoney(-totalPrices);
+            OnChangeMoney(-totalPrice);
         }
         else
         {
