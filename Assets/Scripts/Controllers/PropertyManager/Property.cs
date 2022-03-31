@@ -16,7 +16,7 @@ public class Property : MonoBehaviour
     [HideInInspector]
     public int propertyId;
     public bool isBought=false;
-    public int level = 0;
+    public int level = -1;
 
     
 
