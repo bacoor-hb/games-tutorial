@@ -113,7 +113,7 @@ public class UserManager : MonoBehaviour
     public void SellForBank(Property property, int levelWantToSell)
     {
         int price = 0;
-        if (property.level >= levelWantToSell && levelWantToSell > 0)
+        if (property.level >= levelWantToSell )
         {
 
             for (int i = levelWantToSell; i >= 0; i--)
