@@ -41,32 +41,32 @@ public class UserManager : MonoBehaviour
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
-    public bool isCheckEnoughtMoney(long money)
+    public bool isCheckEnoughMoney(long money)
     {
         long total = userData.Money + money;
         return total >= 0;
     }
     public void OnChangeMoney(long money)
     {
-        walletManager.OnChangeMoney = OnCangeMoneyEnevt;
-        walletManager.OnChangeMoneyWeb3 = OnCangeMoneyWeb3Event;
+        walletManager.OnChangeMoney = OnChangeMoneyEnevt;
+        walletManager.OnChangeMoneyWeb3 = OnChangeMoneyWeb3Event;
         walletManager.OnChangeMoneyEvent(money);
 
     }
-    public void OnCangeMoneyEnevt(long money)
+    public void OnChangeMoneyEnevt(long money)
     {
         
         userData.Money += money;
     }
 
-    public void OnCangeMoneyWeb3Event(long money)
+    public void OnChangeMoneyWeb3Event(long money)
     {
 
          
     }
 
     /// <summary>
-    /// Change money ai Web3 form userMananger
+    /// Change money at Web3 form userMananger
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
