@@ -31,3 +31,37 @@ public enum ACTION
     AUCTION,
     END_TURN,
 }
+
+public enum PROPERTY_ID: int
+{
+    STREET_0 = 0,
+    STREET_1 = 1,
+    STREET_2 = 2,
+    STREET_3 = 3,
+    STREET_4 = 4,
+    STREET_5 = 5,
+    STREET_6 = 6,
+    STREET_7 = 7,
+    STREET_8 = 8,
+    STREET_9 = 9,
+    STREET_10 = 10,
+    STREET_11 = 11,
+    STREET_12 = 12,
+    STREET_13 = 13,
+    STREET_14 = 14,
+    STREET_15 = 15,
+    STREET_16 = 16,
+    STREET_17 = 17,
+    STREET_18 = 18,
+    STREET_19 = 19,
+    STREET_20 = 20,
+    STREET_21 = 21,
+
+    ELECTRIC_0 = 22,
+    ELECTRIC_1 = 23,
+
+    TRANSPORT_0 = 24,
+    TRANSPORT_1 = 25,
+    TRANSPORT_2 = 26,
+    TRANSPORT_3 = 27,
+}

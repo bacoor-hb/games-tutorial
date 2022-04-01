@@ -11,7 +11,7 @@ public class PropertyData : ScriptableObject
 
     [Header("Properties")]
     [Tooltip("Property ID")]
-    public string id;
+    public PROPERTY_ID id;
     [Tooltip("Property Name")]
     public string property_name;
     [Tooltip("Description")]

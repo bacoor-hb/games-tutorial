@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GraphEventManager : MonoBehaviour
 {
-    public delegate void OnEnterNode(string address, GameObject node);
-    public static event OnEnterNode onEnterNode;
-    public static void RaiseOnEnterNode(string address, GameObject node)
+    public delegate void onEventEnter(params object[] args);
+    public  onEventEnter onEnterNode;
+    public void RaiseOnEnterNode(string address, GraphNode node)
     {
         if (onEnterNode != null)
         {
