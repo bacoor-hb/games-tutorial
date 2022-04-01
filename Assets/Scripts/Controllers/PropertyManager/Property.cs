@@ -13,6 +13,16 @@ public class Property : MonoBehaviour
     public List<MeshRenderer> renderers;
     public List<Collider> colliders;
 
+    /// <summary>
+    /// get owned plane
+    /// </summary>
+    /// 
+    public bool isBought = false;
+    /// <summary>
+    /// Level Owned Properties
+    /// </summary>
+    public int level = -1;
+
     [HideInInspector]
     public int propertyId;
 

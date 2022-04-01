@@ -15,6 +15,12 @@ public class WalletData
         Money = money;
         
     }
+    public WalletData(string addressWallet, long money)
+    { 
+        AddressWallet = addressWallet;
+        Money = money;
+
+    }
     public WalletData()
     { 
 
