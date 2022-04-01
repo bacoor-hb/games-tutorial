@@ -31,7 +31,7 @@ public class ViewManagerTest : MonoBehaviour
     {
         string money = inputField.text.ToString(); 
         long moneyChange = long.Parse(money);
-        if (userManager.isCheckEnoughMoney(moneyChange))
+        if(moneyChange >= 0)
         {
             userManager.OnChangeMoney(moneyChange);
             moneyUserStart.text = userManager.walletManager._walletData.Money.ToString();
@@ -39,7 +39,17 @@ public class ViewManagerTest : MonoBehaviour
         }
         else
         {
-            result.text = "So tien tru qua nhieu";
+            if (userManager.IsCheckEnoughMoney(moneyChange))
+            {
+                userManager.OnChangeMoney(moneyChange);
+                moneyUserStart.text = userManager.walletManager._walletData.Money.ToString();
+                result.text = "true";
+            }
+            else
+            {
+                result.text = "So tien tru qua nhieu";
+            }
         }
+       
     }
 }

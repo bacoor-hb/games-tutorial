@@ -41,9 +41,9 @@ public class UserManager : MonoBehaviour
     /// </summary>
     /// <param name="money"></param>
     /// <returns></returns>
-    public bool isCheckEnoughMoney(long money)
+    public bool IsCheckEnoughMoney(long money)
     {
-        long total = userData.Money + money;
+        long total = userData.Money - (long)Mathf.Abs(money);
         return total >= 0;
     }
     public void OnChangeMoney(long money)
