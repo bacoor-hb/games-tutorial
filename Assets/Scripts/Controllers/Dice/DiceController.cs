@@ -10,6 +10,8 @@ public class DiceController : MonoBehaviour
 
     private bool isRolling = false;
     private List<Dice> dices = new List<Dice>();
+    private List<DiceWithValueController> diceWithValues = new List<DiceWithValueController>();
+
     private List<int> diceValues = new List<int>();
 
     [SerializeField]
@@ -51,6 +53,33 @@ public class DiceController : MonoBehaviour
         return true;
     }
 
+
+    /// <summary>
+    /// Initialize the dice Instance
+    /// </summary>
+    /// <param name="_dices"></param>
+    public bool SetDiceWithValue(List<DiceWithValueController> _dices)
+    {
+        if (_dices.Count != diceSpawnPos.Count)
+        {
+            Debug.LogError("Number of dices is different than the number of spawning position...");
+            return false;
+        }
+
+        diceWithValues.Clear();
+        diceValues.Clear();
+        for (int i = 0; i < _dices.Count; i++)
+        {
+            _dices[i].Init(diceSpawnPos[i]);
+            _dices[i].dice.OnValueChange = SetDiceValue;
+            diceWithValues.Add(_dices[i]);
+        }
+
+        //Hide all Dice
+        SetActiveAllDiceWithValue(false);
+        return true;
+    }
+
     /// <summary>
     /// Roll Action
     /// </summary>
@@ -59,6 +88,7 @@ public class DiceController : MonoBehaviour
         if (!isRolling)
         {
             //Show All dice
+            SetActiveAllDiceWithValue(false);
             SetActiveAllDice(true);
             diceValues.Clear();
             isRolling = true;
@@ -74,10 +104,41 @@ public class DiceController : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Roll Action
+    /// </summary>
+    public void RollDice(List<int> values)
+    {
+        if (values.Count != diceWithValues.Count)
+        {
+            Debug.LogError("Number of dices is different than the number of values...");
+            return;
+        }
+
+        if (!isRolling)
+        {
+            //Show All dice
+            SetActiveAllDice(false);
+            SetActiveAllDiceWithValue(true);
+            diceValues.Clear();
+            isRolling = true;
+            for (int i = 0; i < diceWithValues.Count; i++)
+            {
+                OnRoll?.Invoke(i);
+                diceWithValues[i].dice.RollDice(values[i]);
+            }
+        }
+        else
+        {
+            Debug.Log("Dice is rolling");
+        }
+    }
+
     private void SetDiceValue (int value)
     {
         diceValues.Add(value);
-        if (diceValues.Count.Equals(dices.Count))
+        if (diceValues.Count.Equals(diceSpawnPos.Count))
         {
             isRolling = false;
             OnResult?.Invoke(diceValues);
@@ -95,6 +156,21 @@ public class DiceController : MonoBehaviour
             for(int i = 0; i < dices.Count; i++)
             {
                 dices[i].gameObject.SetActive(state);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Set the dice enable/disable
+    /// </summary>
+    /// <param name="state">false = Hide all Dice</param>
+    public void SetActiveAllDiceWithValue(bool state)
+    {
+        if (diceWithValues != null && diceWithValues.Count > 0)
+        {
+            for (int i = 0; i < diceWithValues.Count; i++)
+            {
+                diceWithValues[i].gameObject.SetActive(state);
             }
         }
     }
