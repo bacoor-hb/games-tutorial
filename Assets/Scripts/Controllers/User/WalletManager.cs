@@ -30,7 +30,7 @@ public class WalletManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// Chang money at wweb3
+    /// Change money at wweb3
     /// </summary>
     /// <param name="money"></param>
     void OnChangeMoneyWeb3Event(long money)
