@@ -76,11 +76,11 @@ public class TestGraph : MonoBehaviour
         var nodes = board.GetNodeList();
         List<GraphNode> listNodes1 = board.GetNodesByStep(nodes[0], step1);
         listNodes1.Insert(0, nodes[0]);
-        coroutine1 = Move1(1f, listNodes1);
+        coroutine1 = Move1(0.5f, listNodes1);
         yield return StartCoroutine(coroutine1);
         List<GraphNode> listNodes2 = board.GetNodesByStep(nodes[0], step2);
         listNodes2.Insert(0, nodes[0]);
-        coroutine2 = Move2(1f, listNodes2);
+        coroutine2 = Move2(0.5f, listNodes2);
         StartCoroutine(coroutine2);
     }
 

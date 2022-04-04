@@ -493,7 +493,7 @@ MonoBehaviour:
   useTargetNode: 0
   player1: {fileID: 1642290228}
   player2: {fileID: 189506268}
-  step1: 5
+  step1: 44
   targetNodeGameObj1: {fileID: 1228842734}
   step2: 7
   targetNodeGameObj2: {fileID: 1782951902}
@@ -557,7 +557,7 @@ MonoBehaviour:
   renderers: []
   colliders: []
   propertyId: 0
---- !u!114 &488952317
+--- !u!114 &488952320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1521,7 +1521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: {fileID: 1345884402}
-  preNode: {fileID: 488952317}
+  preNode: {fileID: 488952320}
   nextNode: {fileID: 1986434180}
 --- !u!1 &1410865234 stripped
 GameObject:
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: {fileID: 1500725022}
   preNode: {fileID: 1228842734}
-  nextNode: {fileID: 0}
+  nextNode: {fileID: 968974877}
 --- !u!1 &1536392829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1981176674353629320, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}
@@ -2507,7 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: {fileID: 1772501396}
   preNode: {fileID: 777017716}
-  nextNode: {fileID: 488952317}
+  nextNode: {fileID: 488952320}
 --- !u!1 &1782951899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1857309847194865932, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}
@@ -2850,7 +2850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: {fileID: 2003624121}
   preNode: {fileID: 1410865237}
-  nextNode: {fileID: 0}
+  nextNode: {fileID: 56137069}
 --- !u!1 &2038720242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8153468022190502949, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}
