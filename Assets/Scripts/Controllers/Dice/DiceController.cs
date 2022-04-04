@@ -71,7 +71,7 @@ public class DiceController : MonoBehaviour
         for (int i = 0; i < _dices.Count; i++)
         {
             _dices[i].Init(diceSpawnPos[i]);
-            _dices[i].dice.OnValueChange = SetDiceValue;
+            _dices[i].OnValueChange = SetDiceValue;
             diceWithValues.Add(_dices[i]);
         }
 
@@ -126,7 +126,7 @@ public class DiceController : MonoBehaviour
             for (int i = 0; i < diceWithValues.Count; i++)
             {
                 OnRoll?.Invoke(i);
-                diceWithValues[i].dice.RollDice(values[i]);
+                diceWithValues[i].RollDice(values[i]);
             }
         }
         else
