@@ -107,7 +107,7 @@ public class LanguageReader
         var xml = new XmlDocument();
         xml.Load(new StringReader(xmlText));
 
-        
+        Strings = new Hashtable();
         var element = xml.DocumentElement[language];
         if (element != null)
         {
