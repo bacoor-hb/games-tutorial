@@ -17,6 +17,8 @@ public class Graph : MonoBehaviour
     void Start()
     {
         eventManager.onEnterNode += OnEnterNode;
+        eventManager.onEnterStart += OnEnterStart;
+        eventManager.onEnterImprison += OnEnterImprison;
     }
 
     /// <summary>
@@ -82,10 +84,6 @@ public class Graph : MonoBehaviour
                 {
                     nextNode = nextNode.Next();
                 }
-                //else
-                //{
-                //    nextNode = nodes.First;
-                //}
             }
         }
         else
@@ -98,10 +96,6 @@ public class Graph : MonoBehaviour
                 {
                     prevNode = prevNode.Previous();
                 }
-                //else
-                //{
-                //    prevNode = nodes.Last;
-                //}
             }
         }
 
@@ -181,12 +175,48 @@ public class Graph : MonoBehaviour
             }
             
             if (currentNodes[address].property.data != null)
-            {
+            {   
                 //Debug.Log(currentNodes[address].property.data.description);
                 Debug.Log(currentNodes[address].property.data.property_name);
             }
         }
         catch(Exception ex)
+        {
+            Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
+        }
+    }
+
+    private void OnEnterStart(params object[] args)
+    {
+        if (args.Length != 1)
+        {
+            Debug.LogError("[GetOnEnterNode] Invalid Args...");
+        }
+        try
+        {
+            //Convert Params
+            string address = args[0].ToString();
+            Debug.Log("Bat dau");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
+        }
+    }
+
+    private void OnEnterImprison(params object[] args)
+    {
+        if (args.Length != 1)
+        {
+            Debug.LogError("[GetOnEnterNode] Invalid Args...");
+        }
+        try
+        {
+            //Convert Params
+            string address = args[0].ToString();
+            Debug.Log("Vao tu");
+        }
+        catch (Exception ex)
         {
             Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
         }

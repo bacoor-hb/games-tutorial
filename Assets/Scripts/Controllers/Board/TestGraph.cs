@@ -5,6 +5,12 @@ using UnityEngine;
 public class TestGraph : MonoBehaviour
 {
     [SerializeField]
+    private GraphNode imprisonNode;
+    [SerializeField]
+    private GraphNode startNode;
+    [SerializeField]
+    private GraphNode[] taxNodes;
+    [SerializeField]
     private bool useStep;
     [SerializeField]
     private bool useTargetNode;
@@ -65,9 +71,9 @@ public class TestGraph : MonoBehaviour
 
         listNodes1.Insert(0, nodes[0]);
         listNodes2.Insert(0, nodes[0]);
-        coroutine1 = Move1(1f, listNodes1);
+        coroutine1 = Move1(0.5f, listNodes1);
         yield return StartCoroutine(coroutine1);
-        coroutine2 = Move2(1f, listNodes2);
+        coroutine2 = Move2(0.5f, listNodes2);
         StartCoroutine(coroutine2);
     }
 
@@ -89,8 +95,9 @@ public class TestGraph : MonoBehaviour
         while (currentIndex1 < nodes.Count)
         {
             var nodePosition = nodes[currentIndex1].transform.position;
-            player1.transform.position = new Vector3(nodePosition.x, 3f, nodePosition.z);
+            player1.transform.position = new Vector3(nodePosition.x, 1.5f, nodePosition.z);
             graphEvent.RaiseOnEnterNode("address1", nodes[currentIndex1]);
+            CheckEvent(nodes[currentIndex1], "address1");
             currentIndex1++;
             yield return new WaitForSeconds(waitTime);
         }
@@ -101,10 +108,20 @@ public class TestGraph : MonoBehaviour
         while (currentIndex2 < nodes.Count)
         {
             var nodePosition = nodes[currentIndex2].transform.position;
-            player2.transform.position = new Vector3(nodePosition.x, 3f, nodePosition.z);
+            player2.transform.position = new Vector3(nodePosition.x, 1.5f, nodePosition.z);
             graphEvent.RaiseOnEnterNode("address2", nodes[currentIndex2]);
+            CheckEvent(nodes[currentIndex2], "address2");
             currentIndex2++;
             yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    private void CheckEvent(GraphNode node, string address)
+    {
+        if(node.NodeID == startNode.NodeID) {
+            graphEvent.RaiseOnEnterStartNode(address);
+        } else if(node.NodeID == imprisonNode.NodeID) {
+            graphEvent.RaiseOnEnterImprison(address);
         }
     }
 }
