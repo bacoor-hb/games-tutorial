@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 //
 public class LanguageManager : MonoBehaviour
@@ -35,6 +37,10 @@ public class LanguageManager : MonoBehaviour
         langReader.OnEndLoadingLanguageFile += OnEndLoadingLanguageFile;
         langReader.OnStartTranslating += OnStartTranslating;
         langReader.OnEndTranslating += OnEndTranslating;
+        languageView.OnCloseClicked += OnCloseClicked;
+        languageView.OnEnglishClicked += OnEnglishClicked;
+        languageView.OnJapaneseClicked += OnJapaneseClicked;
+
     }
 
     public void SetLanguageFile(string filePath)
@@ -94,4 +100,35 @@ public class LanguageManager : MonoBehaviour
     {
         Debug.Log("Translation complete!");
     }
+    void OnCloseClicked()
+    {
+        languageView.SetCanvasStatus(false);
+
+
+    Scene CurrentScene = SceneManager.GetActiveScene();
+    //reload CurrentScene
+    SceneManager.LoadScene(CurrentScene.name);
+
+    }
+    void OnJapaneseClicked()
+    {
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.Japanese.Value != lang.Value)
+        {
+            GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
+            languageView.UpdateUI();
+        }
+    }
+    void OnEnglishClicked()
+    {
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.English.Value != lang.Value)
+        {
+            GlobalManager.Instance.languageManager.SetLanguage(Language.English);
+            languageView.UpdateUI();
+        }
+
+    }
+
+
 }

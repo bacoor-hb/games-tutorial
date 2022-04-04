@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 
 
 public class LanguageView : MonoBehaviour
 {
+    public delegate void OnButtonCliked();
+    public OnButtonCliked OnCloseClicked;
+    public OnButtonCliked OnEnglishClicked;
+    public OnButtonCliked OnJapaneseClicked;
+
     [SerializeField]
     private GameObject LanguageCanvas;
     [SerializeField]
@@ -79,31 +83,16 @@ BtnClose.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance
        
     }
     void OnEnglish(){
-        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
-        if (Language.English.Value != lang.Value)
-        {
-            GlobalManager.Instance.languageManager.SetLanguage(Language.English);
-            UpdateUI();
-        }
-      
+        OnEnglishClicked?.Invoke();
+       
     }
     void OnJapanese(){
-        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
-        if (Language.Japanese.Value != lang.Value)
-        {
-            GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
-            UpdateUI();
-        }
+        OnJapaneseClicked?.Invoke();
+      
           
     }
     void OnClose()
     {
-        SetCanvasStatus(false);
-
-       
-        Scene CurrentScene = SceneManager.GetActiveScene();
-        //reload CurrentScene
-        SceneManager.LoadScene(CurrentScene.name);
-
+        OnCloseClicked?.Invoke();
     }
 }
