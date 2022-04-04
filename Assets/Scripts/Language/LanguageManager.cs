@@ -15,6 +15,9 @@ public class LanguageManager : MonoBehaviour
 
     //path of the file that the game is reading from
     string langFilePath = "Resources/menuSentences.xml";
+    //string StoryTellingFilePath = "Resources/storyTelling.xml";
+
+
 
     protected void Awake()
     {
@@ -61,6 +64,16 @@ public class LanguageManager : MonoBehaviour
     {
         return lang;
     }
+    /// <summary>
+    /// load More File Path with filePath follow format "Resources/nameFile.xml"
+    /// </summary>
+    /// <param name="filePath"> </param>
+    public void loadMoreFilePath(string filePath)
+    {
+        langReader.loadMoreFilePath(Path.Combine(Application.dataPath, filePath), lang.Value);
+   
+    }
+
 
     void OnStartLoadingLanguageFile()
     {

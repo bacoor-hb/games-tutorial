@@ -70,10 +70,10 @@ public class LanguageReader
         var xml = new XmlDocument();
         xml.Load (path);
         OnEndLoadingLanguageFile?.Invoke();
+     Strings = new Hashtable();
 
-        Strings = new Hashtable();
-        var element = xml.DocumentElement[language];
-        if (element != null)
+    var element = xml.DocumentElement[language];
+        if (element != null) 
         {
             var elemEnum = element.GetEnumerator();
             while (elemEnum.MoveNext())
@@ -107,7 +107,7 @@ public class LanguageReader
         var xml = new XmlDocument();
         xml.Load(new StringReader(xmlText));
 
-        Strings = new Hashtable();
+        
         var element = xml.DocumentElement[language];
         if (element != null)
         {
@@ -156,4 +156,28 @@ public class LanguageReader
 
         return (string) Strings[name];
     }
+    public void loadMoreFilePath(string filePath, string language)
+    {
+        OnStartLoadingLanguageFile?.Invoke();
+        var xml = new XmlDocument();
+        xml.Load(filePath);
+        OnEndLoadingLanguageFile?.Invoke();
+
+        var element = xml.DocumentElement[language];
+        if (element != null)
+        {
+            var elemEnum = element.GetEnumerator();
+            while (elemEnum.MoveNext())
+            {
+                var xmlItem = (XmlElement)elemEnum.Current;
+                Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+            }
+        }
+        else
+        {
+            Debug
+                .LogError("The specified language does not exist: " + language);
+        }
+    }
+  
 }
