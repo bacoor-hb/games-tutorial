@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 
-public class PlayerTestController : MonoBehaviour
+public class PlayerTestController : MonoBehaviour, IPlayer
 {
     static int count = 0;
     public int id;
@@ -14,11 +14,6 @@ public class PlayerTestController : MonoBehaviour
         id = count;
         TurnBaseController.Register(this);
         count++;
-        TurnBaseController.OnStartTurn += StartTurn;
-        TurnBaseController.OnEndTurn += EndTurn;
-        TurnBaseController.OnActionStart += ActionStart;
-        TurnBaseController.OnActionEnd += ActionEnd;
-        TurnBaseController.OnChangePlayer += ChangePlayer;
     }
 
     // Update is called once per frame
@@ -26,7 +21,7 @@ public class PlayerTestController : MonoBehaviour
     {
         if (Input.GetKeyDown("a"))
         {
-            TurnBaseController.AddAction(new ActionEndTurn());
+            TurnBaseController.AddAction(this, new ActionEndTurn());
         }
 
         if (id == 0 && Input.GetKeyDown("space"))
@@ -42,43 +37,27 @@ public class PlayerTestController : MonoBehaviour
         }
     }
 
-    void StartTurn(Object iplayer)
+    public void StartTurn()
     {
         Material myMaterial = GetComponent<Renderer>().material;
-        PlayerTestController player = iplayer as PlayerTestController;
-        if (player == this)
-        {
-            myMaterial.color = Color.red;
-
-        }
-        else
-        {
-            myMaterial.color = Color.grey;
-        }
-        Debug.Log("StartTurn: id: " + id + ", player: " + player.id);
+        myMaterial.color = Color.red;
+        Debug.Log("StartTurn: id: " + id);
     }
 
-    void EndTurn(Object iplayer)
+    public void EndTurn()
     {
-        PlayerTestController player = iplayer as PlayerTestController;
-
-        Debug.Log("EndTurn: id: " + id + ", player: " + player.id);
+        Material myMaterial = GetComponent<Renderer>().material;
+        myMaterial.color = Color.white;
+        Debug.Log("EndTurn: id: " + id);
 
     }
-    void ActionStart(IAction action)
+    public void ActionStart()
     {
         Debug.Log("ActionStart: id: " + id);
     }
 
-    void ActionEnd(IAction action)
+    public void ActionEnd()
     {
         Debug.Log("ActionEnd: id: " + id);
-    }
-
-    void ChangePlayer(Object iplayer)
-    {
-        PlayerTestController player = iplayer as PlayerTestController;
-
-        Debug.Log("ChangePlayer: id: " + id + ", player: " + player.id);
     }
 }
