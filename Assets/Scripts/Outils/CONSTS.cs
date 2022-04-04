@@ -32,6 +32,14 @@ public enum ACTION
     END_TURN,
 }
 
+public class TEXT_UI
+{
+    public const string LANGUAGE = "Language";
+    public const string ENGLISH = "English";
+    public const string JAPANESE = "Japanese";
+    
+}
+
 public enum PROPERTY_ID: int
 {
     STREET_0 = 0,

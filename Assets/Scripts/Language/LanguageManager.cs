@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class LanguageManager : Singleton<LanguageManager>
+//
+public class LanguageManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public LanguageView languageView;
     //THE language manager
     LanguageReader langReader;
 
@@ -15,11 +16,8 @@ public class LanguageManager : Singleton<LanguageManager>
     //path of the file that the game is reading from
     string langFilePath = "Resources/menuSentences.xml";
 
-    protected override void Awake()
+    protected void Awake()
     {
-        //base.isDontDestroy = true;
-        base.Awake();
-
         //Initialize and set a default language
         langReader =
             new LanguageReader(Path.Combine(Application.dataPath, langFilePath),
@@ -29,6 +27,7 @@ public class LanguageManager : Singleton<LanguageManager>
 
     void Start()
     {
+        languageView.Init();
         langReader.OnStartLoadingLanguageFile += OnStartLoadingLanguageFile;
         langReader.OnEndLoadingLanguageFile += OnEndLoadingLanguageFile;
         langReader.OnStartTranslating += OnStartTranslating;
@@ -61,18 +60,6 @@ public class LanguageManager : Singleton<LanguageManager>
     public Language GetLanguage()
     {
         return lang;
-    }
-
-    public void ChangeLanguage()
-    {
-        if (lang.Value == Language.English.Value)
-        {
-            SetLanguage(Language.Japanese);
-        }
-        else
-        {
-            SetLanguage(Language.English);
-        }
     }
 
     void OnStartLoadingLanguageFile()
