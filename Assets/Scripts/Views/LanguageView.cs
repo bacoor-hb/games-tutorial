@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 
@@ -48,10 +49,24 @@ private Button BtnEnglish;
         }
     }
     public void UpdateUI(){
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.English.Value == lang.Value)
+        {
+            //change color of button
+            BtnEnglish.GetComponent<Image>().color = Color.green;
+        }else{
+            BtnEnglish.GetComponent<Image>().color = Color.white;
+        }
+         if(Language.Japanese.Value == lang.Value){
+            BtnJapanese.GetComponent<Image>().color = Color.green;
+        }else{
+            BtnJapanese.GetComponent<Image>().color = Color.white;
+        }
+        
         LanguageText.text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.LANGUAGE);
         BtnEnglish.GetComponentInChildren<TextMeshProUGUI>().text=GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.ENGLISH);
         BtnJapanese.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.JAPANESE);
-
+BtnClose.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.CLOSE);
 
     }
     public void SetBtnEvent(){
@@ -64,15 +79,31 @@ private Button BtnEnglish;
        
     }
     void OnEnglish(){
-        GlobalManager.Instance.languageManager.SetLanguage(Language.English);
-        UpdateUI();
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.English.Value != lang.Value)
+        {
+            GlobalManager.Instance.languageManager.SetLanguage(Language.English);
+            UpdateUI();
+        }
+      
     }
     void OnJapanese(){
-        GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
-        UpdateUI();
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.Japanese.Value != lang.Value)
+        {
+            GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
+            UpdateUI();
+        }
+          
     }
     void OnClose()
     {
         SetCanvasStatus(false);
+
+       
+        Scene CurrentScene = SceneManager.GetActiveScene();
+        //reload CurrentScene
+        SceneManager.LoadScene(CurrentScene.name);
+
     }
 }
