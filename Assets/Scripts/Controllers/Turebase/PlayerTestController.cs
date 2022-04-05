@@ -23,7 +23,7 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         if (Input.GetKeyDown("a"))
         {
-            turnbase.AddAction(this, new ActionEndTurn());
+            turnbase.AddAction(this, new Action(ACTION.END_TURN));
         }
 
         if (id == 0 && Input.GetKeyDown("space"))
