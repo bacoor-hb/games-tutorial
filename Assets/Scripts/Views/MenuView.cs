@@ -12,11 +12,15 @@ public class MenuView : MonoBehaviour
     [SerializeField]
     private Button startGameBtn;
     [SerializeField]
+    private Button btnLanguage;
+    [SerializeField]
     private TextMeshProUGUI MsgTxt;
 
     public void Init()
     {
         SetStartBtnEvent();
+        setLanguageEvent();
+
     }
 
     void Update()
@@ -29,12 +33,22 @@ public class MenuView : MonoBehaviour
         startGameBtn.onClick.RemoveAllListeners();
         startGameBtn.onClick.AddListener(OnLogin);
     }
-
+    void setLanguageEvent()
+    {
+        btnLanguage.onClick.RemoveAllListeners();
+        btnLanguage.onClick.AddListener(OnShowLanguageView);
+    }
     void OnLogin()
     {
         Debug.Log("Clicked on start game Button.");
         OnStartGameClicked?.Invoke();
         StartCoroutine(OnStartGameDelay());
+    }
+    void OnShowLanguageView()
+    {
+        //show language view
+
+        GlobalManager.Instance.languageManager.languageView.SetCanvasStatus(true);
     }
 
     IEnumerator OnStartGameDelay()
