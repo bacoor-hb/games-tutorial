@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    protected Dictionary<int, GraphNode> nodes = new Dictionary<int,GraphNode>();
+    protected Dictionary<int, GraphNode> nodes = new Dictionary<int, GraphNode>();
     //Hash Table of the same Color (type) of property
     protected Dictionary<int, int> totalType = new Dictionary<int, int>();
     protected Dictionary<string, GraphNode> currentNodes = new Dictionary<string, GraphNode>();
@@ -41,7 +41,7 @@ public class Graph : MonoBehaviour
                 {
                     totalType[typeId] += 1;
                 }
-            }            
+            }
         }
     }
 
@@ -80,22 +80,16 @@ public class Graph : MonoBehaviour
             while (nextNode.NodeID != targetNode.NodeID)
             {
                 listNodes.Add(nextNode);
-                if (nextNode.Next() != null)
-                {
-                    nextNode = nextNode.Next();
-                }
+                nextNode = nextNode.Next();
             }
         }
         else
         {
             GraphNode prevNode = currentNode.Previous();
-            while (prevNode != targetNode.Previous())
+            while (prevNode.NodeID != targetNode.NodeID)
             {
                 listNodes.Add(prevNode);
-                if (prevNode.Previous() != null)
-                {
-                    prevNode = prevNode.Previous();
-                }
+                prevNode = prevNode.Previous();
             }
         }
 
@@ -118,10 +112,7 @@ public class Graph : MonoBehaviour
             GraphNode nextNode = currentNode;
             while (count < step)
             {
-                if (nextNode.Next() != null)
-                {
-                    nextNode = nextNode.Next();
-                }
+                nextNode = nextNode.Next();
                 listNodes.Add(nextNode);
                 count++;
             }
@@ -132,10 +123,7 @@ public class Graph : MonoBehaviour
             GraphNode prevNode = currentNode;
             while (count < step * -1)
             {
-                if (prevNode.Previous() != null)
-                {
-                    prevNode = prevNode.Previous();
-                }
+                prevNode = prevNode.Previous();
                 listNodes.Add(prevNode);
                 count++;
             }
@@ -158,8 +146,8 @@ public class Graph : MonoBehaviour
     /// </summary>
     /// <param name="args"></param>
     private void OnEnterNode(params object[] args)
-    {        
-        if(args.Length != 2)
+    {
+        if (args.Length != 2)
         {
             Debug.LogError("[GetOnEnterNode] Invalid Args...");
         }
@@ -173,14 +161,14 @@ public class Graph : MonoBehaviour
             {
                 currentNodes[address] = node;
             }
-            
+
             if (currentNodes[address].property.data != null)
-            {   
+            {
                 //Debug.Log(currentNodes[address].property.data.description);
                 Debug.Log(currentNodes[address].property.data.property_name);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
         }
