@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionExchanceCard : IAction
+public class ActionChanceCard : IAction
 {
     public ACTION GetAction()
     {
