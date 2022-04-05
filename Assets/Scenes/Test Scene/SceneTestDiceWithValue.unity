@@ -482,9 +482,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5395963703118360549, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395963703118360549, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395963703118360549, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5577964442663811522, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
       propertyPath: m_Name
       value: DiceWithValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 5577964442663811522, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5577964442663811523, guid: fa6ad5188769e144b9de101555628eb5, type: 3}
       propertyPath: m_RootOrder
@@ -549,4 +565,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80e3b3eb35bfd84f8075523d4d75645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 7400000, guid: eaf924c40a683804c9712ae34e2d9907, type: 2}
+  clip: {fileID: 7400000, guid: d2203f8c31b40a2468de22be7ff328f7, type: 2}

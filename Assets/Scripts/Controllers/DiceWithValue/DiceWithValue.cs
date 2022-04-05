@@ -26,6 +26,7 @@ public class DiceWithValue : MonoBehaviour
 
     public void RollDice(int value)
     {
+        Debug.Log("aaaaa");
         if (!thrown)
         {
             StartCoroutine(RolldiceAnimation(value));
@@ -34,10 +35,10 @@ public class DiceWithValue : MonoBehaviour
 
     IEnumerator RolldiceAnimation(int value)
     {
+        animator.SetBool("drop", false);
         thrown = true;
         animator.SetInteger("diceValue", value);
-        animator.SetFloat("diceAnimation", GetDiceAnimation());
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3f);
         thrown = false;
         OnEnd?.Invoke();
         animator.SetInteger("diceValue", 0);
@@ -50,5 +51,11 @@ public class DiceWithValue : MonoBehaviour
         arr[1] = 0.5f;
         arr[2] = 1;
         return arr[Random.Range(0, arr.Length - 1)];
+    }
+
+    public void DropDice ()
+    {
+        animator.SetBool("drop", true);
+        animator.SetFloat("diceAnimation", GetDiceAnimation());
     }
 }

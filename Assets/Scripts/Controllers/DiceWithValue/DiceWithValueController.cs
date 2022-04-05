@@ -41,6 +41,7 @@ public class DiceWithValueController : MonoBehaviour
             this.rb.useGravity = true;
             this.thrown = true;
             this.value = value;
+            this.dice.DropDice();
         }
     }
 
