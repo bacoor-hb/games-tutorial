@@ -6,7 +6,10 @@ using TMPro;
 public class TestViewChanceCard : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI cardId;
+    private TextMeshProUGUI textChanceCard;
+
+    [SerializeField]
+    private TextMeshProUGUI textLuckyCard;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +22,14 @@ public class TestViewChanceCard : MonoBehaviour
 
     }
 
-    public void SetViewData(int id)
+    public void SetChanceCard(int id)
     {
-        cardId.text = id.ToString();
+        textChanceCard.text = id.ToString();
+    }
+
+
+    public void SetLuckyCard(int id)
+    {
+        textLuckyCard.text = id.ToString();
     }
 }

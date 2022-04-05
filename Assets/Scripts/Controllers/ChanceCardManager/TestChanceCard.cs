@@ -6,6 +6,10 @@ public class TestChanceCard : MonoBehaviour
 {
     [SerializeField]
     private TestViewChanceCard ui;
+
+    [SerializeField]
+    private ChanceCardManager chanceCardManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +22,14 @@ public class TestChanceCard : MonoBehaviour
         if (Input.GetKeyDown("k"))
         {
             // bam k de rut the khi van
-            
+            ChanceCard card = chanceCardManager.GetRandomChanceCard();
+            ui.SetChanceCard(card.Id);
+
         } else if (Input.GetKeyDown("c"))
         {
             // bam c de rut the co hoi
+            ChanceCard card = chanceCardManager.GetRandomLuckyCard();
+            ui.SetLuckyCard(card.Id);
         }
     }
 }
