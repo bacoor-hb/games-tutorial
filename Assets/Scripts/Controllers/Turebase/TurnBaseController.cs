@@ -11,32 +11,50 @@ public class TurnBaseController : MonoBehaviour
     //public static Event<IAction> OnActionEnd;
     //public static Event<Object> OnChangePlayer;
 
+    public delegate void Event();
+    public Event OnStartGame;
+    public Event OnEndGame;
 
-    public static bool isStarting = false;
-    public static List<IPlayer> playerList = new List<IPlayer>();
-    private static List<IAction> historyActionList;
-    private static Queue<IAction> queueActionList;
-    private static IAction currentAction;
-    private static int turnBase = 0;
-    private static CYCLE_TURN status = CYCLE_TURN.START_TURN;
+    public bool isStarting = false;
+    public  List<IPlayer> playerList = new List<IPlayer>();
+    private Queue<IAction> queueActionList;
+    private  IAction currentAction;
+    private  int turnBase = 0;
+    private  CYCLE_TURN status = CYCLE_TURN.START_TURN;
 
-
-    public static void StartGame()
+    /// <summary>
+    /// call StartGame to start game
+    /// </summary>
+    public void StartGame()
     {
         if (!isStarting)
         {
             isStarting = true;
             turnBase = 0;
             status = CYCLE_TURN.START_TURN;
+            if (OnStartGame != null)
+            {
+                this.OnStartGame();
+            }
         }
     }
 
-    public static void EndGame()
+    /// <summary>
+    /// call EndGame to stop game
+    /// </summary>
+    public void EndGame()
     {
         isStarting = false;
+        if (OnEndGame != null)
+        {
+            this.OnEndGame();
+        }
     }
 
-    public static void Register(IPlayer player)
+    /// <summary>
+    /// regist game
+    /// </summary>
+    public void Register(IPlayer player)
     {
         if (isStarting)
         {
@@ -45,12 +63,10 @@ public class TurnBaseController : MonoBehaviour
         playerList.Add(player);
     }
 
-    private void Start()
-    {
-        isStarting = false;
-    }
-
-    public static void AddAction(IPlayer player, IAction action)
+    /// <summary>
+    /// add action when your turn
+    /// </summary>
+    public void AddAction(IPlayer player, IAction action)
     {
         if (!isStarting)
         {
@@ -60,6 +76,11 @@ public class TurnBaseController : MonoBehaviour
         {
             queueActionList.Enqueue(action);
         }
+    }
+
+    private void Start()
+    {
+        isStarting = false;
     }
 
     private void Update()
@@ -83,13 +104,12 @@ public class TurnBaseController : MonoBehaviour
                 case CYCLE_TURN.END_TURN:
                     EndTurn();
                     break;
-
             }
         }
     }
 
     // handle law in game
-    private static void OnAction()
+    private void OnAction()
     {
         currentAction.OnStartAction();
         currentAction.OnAction();
@@ -100,13 +120,15 @@ public class TurnBaseController : MonoBehaviour
     }
 
     // check change player when return true
-    private static bool CheckChangePlayer()
+    private bool CheckChangePlayer()
     {
         return true;
     }
 
-    // Script run before start turn
-    private static void StartTurn()
+    /// <summary>
+    ///  Script run before start turn
+    /// </summary>
+    private void StartTurn()
     {
         //if (OnStartTurn != null)
         //{
@@ -115,14 +137,16 @@ public class TurnBaseController : MonoBehaviour
         playerList[turnBase].StartTurn();
 
         // init history action in one turn
-        historyActionList = new List<IAction>();
         queueActionList = new Queue<IAction>();
         // chanage status
         status = CYCLE_TURN.START_ACTION;
     }
 
-    // Script run after end turn
-    private static void EndTurn()
+
+    /// <summary>
+    ///  Script run after end turn
+    /// </summary>
+    private void EndTurn()
     {
         //if (OnEndTurn != null)
         //{
@@ -138,8 +162,10 @@ public class TurnBaseController : MonoBehaviour
         status = CYCLE_TURN.START_TURN;
     }
 
-    // script change player
-    private static void ChangePlayer()
+    /// <summary>
+    ///  Script run change player
+    /// </summary>
+    private void ChangePlayer()
     {
         //if (OnChangePlayer != null)
         //{
@@ -148,20 +174,22 @@ public class TurnBaseController : MonoBehaviour
         turnBase = NextPlayer();
     }
 
-    private static int NextPlayer()
+    private int NextPlayer()
     {
         return (turnBase + 1) % playerList.Count;
     }
 
-    // script run before excute action
-    private static void ActionStart()
+    /// <summary>
+    ///  Script run before excute action
+    /// </summary>
+    private void ActionStart()
     {
         if (queueActionList.Count > 0)
         {
             currentAction = queueActionList.Dequeue();
             //if (OnActionStart != null)
             //{
-            //    OnActionStart(currentAction);
+            //    OnActionStart(currentAction);    
             //}
             playerList[turnBase].ActionStart();
 
@@ -169,8 +197,11 @@ public class TurnBaseController : MonoBehaviour
         }
     }
 
-    // script run after excute action
-    private static void ActionEnd()
+    
+    /// <summary>
+    ///  Script run after excute action
+    /// </summary>
+    private void ActionEnd()
     {
         //if (OnActionEnd != null)
         //{
@@ -178,8 +209,6 @@ public class TurnBaseController : MonoBehaviour
         //}
         playerList[turnBase].ActionEnd();
 
-        // add history excuted action
-        historyActionList.Add(currentAction);
         // check action end to pass turn
         if (currentAction.GetAction() == ACTION.END_TURN)
         {

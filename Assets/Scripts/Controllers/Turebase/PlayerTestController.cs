@@ -6,13 +6,15 @@ using System.Collections.Generic;
 
 public class PlayerTestController : MonoBehaviour, IPlayer
 {
+    [SerializeReference]
+    TurnBaseController turnbase;
     static int count = 0;
     public int id;
     // Use this for initialization
     void Start()
     {
         id = count;
-        TurnBaseController.Register(this);
+        turnbase.Register(this);
         count++;
     }
 
@@ -21,18 +23,18 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         if (Input.GetKeyDown("a"))
         {
-            TurnBaseController.AddAction(this, new ActionEndTurn());
+            turnbase.AddAction(this, new ActionEndTurn());
         }
 
         if (id == 0 && Input.GetKeyDown("space"))
         {
-            if (TurnBaseController.isStarting)
+            if (turnbase.isStarting)
             {
-                TurnBaseController.EndGame();
+                turnbase.EndGame();
             }
             else
             {
-                TurnBaseController.StartGame();
+                turnbase.StartGame();
             }
         }
     }
