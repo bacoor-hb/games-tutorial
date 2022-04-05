@@ -26,7 +26,6 @@ public class DiceWithValue : MonoBehaviour
 
     public void RollDice(int value)
     {
-        Debug.Log("aaaaa");
         if (!thrown)
         {
             StartCoroutine(RolldiceAnimation(value));
