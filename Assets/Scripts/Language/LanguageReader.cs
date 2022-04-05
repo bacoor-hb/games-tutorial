@@ -7,6 +7,7 @@ Created by Adam T. Ryder
 C# version by O. Glorieux
  
 */
+using System;
 using System.Collections;
 using System.IO;
 using System.Xml;
@@ -25,6 +26,7 @@ public class LanguageReader
     public OnEventCalled OnStartTranslating;
 
     public OnEventCalled OnEndTranslating;
+    private ArrayList listFilePath= new ArrayList();
 
     /*
     Initialize Lang class
@@ -66,27 +68,36 @@ public class LanguageReader
     */
     public void setLanguage(string path, string language)
     {
-        OnStartLoadingLanguageFile?.Invoke();
-        var xml = new XmlDocument();
-        xml.Load (path);
-        OnEndLoadingLanguageFile?.Invoke();
-     Strings = new Hashtable();
+        try
+        {     
+                OnStartLoadingLanguageFile?.Invoke();
+                var xml = new XmlDocument();
+                xml.Load(path);
+                listFilePath.Add(path);
+                OnEndLoadingLanguageFile?.Invoke();
+                Strings = new Hashtable();
 
-    var element = xml.DocumentElement[language];
-        if (element != null) 
-        {
-            var elemEnum = element.GetEnumerator();
-            while (elemEnum.MoveNext())
-            {
-                var xmlItem = (XmlElement) elemEnum.Current;
-                Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
-            }
+                var element = xml.DocumentElement[language];
+                if (element != null)
+                {
+                    var elemEnum = element.GetEnumerator();
+                    while (elemEnum.MoveNext())
+                    {
+                        var xmlItem = (XmlElement)elemEnum.Current;
+                        Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                    }
+                }
+                else
+                {
+                    Debug
+                        .LogError("The specified language does not exist: " + language);
+                }
         }
-        else
+        catch (Exception e)
         {
-            Debug
-                .LogError("The specified language does not exist: " + language);
+            Debug.LogError("Error: " + e.Message);
         }
+        
     }
 
     /*
@@ -158,26 +169,28 @@ public class LanguageReader
     }
     public void loadMoreFilePath(string filePath, string language)
     {
-        OnStartLoadingLanguageFile?.Invoke();
-        var xml = new XmlDocument();
-        xml.Load(filePath);
-        OnEndLoadingLanguageFile?.Invoke();
+        if(!listFilePath.Contains(filePath)){
+            OnStartLoadingLanguageFile?.Invoke();
+            var xml = new XmlDocument();
+            xml.Load(filePath);
+            listFilePath.Add(listFilePath);
+            OnEndLoadingLanguageFile?.Invoke();
 
-        var element = xml.DocumentElement[language];
-        if (element != null)
-        {
-            var elemEnum = element.GetEnumerator();
-            while (elemEnum.MoveNext())
+            var element = xml.DocumentElement[language];
+            if (element != null)
             {
-                var xmlItem = (XmlElement)elemEnum.Current;
-                Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                var elemEnum = element.GetEnumerator();
+                while (elemEnum.MoveNext())
+                {
+                    var xmlItem = (XmlElement)elemEnum.Current;
+                    Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                }
+            }
+            else
+            {
+                Debug
+                    .LogError("The specified language does not exist: " + language);
             }
         }
-        else
-        {
-            Debug
-                .LogError("The specified language does not exist: " + language);
-        }
     }
-  
 }

@@ -2,10 +2,14 @@
 <languages>
 
 	<English>
-		<string name="story1">Story1</string>
+		<string name="story1">Story1 en</string>
+		<string name="story2">Story2 en</string>
+
 	</English>
 
 	<Japanese>
-		<string name="story1">Story1</string>
+		<string name="story1">Story1 jp</string>
+		<string name="story2">Story2 jp</string>
+
 	</Japanese>
 </languages>
