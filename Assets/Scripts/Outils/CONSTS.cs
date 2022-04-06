@@ -21,12 +21,12 @@ public enum CYCLE_TURN
     END_TURN,
 }
 
-public enum ACTION
+public enum ACTION_TYPE
 {
     RELEASE_CARD,
     ROLL_DICE,
     RUN_THE_CELL,
-    PUNCHARE,
+    PURCHASE,
     BUILDING,
     AUCTION,
     END_TURN,

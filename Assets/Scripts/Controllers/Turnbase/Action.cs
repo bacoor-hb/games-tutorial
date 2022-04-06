@@ -8,19 +8,19 @@ public class Action
     public Event EventAction;
     public Event EventEndAction;
 
-    private ACTION action;
+    private ACTION_TYPE actionType;
 
-    public Action(ACTION action)
+    public Action(ACTION_TYPE action)
     {
-        this.action = action;
+        this.actionType = action;
     }
 
-    public ACTION GetAction()
+    public ACTION_TYPE GetAction()
     {
-        return this.action;
+        return this.actionType;
     }
 
-    public void OnStartAction()
+    public virtual void OnStartAction()
     {
         if (EventStartAction != null)
         {
@@ -28,7 +28,7 @@ public class Action
         }
     }
 
-    public void OnAction()
+    public virtual void OnAction()
     {
         if (EventAction != null)
         {
@@ -36,7 +36,7 @@ public class Action
         }
     }
 
-    public void OnEndAction()
+    public virtual void OnEndAction()
     {
         if (EventEndAction != null)
         {
