@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0640aeb4050564be98951c977d0b66b9, type: 3}
   m_Name: LUCKY_9
   m_EditorClassIdentifier: Assembly-CSharp::ChanceCard
   Model: {fileID: 0}
