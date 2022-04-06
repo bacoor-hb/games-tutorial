@@ -49,9 +49,9 @@ public class PlayerTestController : MonoBehaviour, IPlayer
         }
         if (actionType == ACTION_TYPE.AUCTION)
         {
-            action.EventStartAction += OnPurchaseStart;
-            action.EventEndAction += OnPurchaseEnd;
-            action.EventAction += OnPurchase;
+            action.EventStartAction += OnAunctionStart;
+            action.EventEndAction += OnAunctionEnd;
+            action.EventAction += OnAunction;
         }
 
         return action;
@@ -69,6 +69,7 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     public void OnPurchase()
     {
         Debug.Log("Action:OnPurchase | id: " + id);
+
     }
     #endregion
 
