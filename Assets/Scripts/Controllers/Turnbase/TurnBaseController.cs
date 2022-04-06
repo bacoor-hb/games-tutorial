@@ -13,22 +13,32 @@ public class TurnBaseController : MonoBehaviour
     public Event<int> OnEndAction;
     public Event<int> OnChangePlayer;
 
+    public delegate void Callback();
+    public Callback OnStepStatus;
+
+
+
     public bool isStarting = false;
-    public List<IPlayer> playerList = new List<IPlayer>();
-    private Queue<Action> queueActionList;
-    private Action currentAction;
     public int currentPlayer { get; private set; }
+    public List<IPlayer> playerList = new List<IPlayer>();
+
+    private Action currentAction;
+    private Queue<Action> queueActionList;
+
     private CYCLE_TURN status = CYCLE_TURN.START_TURN;
+    private bool isWaiting = false;
 
     #region Unity Event
     private void Start()
     {
         isStarting = false;
+        OnStepStatus = StepCycleTurn;
     }
 
     private void Update()
     {
-        if (isStarting)
+        // check game start, and status waiting
+        if (isStarting && !isWaiting)
         {
             switch (status)
             {
@@ -76,9 +86,8 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void OnAction()
     {
-        currentAction.OnAction();
-
-        status = CYCLE_TURN.END_ACTION;
+        isWaiting = true;
+        currentAction.OnAction(OnStepStatus);
     }
 
     /// <summary>
@@ -94,7 +103,7 @@ public class TurnBaseController : MonoBehaviour
             playerList[currentPlayer].StartAction();
             currentAction.OnStartAction();
 
-            status = CYCLE_TURN.ON_ACTION;
+            StepCycleTurn();
         }
     }
 
@@ -107,19 +116,44 @@ public class TurnBaseController : MonoBehaviour
         playerList[currentPlayer].EndAction();
         currentAction.OnEndAction();
 
-        // check action end to pass turn
-        if (currentAction.GetAction() == ACTION_TYPE.END_TURN)
-        {
-            status = CYCLE_TURN.END_TURN;
-        }
-        else
-        {
-            status = CYCLE_TURN.START_ACTION;
-        }
+        StepCycleTurn();
     }
     #endregion
 
     #region Turn Management
+    /// <summary>
+    ///  Step cycle turn
+    /// </summary>
+    private void StepCycleTurn()
+    {
+        isWaiting = false;
+        switch (status)
+        {
+            case CYCLE_TURN.START_TURN:
+                status = CYCLE_TURN.START_ACTION;
+                break;
+            case CYCLE_TURN.START_ACTION:
+                status = CYCLE_TURN.ON_ACTION;
+                break;
+            case CYCLE_TURN.ON_ACTION:
+                status = CYCLE_TURN.END_ACTION;
+                break;
+            case CYCLE_TURN.END_ACTION:
+                if (currentAction.GetAction() == ACTION_TYPE.END_TURN)
+                {
+                    status = CYCLE_TURN.END_TURN;
+                }
+                else
+                {
+                    status = CYCLE_TURN.START_ACTION;
+                }
+                break;
+            case CYCLE_TURN.END_TURN:
+                status = CYCLE_TURN.START_TURN;
+                break;
+        }
+    }
+
     /// <summary>
     /// call StartGame to start game
     /// </summary>
@@ -129,9 +163,10 @@ public class TurnBaseController : MonoBehaviour
         {
             isStarting = true;
             currentPlayer = 0;
-            status = CYCLE_TURN.START_TURN;
-
             OnStartGame?.Invoke(currentPlayer);
+
+            status = CYCLE_TURN.START_TURN;
+            isWaiting = false;
         }
     }
 
@@ -153,14 +188,14 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void StartTurn()
     {
+        // init history action in one turn
+        queueActionList = new Queue<Action>();
+
         //Trigger the Start turn function of the current player
         playerList[currentPlayer].StartTurn();
         OnStartTurn?.Invoke(currentPlayer);
 
-        // init history action in one turn
-        queueActionList = new Queue<Action>();
-        // chanage status
-        status = CYCLE_TURN.START_ACTION;
+        StepCycleTurn();
     }
 
 
@@ -178,7 +213,7 @@ public class TurnBaseController : MonoBehaviour
         {
             ChangePlayer();
         }
-        status = CYCLE_TURN.START_TURN;
+        StepCycleTurn();
     }
 
     /// <summary>

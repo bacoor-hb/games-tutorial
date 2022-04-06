@@ -25,9 +25,10 @@ public class Action
         EventStartAction?.Invoke();
     }
 
-    public virtual void OnAction()
+    public virtual void OnAction(TurnBaseController.Callback OnStepStatus)
     {
         EventAction?.Invoke();
+        OnStepStatus();
     }
 
     public virtual void OnEndAction()
