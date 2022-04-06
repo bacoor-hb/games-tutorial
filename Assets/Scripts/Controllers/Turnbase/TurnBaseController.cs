@@ -9,8 +9,8 @@ public class TurnBaseController : MonoBehaviour
     public Event<int> OnEndGame;
     public Event<int> OnStartTurn;
     public Event<int> OnEndTurn;
-    public Event<int> OnStartAction;
-    public Event<int> OnEndAction;
+    public Event<ACTION_TYPE> OnStartAction;
+    public Event<ACTION_TYPE> OnEndAction;
     public Event<int> OnChangePlayer;
 
     public delegate void Callback();
@@ -99,7 +99,7 @@ public class TurnBaseController : MonoBehaviour
         {
             currentAction = queueActionList.Dequeue();
 
-            OnStartAction?.Invoke(currentPlayer);
+            OnStartAction?.Invoke(currentAction.GetAction());
             playerList[currentPlayer].StartAction();
             currentAction.OnStartAction();
 
@@ -112,7 +112,7 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void EndAction()
     {
-        OnEndAction?.Invoke(currentPlayer);
+        OnEndAction?.Invoke(currentAction.GetAction());
         playerList[currentPlayer].EndAction();
         currentAction.OnEndAction();
 
