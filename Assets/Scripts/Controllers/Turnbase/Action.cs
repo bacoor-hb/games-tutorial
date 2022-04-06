@@ -22,25 +22,16 @@ public class Action
 
     public virtual void OnStartAction()
     {
-        if (EventStartAction != null)
-        {
-            EventStartAction();
-        }
+        EventStartAction?.Invoke();
     }
 
     public virtual void OnAction()
     {
-        if (EventAction != null)
-        {
-            EventAction();
-        }
+        EventAction?.Invoke();
     }
 
     public virtual void OnEndAction()
     {
-        if (EventEndAction != null)
-        {
-            EventEndAction();
-        }
+        EventEndAction?.Invoke();
     }
 }

@@ -3,6 +3,6 @@ public interface IPlayer
 {
     public void StartTurn();
     public void EndTurn();
-    public void ActionStart();
-    public void ActionEnd();
+    public void StartAction();
+    public void EndAction();
 }

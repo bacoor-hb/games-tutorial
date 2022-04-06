@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 public class PlayerTestController : MonoBehaviour, IPlayer
 {
-    public int id;   
+    public int id;
 
     public void SetPlayerID(int _id)
     {
         id = _id;
     }
-    
+
 
     public void StartTurn()
     {
@@ -26,7 +26,16 @@ public class PlayerTestController : MonoBehaviour, IPlayer
         Material myMaterial = GetComponent<Renderer>().material;
         myMaterial.color = Color.white;
         Debug.Log("EndTurn: id: " + id);
+    }
 
+    public void StartAction()
+    {
+        Debug.Log("StartAction: id: " + id);
+    }
+
+    public void EndAction()
+    {
+        Debug.Log("EndAction: id: " + id);
     }
 
     public void OnPurchaseStart()
@@ -44,15 +53,5 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     public void OnAunctionEnd()
     {
         Debug.Log("ActionEnd:OnAunction | id: " + id);
-    }
-
-    void IPlayer.ActionStart()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IPlayer.ActionEnd()
-    {
-        throw new System.NotImplementedException();
     }
 }
