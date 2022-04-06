@@ -16,14 +16,6 @@ public class DiceWithValue : MonoBehaviour
         animator.SetInteger("diceValue", 0);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            RollDice(2);
-        }
-    }
-
     public void RollDice(int value)
     {
         if (!thrown)
@@ -37,7 +29,7 @@ public class DiceWithValue : MonoBehaviour
         animator.SetBool("drop", false);
         thrown = true;
         animator.SetInteger("diceValue", value);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         thrown = false;
         OnEnd?.Invoke();
         animator.SetInteger("diceValue", 0);
