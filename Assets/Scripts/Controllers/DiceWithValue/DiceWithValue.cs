@@ -37,11 +37,11 @@ public class DiceWithValue : MonoBehaviour
 
     float GetDiceAnimation ()
     {
-        float[] arr = new float[3];
-        arr[0] = 0;
-        arr[1] = 0.5f;
-        arr[2] = 1;
-        return arr[Random.Range(0, arr.Length - 1)];
+        List<float> listAnimationValue = new List<float> ();
+        listAnimationValue.Add(0);
+        listAnimationValue.Add(0.5f);
+        listAnimationValue.Add(1);
+        return listAnimationValue[Random.Range(0, listAnimationValue.Count - 1)];
     }
 
     public void DropDice ()
