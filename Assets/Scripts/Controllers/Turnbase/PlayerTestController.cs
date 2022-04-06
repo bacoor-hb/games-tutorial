@@ -38,20 +38,52 @@ public class PlayerTestController : MonoBehaviour, IPlayer
         Debug.Log("EndAction: id: " + id);
     }
 
+    public Action GetAction(ACTION_TYPE actionType)
+    {
+        Action action = new Action(actionType);
+        if (actionType == ACTION_TYPE.PURCHASE)
+        {
+            action.EventStartAction += OnPurchaseStart;
+            action.EventEndAction += OnPurchaseEnd;
+            action.EventAction += OnPurchase;
+        }
+        if (actionType == ACTION_TYPE.AUCTION)
+        {
+            action.EventStartAction += OnPurchaseStart;
+            action.EventEndAction += OnPurchaseEnd;
+            action.EventAction += OnPurchase;
+        }
+
+        return action;
+    }
+
+    #region OnPurchase
     public void OnPurchaseStart()
     {
-        Debug.Log("ActionStart:OnPurchase | id: " + id);
+        Debug.Log("StartAction:OnPurchase | id: " + id);
     }
     public void OnPurchaseEnd()
     {
-        Debug.Log("ActionEnd:OnPurchase | id: " + id);
+        Debug.Log("EndAction:OnPurchase | id: " + id);
     }
+    public void OnPurchase()
+    {
+        Debug.Log("Action:OnPurchase | id: " + id);
+    }
+    #endregion
+
+    #region OnAunction
     public void OnAunctionStart()
     {
-        Debug.Log("ActionStart:OnAunction | id: " + id);
+        Debug.Log("StartAction:OnAunction | id: " + id);
     }
     public void OnAunctionEnd()
     {
-        Debug.Log("ActionEnd:OnAunction | id: " + id);
+        Debug.Log("EndAction:OnAunction | id: " + id);
     }
+    public void OnAunction()
+    {
+        Debug.Log("Action:OnAunction | id: " + id);
+    }
+    #endregion
 }
