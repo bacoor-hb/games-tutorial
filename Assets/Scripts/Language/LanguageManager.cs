@@ -19,18 +19,17 @@ public class LanguageManager : MonoBehaviour
 
     //path of the file that the game is reading from
     string langFilePath = "Resources/menuSentences.xml";
-    public bool isFinishLoadLanguage =false;
+    public bool isFinishLoadLanguage = false;
     bool isChangeFinish = true;
     //string StoryTellingFilePath = "Resources/storyTelling.xml";
-    
-   
+
+
     IEnumerator LoadFileWeb(string url)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             Debug.Log("1-LoadFileWeb");
-            yield return www.SendWebRequest(); 
-            yield return new WaitForSeconds(6);
+            yield return www.SendWebRequest();
             isFinishLoadLanguage = true;
             if (isFinishLoadLanguage)
             {
@@ -46,7 +45,7 @@ public class LanguageManager : MonoBehaviour
                     langReader = new LanguageReader(www.downloadHandler.text, lang.Value, true);
                 }
             }
-            
+
         }
     }
 
@@ -58,23 +57,22 @@ public class LanguageManager : MonoBehaviour
                 false);
 
         yield return langReader;
-        yield return new WaitForSeconds(6);
         isFinishLoadLanguage = true;
 
     }
-    protected  void Awake()
+    protected void Awake()
     {
         // load from Resource 
         StartCoroutine(LoadFileLocal());
 
         //load from server
-        //StartCoroutine(LoadFileWeb(pathLanguage));
+        // StartCoroutine(LoadFileWeb(pathLanguage));
 
     }
 
     void Start()
     {
-   
+
 
     }
     private void Update()
@@ -83,7 +81,7 @@ public class LanguageManager : MonoBehaviour
         {
             languageView.Init();
             SetUpEventLanguage();
-             isChangeFinish = false;
+            isChangeFinish = false;
         }
     }
     void SetUpEventLanguage()
@@ -97,7 +95,7 @@ public class LanguageManager : MonoBehaviour
         languageView.OnJapaneseClicked += OnJapaneseClicked;
     }
 
-   
+
 
     public void SetLanguageFile(string filePath)
     {
