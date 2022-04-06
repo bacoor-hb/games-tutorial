@@ -75,4 +75,23 @@ public enum PROPERTY_ID: int
     TRANSPORT_1 = 25,
     TRANSPORT_2 = 26,
     TRANSPORT_3 = 27,
+    
+    START = -1,
+
+    CHANCE_0 = -2,
+    CHANCE_1 = -3,
+    CHANCE_2 = -4,
+
+    LUCKY_0 = -5,
+    LUCKY_1 = -6,
+    LUCKY_2 = -7,
+
+    TAX_0 = -8,
+    TAX_1 = -9,
+
+    PARK = -10,
+
+    PRISON = -11,
+    IMPRISON = -12,
+
 }
