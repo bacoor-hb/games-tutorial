@@ -16,11 +16,11 @@ public class TurnBaseController : MonoBehaviour
     public Event OnEndGame;
 
     public bool isStarting = false;
-    public  List<IPlayer> playerList = new List<IPlayer>();
-    private Queue<IAction> queueActionList;
-    private  IAction currentAction;
-    private  int turnBase = 0;
-    private  CYCLE_TURN status = CYCLE_TURN.START_TURN;
+    public List<IPlayer> playerList = new List<IPlayer>();
+    private Queue<Action> queueActionList;
+    private Action currentAction;
+    private int turnBase = 0;
+    private CYCLE_TURN status = CYCLE_TURN.START_TURN;
 
     /// <summary>
     /// call StartGame to start game
@@ -66,7 +66,7 @@ public class TurnBaseController : MonoBehaviour
     /// <summary>
     /// add action when your turn
     /// </summary>
-    public void AddAction(IPlayer player, IAction action)
+    public void AddAction(IPlayer player, Action action)
     {
         if (!isStarting)
         {
@@ -111,10 +111,7 @@ public class TurnBaseController : MonoBehaviour
     // handle law in game
     private void OnAction()
     {
-        currentAction.OnStartAction();
         currentAction.OnAction();
-        currentAction.OnEndAction();
-
 
         status = CYCLE_TURN.END_ACTION;
     }
@@ -137,7 +134,7 @@ public class TurnBaseController : MonoBehaviour
         playerList[turnBase].StartTurn();
 
         // init history action in one turn
-        queueActionList = new Queue<IAction>();
+        queueActionList = new Queue<Action>();
         // chanage status
         status = CYCLE_TURN.START_ACTION;
     }
@@ -192,12 +189,13 @@ public class TurnBaseController : MonoBehaviour
             //    OnActionStart(currentAction);    
             //}
             playerList[turnBase].ActionStart();
+            currentAction.OnStartAction();
 
             status = CYCLE_TURN.ON_ACTION;
         }
     }
 
-    
+
     /// <summary>
     ///  Script run after excute action
     /// </summary>
@@ -208,6 +206,7 @@ public class TurnBaseController : MonoBehaviour
         //    OnActionEnd(currentAction);
         //}
         playerList[turnBase].ActionEnd();
+        currentAction.OnEndAction();
 
         // check action end to pass turn
         if (currentAction.GetAction() == ACTION.END_TURN)
