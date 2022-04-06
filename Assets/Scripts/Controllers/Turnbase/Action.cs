@@ -22,25 +22,17 @@ public class Action
 
     public virtual void OnStartAction()
     {
-        if (EventStartAction != null)
-        {
-            EventStartAction();
-        }
+        EventStartAction?.Invoke();
     }
 
-    public virtual void OnAction()
+    public virtual void OnAction(TurnBaseController.Callback OnStepStatus)
     {
-        if (EventAction != null)
-        {
-            EventAction();
-        }
+        EventAction?.Invoke();
+        OnStepStatus();
     }
 
     public virtual void OnEndAction()
     {
-        if (EventEndAction != null)
-        {
-            EventEndAction();
-        }
+        EventEndAction?.Invoke();
     }
 }

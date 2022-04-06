@@ -14,7 +14,7 @@ public class LocalGameController : MonoBehaviour
     void Start()
     {
         //Set Player id ~ The turn order
-        for(int i = 0; i< players.Count; i++)
+        for (int i = 0; i < players.Count; i++)
         {
             players[i].SetPlayerID(i);
             turnBaseController.Register(players[i]);
@@ -27,17 +27,17 @@ public class LocalGameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], new Action(ACTION_TYPE.PURCHASE));
+            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.PURCHASE));
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], new Action(ACTION_TYPE.AUCTION));
+            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.AUCTION));
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], new Action(ACTION_TYPE.END_TURN));
+            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.END_TURN));
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
