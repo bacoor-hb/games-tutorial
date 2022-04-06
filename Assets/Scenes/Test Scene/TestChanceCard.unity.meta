@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scenes/Test Scene/TestChanceCard.unity.meta
 guid: 8a1200725138d4c42a7236239bbe2562
 DefaultImporter:
+=======
+guid: 94540635fa4054ade985801a2afce5bc
+NativeFormatImporter:
+>>>>>>> 4dac847047eaf283a738e8d95d1dcd5a1029a829:Assets/ScriptableModels/Properties/CHANCE_0.asset.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

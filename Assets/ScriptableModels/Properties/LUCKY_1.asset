@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 926c05d9b6cc44211b4742e24ee84b1b, type: 3}
-  m_Name: ELECTRIC_1
+  m_Name: LUCKY_1
   m_EditorClassIdentifier: 
-  Model: {fileID: 8856345225622726159, guid: 5bc9fcbf348524533999cda4e478e782, type: 3}
-  id: 23
-  property_name: "C\xF4ng ty thu\u1EF7 \u0111i\u1EC7n Ho\xE0 Binh"
-  description: "C\xF4ng ty thu\u1EF7 \u0111i\u1EC7n Ho\xE0 Binh"
-  typeId: 9
-  cost: 1500
+  Model: {fileID: 0}
+  id: -6
+  property_name: LUCKY_1
+  description: LUCKY_1
+  typeId: 0
+  cost: 0
   cost_rent: 0
   cost_rent_full: 0
-  cost_rent_one_house: 40
-  cost_rent_two_houses: 100
+  cost_rent_one_house: 0
+  cost_rent_two_houses: 0
   cost_rent_three_houses: 0
   cost_rent_four_houses: 0
   cost_rent_hotel: 0
   cost_house: 0
   cost_hotel: 0
-  cost_bid: 300
+  cost_bid: 0
