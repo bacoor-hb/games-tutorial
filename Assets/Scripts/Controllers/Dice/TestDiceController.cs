@@ -8,6 +8,12 @@ public class TestDiceController : MonoBehaviour
     private List<Dice> listDice;
 
     [SerializeField]
+    private List<DiceWithValueController> listDiceWithValue;
+
+    [SerializeField]
+    List<int> listValue;
+
+    [SerializeField]
     private DiceController diceController;
 
     private void Start()
@@ -15,6 +21,7 @@ public class TestDiceController : MonoBehaviour
         diceController.OnResult = LogResult;
         diceController.OnRoll = LogRolling;
         diceController.SetDice(listDice);
+        diceController.SetDiceWithValue(listDiceWithValue);
     }
 
     private void Update()
@@ -23,9 +30,17 @@ public class TestDiceController : MonoBehaviour
         {            
             diceController.RollDice();
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            diceController.RollDice(listValue);
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             diceController.SetDice(listDice);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            diceController.SetDiceWithValue(listDiceWithValue);
         }
     }
 

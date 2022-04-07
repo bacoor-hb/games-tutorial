@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0640aeb4050564be98951c977d0b66b9, type: 3}
+  m_Name: LUCKY_8
+  m_EditorClassIdentifier: Assembly-CSharp::ChanceCard
+  Model: {fileID: 0}
+  Name: 
+  Id: 23
+  Type: 2
+  Value1: 1000
+  Value2: 

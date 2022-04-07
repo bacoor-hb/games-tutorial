@@ -1,161 +1,212 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    protected LinkedList<GameObject> nodes = new LinkedList<GameObject>();
+    protected Dictionary<int, GraphNode> nodes = new Dictionary<int, GraphNode>();
+    //Hash Table of the same Color (type) of property
     protected Dictionary<int, int> totalType = new Dictionary<int, int>();
-    protected Dictionary<string, GameObject> currentNodes = new Dictionary<string, GameObject>();
+    protected Dictionary<string, GraphNode> currentNodes = new Dictionary<string, GraphNode>();
 
+    [SerializeField]
+    private GraphEventManager eventManager;
 
     void Start()
     {
-        GraphEventManager.onEnterNode += GetOnEnterNode;
+        eventManager.onEnterNode += OnEnterNode;
+        eventManager.onEnterStart += OnEnterStart;
+        eventManager.onEnterImprison += OnEnterImprison;
     }
 
-    public void GenerateBoard(Transform[] transforms)
+    /// <summary>
+    /// Add all node to the cache
+    /// </summary>
+    /// <param name="nodeInScene"></param>
+    public void GenerateBoard(GraphNode[] nodeInScene)
     {
-        for (var i = 0; i < transforms.Length; i++)
+        for (var i = 0; i < nodeInScene.Length; i++)
         {
-            if (transforms[i].CompareTag("board_node"))
+            nodes.Add(nodeInScene[i].NodeID, nodeInScene[i]);
+            if (nodeInScene[i].property != null)
             {
-                nodes.AddLast(transforms[i].gameObject);
-                if (transforms[i].gameObject.GetComponent<Property>().data != null)
+                int typeId = nodeInScene[i].property.data.typeId;
+                if (!totalType.ContainsKey(typeId))
                 {
-                    int typeId = transforms[i].gameObject.GetComponent<Property>().data.typeId;
-                    if (!totalType.ContainsKey(typeId))
-                    {
-                        totalType.Add(typeId, 1);
-                    }
-                    else
-                    {
-                        totalType[typeId] += 1;
-                    }
+                    totalType.Add(typeId, 1);
+                }
+                else
+                {
+                    totalType[typeId] += 1;
                 }
             }
         }
     }
 
-    public LinkedListNode<GameObject> GetNode(GameObject node)
+    /// <summary>
+    /// Get a node of this graph base on its ID
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public GraphNode GetNode(int nodeID)
     {
-        return nodes.Find(node);
+        return nodes[nodeID];
     }
 
-    public LinkedList<GameObject> GetNodes()
+    /// <summary>
+    /// Get a list of all Node in this graph
+    /// </summary>
+    /// <returns></returns>
+    public List<GraphNode> GetNodeList()
     {
-        return nodes;
+        return nodes.Select(x => x.Value).ToList();
     }
 
-    public List<GameObject> GetNodesByTargetNode(LinkedListNode<GameObject> currentNode, LinkedListNode<GameObject> targetNode, bool isClockWise = true)
+    /// <summary>
+    /// Get a list of node between currentNode and targetNode, this list include the target node
+    /// </summary>
+    /// <param name="currentNode"></param>
+    /// <param name="targetNode"></param>
+    /// <param name="isClockWise"></param>
+    /// <returns></returns>
+    public List<GraphNode> GetNodesByTargetNode(GraphNode currentNode, GraphNode targetNode, bool isClockWise = true)
     {
-        List<GameObject> listNodes = new List<GameObject>();
+        List<GraphNode> listNodes = new List<GraphNode>();
         if (isClockWise)
         {
-            LinkedListNode<GameObject> nextNode = currentNode.Next;
-            while (nextNode != targetNode.Next)
+            GraphNode nextNode = currentNode.Next();
+            while (nextNode.NodeID != targetNode.NodeID)
             {
-                listNodes.Add(nextNode.Value);
-                if (nextNode.Next != null)
-                {
-                    nextNode = nextNode.Next;
-                }
-                else
-                {
-                    nextNode = nodes.First;
-                }
+                listNodes.Add(nextNode);
+                nextNode = nextNode.Next();
             }
         }
         else
         {
-            LinkedListNode<GameObject> prevNode = currentNode.Previous;
-            while (prevNode != targetNode.Previous)
+            GraphNode prevNode = currentNode.Previous();
+            while (prevNode.NodeID != targetNode.NodeID)
             {
-                listNodes.Add(prevNode.Value);
-                if (prevNode.Previous != null)
-                {
-                    prevNode = prevNode.Previous;
-                }
-                else
-                {
-                    prevNode = nodes.Last;
-                }
-
+                listNodes.Add(prevNode);
+                prevNode = prevNode.Previous();
             }
         }
+
+        listNodes.Add(targetNode);
         return listNodes;
     }
 
-    public List<GameObject> GetNodesByStep(LinkedListNode<GameObject> currentNode, int step)
+    /// <summary>
+    /// Get a list of node "step" step from the current node
+    /// </summary>
+    /// <param name="currentNode"></param>
+    /// <param name="step">Number of step: [> 0 ~ use Next()] [< 0 ~ use Previous()]</param>
+    /// <returns></returns>
+    public List<GraphNode> GetNodesByStep(GraphNode currentNode, int step)
     {
-        List<GameObject> listNodes = new List<GameObject>();
+        List<GraphNode> listNodes = new List<GraphNode>();
         if (step > 0)
         {
             int count = 0;
-            LinkedListNode<GameObject> nextNode = currentNode;
+            GraphNode nextNode = currentNode;
             while (count < step)
             {
-                if (nextNode.Next != null)
-                {
-                    nextNode = nextNode.Next;
-                }
-                else
-                {
-                    nextNode = nodes.First;
-                }
-                listNodes.Add(nextNode.Value);
+                nextNode = nextNode.Next();
+                listNodes.Add(nextNode);
                 count++;
             }
         }
         else if (step < 0)
         {
             int count = 0;
-            LinkedListNode<GameObject> prevNode = currentNode;
+            GraphNode prevNode = currentNode;
             while (count < step * -1)
             {
-                if (prevNode.Previous != null)
-                {
-                    prevNode = prevNode.Previous;
-                }
-                else
-                {
-                    prevNode = nodes.Last;
-                }
-                listNodes.Add(prevNode.Value);
+                prevNode = prevNode.Previous();
+                listNodes.Add(prevNode);
                 count++;
             }
         }
         return listNodes;
     }
-    public Property GetProperty(int index)
-    {
 
-        return null;
-    }
-    public GameObject GetCurrentNodeByAddress(string address)
+    /// <summary>
+    /// Get the node that the user is step on, using the user address
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns></returns>
+    public GraphNode GetCurrentNodeByAddress(string address)
     {
         return currentNodes[address];
     }
 
-    public void GetOnEnterNode(string address, GameObject node)
+    /// <summary>
+    /// Trigger this Event while enter a node
+    /// </summary>
+    /// <param name="args"></param>
+    private void OnEnterNode(params object[] args)
     {
-        if (node != null)
+        if (args.Length != 2)
         {
-            currentNodes[address] = node;
+            Debug.LogError("[GetOnEnterNode] Invalid Args...");
         }
-        else
+        try
         {
-            currentNodes[address] = nodes.First.Value;
-        }
-        if (currentNodes[address].GetComponent<Property>().data != null)
-        {
-            //Debug.Log(currentNodes[address].GetComponent<Property>().data.description);
-        }
-        {
-            //Debug.Log(address);
+            //Convert Params
+            string address = args[0].ToString();
+            GraphNode node = (GraphNode)args[1];
 
+            if (node != null)
+            {
+                currentNodes[address] = node;
+            }
 
-            //Debug.Log(currentNodes[address].GetComponent<Property>().name);
+            if (currentNodes[address].property.data != null)
+            {
+                //Debug.Log(currentNodes[address].property.data.description);
+                Debug.Log(currentNodes[address].property.data.property_name);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
+        }
+    }
+
+    private void OnEnterStart(params object[] args)
+    {
+        if (args.Length != 1)
+        {
+            Debug.LogError("[GetOnEnterNode] Invalid Args...");
+        }
+        try
+        {
+            //Convert Params
+            string address = args[0].ToString();
+            Debug.Log("Bat dau");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
+        }
+    }
+
+    private void OnEnterImprison(params object[] args)
+    {
+        if (args.Length != 1)
+        {
+            Debug.LogError("[GetOnEnterNode] Invalid Args...");
+        }
+        try
+        {
+            //Convert Params
+            string address = args[0].ToString();
+            Debug.Log("Vao tu");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("[GetOnEnterNodeERROR] " + ex.Message);
         }
     }
 

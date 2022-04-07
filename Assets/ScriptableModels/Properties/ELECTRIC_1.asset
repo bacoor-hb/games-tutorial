@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Model: {fileID: 8856345225622726159, guid: 5bc9fcbf348524533999cda4e478e782, type: 3}
   id: 23
-  property_name: "Tập đoàn điện lực Việt Nam"
-  description: "Tập đoàn điện lực Việt Nam"
+  property_name: "C\xF4ng ty thu\u1EF7 \u0111i\u1EC7n Ho\xE0 Binh"
+  description: "C\xF4ng ty thu\u1EF7 \u0111i\u1EC7n Ho\xE0 Binh"
   typeId: 9
   cost: 1500
   cost_rent: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   cost_rent_four_houses: 0
   cost_rent_hotel: 0
   cost_house: 0
-  cost_hotel: 0 
+  cost_hotel: 0
   cost_bid: 300
