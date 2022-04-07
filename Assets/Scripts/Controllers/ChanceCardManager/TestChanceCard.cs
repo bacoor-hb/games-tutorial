@@ -19,13 +19,13 @@ public class TestChanceCard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("k"))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             // bam k de rut the khi van
             ChanceCard card = chanceCardManager.GetRandomChanceCard();
             ui.SetChanceCard(card.Id);
 
-        } else if (Input.GetKeyDown("c"))
+        } else if (Input.GetKeyDown(KeyCode.C))
         {
             // bam c de rut the co hoi
             ChanceCard card = chanceCardManager.GetRandomLuckyCard();
