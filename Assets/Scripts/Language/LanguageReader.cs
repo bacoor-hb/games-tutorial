@@ -27,7 +27,6 @@ public class LanguageReader
 
     public OnEventCalled OnEndTranslating;
     private ArrayList listFilePath = new ArrayList();
-
     /*
     Initialize Lang class
     path = path to XML resource example:  Path.Combine(Application.dataPath, "lang.xml")
@@ -54,7 +53,9 @@ public class LanguageReader
         {
             setLanguageWeb(path, language);
         }
+      
     }
+    
 
     /*
     Use the setLanguage function to swap languages after the Lang class has been initialized.
@@ -86,6 +87,7 @@ public class LanguageReader
                     Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
                 }
                 OnEndLoadingLanguageFile?.Invoke();
+
 
             }
             else
@@ -133,6 +135,7 @@ public class LanguageReader
                     var xmlItem = (XmlElement)elemEnum.Current;
                     Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
                 }
+
                 OnEndLoadingLanguageFile?.Invoke();
 
             }
@@ -180,14 +183,14 @@ public class LanguageReader
 
         return (string)Strings[name];
     }
-    public void loadMoreFilePath(string filePath, string language)
+    public void LoadMoreFilePathLocal(string filePath, string language)
     {
         if (!listFilePath.Contains(filePath))
         {
             OnStartLoadingLanguageFile?.Invoke();
             var xml = new XmlDocument();
             xml.Load(filePath);
-            listFilePath.Add(listFilePath);
+            listFilePath.Add(filePath);
 
             var element = xml.DocumentElement[language];
             if (element != null)
@@ -208,4 +211,5 @@ public class LanguageReader
             }
         }
     }
+  
 }

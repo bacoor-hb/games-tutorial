@@ -20,70 +20,68 @@ public class LanguageManager : MonoBehaviour
     //path of the file that the game is reading from
     string langFilePath = "Resources/menuSentences.xml";
     public bool isFinishLoadLanguage = false;
-    bool isChangeFinish = true;
-    //string StoryTellingFilePath = "Resources/storyTelling.xml";
+    string StoryTellingFilePath = "Resources/storyTelling.xml";
 
 
     IEnumerator LoadFileWeb(string url)
     {
+        isFinishLoadLanguage = false;
+
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            Debug.Log("1-LoadFileWeb");
             yield return www.SendWebRequest();
-            isFinishLoadLanguage = true;
-            if (isFinishLoadLanguage)
-            {
-                if (www.isNetworkError || www.isHttpError)
-                {
-                    Debug.Log("2-LoadFileWeb-err");
-                    Debug.Log(www.error);
-                }
-                else
-                {
 
-                    Debug.Log("2-LoadFileWeb");
-                    langReader = new LanguageReader(www.downloadHandler.text, lang.Value, true);
-                }
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+
+                langReader = new LanguageReader(www.downloadHandler.text, lang.Value, true);
+                isFinishLoadLanguage = true;
+                LoadedLanguageFile();
             }
 
         }
-    }
 
+    }
     IEnumerator LoadFileLocal()
     {
+        isFinishLoadLanguage = false;
         langReader =
             new LanguageReader(Path.Combine(Application.dataPath, langFilePath),
                 lang.Value,
                 false);
 
         yield return langReader;
+        LoadedLanguageFile();
         isFinishLoadLanguage = true;
 
+
     }
+    IEnumerator LoadFileLocalMore()
+    {
+        isFinishLoadLanguage = false;
+        LoadMoreFilePathLocal(StoryTellingFilePath);
+        yield return null;
+        isFinishLoadLanguage = true;
+
+
+    }
+
     protected void Awake()
     {
         // load from Resource 
         StartCoroutine(LoadFileLocal());
 
         //load from server
-        // StartCoroutine(LoadFileWeb(pathLanguage));
+        //StartCoroutine(LoadFileWeb(pathLanguage));
 
     }
 
-    void Start()
-    {
 
 
-    }
-    private void Update()
-    {
-        if (isChangeFinish && isFinishLoadLanguage)
-        {
-            languageView.Init();
-            SetUpEventLanguage();
-            isChangeFinish = false;
-        }
-    }
     void SetUpEventLanguage()
     {
         langReader.OnStartLoadingLanguageFile += OnStartLoadingLanguageFile;
@@ -128,11 +126,12 @@ public class LanguageManager : MonoBehaviour
     /// load More File Path with filePath follow format "Resources/nameFile.xml"
     /// </summary>
     /// <param name="filePath"> </param>
-    public void loadMoreFilePath(string filePath)
+    public void LoadMoreFilePathLocal(string filePath)
     {
-        langReader.loadMoreFilePath(Path.Combine(Application.dataPath, filePath), lang.Value);
+        langReader.LoadMoreFilePathLocal(Path.Combine(Application.dataPath, filePath), lang.Value);
 
     }
+ 
 
 
     void OnStartLoadingLanguageFile()
@@ -142,9 +141,14 @@ public class LanguageManager : MonoBehaviour
 
     void OnEndLoadingLanguageFile()
     {
-        Debug.Log("Language file loaded!");
-    }
+        Debug.Log("Loaded language file...");
 
+    }
+    void LoadedLanguageFile()
+    {
+        languageView.Init();
+        SetUpEventLanguage();
+    }
     void OnStartTranslating()
     {
         Debug.Log("Translating...");
