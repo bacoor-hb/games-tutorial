@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -238,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b9a3682341c41c2a9e68319bf4cd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnbase: {fileID: 1520538249}
   id: 0
 --- !u!65 &120460674
 BoxCollider:
@@ -424,7 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b9a3682341c41c2a9e68319bf4cd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnbase: {fileID: 1520538249}
   id: 0
 --- !u!1 &984047677
 GameObject:
@@ -458,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b9a3682341c41c2a9e68319bf4cd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnbase: {fileID: 1520538249}
   id: 0
 --- !u!65 &984047679
 BoxCollider:
@@ -664,7 +661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b9a3682341c41c2a9e68319bf4cd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnbase: {fileID: 1520538249}
   id: 0
 --- !u!65 &1109613638
 BoxCollider:
@@ -897,3 +893,4 @@ MonoBehaviour:
   - {fileID: 1109613637}
   - {fileID: 984047678}
   - {fileID: 120460673}
+  turnBaseController: {fileID: 1520538249}

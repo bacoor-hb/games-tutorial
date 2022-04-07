@@ -9,26 +9,36 @@ public class TurnBaseController : MonoBehaviour
     public Event<int> OnEndGame;
     public Event<int> OnStartTurn;
     public Event<int> OnEndTurn;
-    public Event<int> OnActionStart;
-    public Event<int> OnActionEnd;
+    public Event<ACTION_TYPE> OnStartAction;
+    public Event<ACTION_TYPE> OnEndAction;
     public Event<int> OnChangePlayer;
 
+    public delegate void Callback();
+    public Callback OnStepStatus;
+
+
+
     public bool isStarting = false;
-    public List<IPlayer> playerList = new List<IPlayer>();
-    private Queue<Action> queueActionList;
-    private Action currentAction;
     public int currentPlayer { get; private set; }
+    public List<IPlayer> playerList = new List<IPlayer>();
+
+    private Action currentAction;
+    private Queue<Action> queueActionList;
+
     private CYCLE_TURN status = CYCLE_TURN.START_TURN;
+    private bool isWaiting = false;
 
     #region Unity Event
     private void Start()
     {
         isStarting = false;
+        OnStepStatus = StepCycleTurn;
     }
 
     private void Update()
     {
-        if (isStarting)
+        // check game start, and status waiting
+        if (isStarting && !isWaiting)
         {
             switch (status)
             {
@@ -36,13 +46,13 @@ public class TurnBaseController : MonoBehaviour
                     StartTurn();
                     break;
                 case CYCLE_TURN.START_ACTION:
-                    ActionStart();
+                    StartAction();
                     break;
                 case CYCLE_TURN.ON_ACTION:
                     OnAction();
                     break;
                 case CYCLE_TURN.END_ACTION:
-                    ActionEnd();
+                    EndAction();
                     break;
                 case CYCLE_TURN.END_TURN:
                     EndTurn();
@@ -58,13 +68,16 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     public void AddAction(IPlayer player, Action action)
     {
-        if (!isStarting)
+        if (isStarting)
+        {
+            if (queueActionList != null && player == playerList[currentPlayer])
+            {
+                queueActionList.Enqueue(action);
+            }
+        }
+        else
         {
             Debug.LogError("[AddAction] ERROR: Game is not start.");
-        }
-        if (queueActionList != null && player == playerList[currentPlayer])
-        {
-            queueActionList.Enqueue(action);
         }
     }
 
@@ -73,51 +86,74 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void OnAction()
     {
-        currentAction.OnAction();
-
-        status = CYCLE_TURN.END_ACTION;
+        isWaiting = true;
+        currentAction.OnAction(OnStepStatus);
     }
 
     /// <summary>
     ///  Script run before excute action
     /// </summary>
-    private void ActionStart()
+    private void StartAction()
     {
         if (queueActionList.Count > 0)
         {
             currentAction = queueActionList.Dequeue();
-            //if (OnActionStart != null)
-            //{
-            //    OnActionStart(currentAction);    
-            //}
-            playerList[currentPlayer].ActionStart();
+
+            OnStartAction?.Invoke(currentAction.GetAction());
+            playerList[currentPlayer].StartAction();
             currentAction.OnStartAction();
 
-            status = CYCLE_TURN.ON_ACTION;
+            StepCycleTurn();
         }
     }
 
     /// <summary>
     ///  Script run after excute action
     /// </summary>
-    private void ActionEnd()
+    private void EndAction()
     {
-        playerList[currentPlayer].ActionEnd();
+        OnEndAction?.Invoke(currentAction.GetAction());
+        playerList[currentPlayer].EndAction();
         currentAction.OnEndAction();
 
-        // check action end to pass turn
-        if (currentAction.GetAction() == ACTION_TYPE.END_TURN)
-        {
-            status = CYCLE_TURN.END_TURN;
-        }
-        else
-        {
-            status = CYCLE_TURN.START_ACTION;
-        }
+        StepCycleTurn();
     }
     #endregion
 
     #region Turn Management
+    /// <summary>
+    ///  Step cycle turn
+    /// </summary>
+    private void StepCycleTurn()
+    {
+        isWaiting = false;
+        switch (status)
+        {
+            case CYCLE_TURN.START_TURN:
+                status = CYCLE_TURN.START_ACTION;
+                break;
+            case CYCLE_TURN.START_ACTION:
+                status = CYCLE_TURN.ON_ACTION;
+                break;
+            case CYCLE_TURN.ON_ACTION:
+                status = CYCLE_TURN.END_ACTION;
+                break;
+            case CYCLE_TURN.END_ACTION:
+                if (currentAction.GetAction() == ACTION_TYPE.END_TURN)
+                {
+                    status = CYCLE_TURN.END_TURN;
+                }
+                else
+                {
+                    status = CYCLE_TURN.START_ACTION;
+                }
+                break;
+            case CYCLE_TURN.END_TURN:
+                status = CYCLE_TURN.START_TURN;
+                break;
+        }
+    }
+
     /// <summary>
     /// call StartGame to start game
     /// </summary>
@@ -127,9 +163,10 @@ public class TurnBaseController : MonoBehaviour
         {
             isStarting = true;
             currentPlayer = 0;
-            status = CYCLE_TURN.START_TURN;
-
             OnStartGame?.Invoke(currentPlayer);
+
+            status = CYCLE_TURN.START_TURN;
+            isWaiting = false;
         }
     }
 
@@ -138,8 +175,12 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        isStarting = false;
-        OnEndGame?.Invoke(currentPlayer);        
+        if (isStarting)
+        {
+            isStarting = false;
+
+            OnEndGame?.Invoke(currentPlayer);
+        }
     }
 
     /// <summary>
@@ -147,15 +188,14 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void StartTurn()
     {
-        //Trigger the Start turn function of the current player
-        playerList[currentPlayer].StartTurn();
-
-        OnStartTurn?.Invoke(currentPlayer);
-
         // init history action in one turn
         queueActionList = new Queue<Action>();
-        // chanage status
-        status = CYCLE_TURN.START_ACTION;
+
+        //Trigger the Start turn function of the current player
+        playerList[currentPlayer].StartTurn();
+        OnStartTurn?.Invoke(currentPlayer);
+
+        StepCycleTurn();
     }
 
 
@@ -164,18 +204,16 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void EndTurn()
     {
-        //if (OnEndTurn != null)
-        //{
-        //    OnEndTurn(playerList[turnBase]);
-        //}
+        //Trigger the End turn function of the current player
         playerList[currentPlayer].EndTurn();
+        OnEndTurn?.Invoke(currentPlayer);
 
         // handle change player
         if (CheckChangePlayer())
         {
             ChangePlayer();
         }
-        status = CYCLE_TURN.START_TURN;
+        StepCycleTurn();
     }
 
     /// <summary>
@@ -183,10 +221,6 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void ChangePlayer()
     {
-        //if (OnChangePlayer != null)
-        //{
-        //    OnChangePlayer(playerList[NextPlayer()]);
-        //}
         currentPlayer = GetNextPlayerId();
 
         //Invoke 1 time OnChangePlayer event and then reset it.
@@ -219,9 +253,12 @@ public class TurnBaseController : MonoBehaviour
     {
         if (isStarting)
         {
-            throw new System.Exception("Game start");
+            Debug.LogError("[Register]: ERROR: Game is start.");
         }
-        playerList.Add(player);
+        else
+        {
+            playerList.Add(player);
+        }
     }
     #endregion
 }
