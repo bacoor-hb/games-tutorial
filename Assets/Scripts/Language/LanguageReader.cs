@@ -7,6 +7,7 @@ Created by Adam T. Ryder
 C# version by O. Glorieux
  
 */
+using System;
 using System.Collections;
 using System.IO;
 using System.Xml;
@@ -25,7 +26,7 @@ public class LanguageReader
     public OnEventCalled OnStartTranslating;
 
     public OnEventCalled OnEndTranslating;
-
+    private ArrayList listFilePath = new ArrayList();
     /*
     Initialize Lang class
     path = path to XML resource example:  Path.Combine(Application.dataPath, "lang.xml")
@@ -46,13 +47,15 @@ public class LanguageReader
     {
         if (!web)
         {
-            setLanguage (path, language);
+            setLanguage(path, language);
         }
         else
         {
-            setLanguageWeb (path, language);
+            setLanguageWeb(path, language);
         }
+      
     }
+    
 
     /*
     Use the setLanguage function to swap languages after the Lang class has been initialized.
@@ -66,27 +69,38 @@ public class LanguageReader
     */
     public void setLanguage(string path, string language)
     {
-        OnStartLoadingLanguageFile?.Invoke();
-        var xml = new XmlDocument();
-        xml.Load (path);
-        OnEndLoadingLanguageFile?.Invoke();
-
-        Strings = new Hashtable();
-        var element = xml.DocumentElement[language];
-        if (element != null)
+        try
         {
-            var elemEnum = element.GetEnumerator();
-            while (elemEnum.MoveNext())
+            OnStartLoadingLanguageFile?.Invoke();
+            var xml = new XmlDocument();
+            xml.Load(path);
+            listFilePath.Add(path);
+            Strings = new Hashtable();
+
+            var element = xml.DocumentElement[language];
+            if (element != null)
             {
-                var xmlItem = (XmlElement) elemEnum.Current;
-                Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                var elemEnum = element.GetEnumerator();
+                while (elemEnum.MoveNext())
+                {
+                    var xmlItem = (XmlElement)elemEnum.Current;
+                    Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                }
+                OnEndLoadingLanguageFile?.Invoke();
+
+
+            }
+            else
+            {
+                Debug
+                    .LogError("The specified language does not exist: " + language);
             }
         }
-        else
+        catch (Exception e)
         {
-            Debug
-                .LogError("The specified language does not exist: " + language);
+            Debug.LogError("Error: " + e.Message);
         }
+
     }
 
     /*
@@ -104,25 +118,38 @@ public class LanguageReader
     */
     public void setLanguageWeb(string xmlText, string language)
     {
-        var xml = new XmlDocument();
-        xml.Load(new StringReader(xmlText));
-
-        Strings = new Hashtable();
-        var element = xml.DocumentElement[language];
-        if (element != null)
+        try
         {
-            var elemEnum = element.GetEnumerator();
-            while (elemEnum.MoveNext())
+            OnStartLoadingLanguageFile?.Invoke();
+
+            var xml = new XmlDocument();
+            xml.Load(new StringReader(xmlText));
+
+            Strings = new Hashtable();
+            var element = xml.DocumentElement[language];
+            if (element != null)
             {
-                var xmlItem = (XmlElement) elemEnum.Current;
-                Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                var elemEnum = element.GetEnumerator();
+                while (elemEnum.MoveNext())
+                {
+                    var xmlItem = (XmlElement)elemEnum.Current;
+                    Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                }
+
+                OnEndLoadingLanguageFile?.Invoke();
+
+            }
+            else
+            {
+                Debug
+                    .LogError("The specified language does not exist: " + language);
             }
         }
-        else
+        catch (Exception e)
         {
-            Debug
-                .LogError("The specified language does not exist: " + language);
+            Debug.LogError("Error: " + e.Message);
         }
+
     }
 
     /*
@@ -154,6 +181,35 @@ public class LanguageReader
             return "";
         }
 
-        return (string) Strings[name];
+        return (string)Strings[name];
     }
+    public void LoadMoreFilePathLocal(string filePath, string language)
+    {
+        if (!listFilePath.Contains(filePath))
+        {
+            OnStartLoadingLanguageFile?.Invoke();
+            var xml = new XmlDocument();
+            xml.Load(filePath);
+            listFilePath.Add(filePath);
+
+            var element = xml.DocumentElement[language];
+            if (element != null)
+            {
+                var elemEnum = element.GetEnumerator();
+                while (elemEnum.MoveNext())
+                {
+                    var xmlItem = (XmlElement)elemEnum.Current;
+                    Strings.Add(xmlItem.GetAttribute("name"), xmlItem.InnerText);
+                }
+                OnEndLoadingLanguageFile?.Invoke();
+
+            }
+            else
+            {
+                Debug
+                    .LogError("The specified language does not exist: " + language);
+            }
+        }
+    }
+  
 }

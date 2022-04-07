@@ -37,7 +37,10 @@ public class TEXT_UI
     public const string LANGUAGE = "Language";
     public const string ENGLISH = "English";
     public const string JAPANESE = "Japanese";
-    
+    public const string CLOSE = "Close";
+
+
+
 }
 
 public enum PROPERTY_ID: int

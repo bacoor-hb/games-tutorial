@@ -20,6 +20,7 @@ public class MenuView : MonoBehaviour
     {
         SetStartBtnEvent();
         setLanguageEvent();
+        UpdateUI();
 
     }
 
@@ -61,5 +62,9 @@ public class MenuView : MonoBehaviour
     public void SetMessage(string _msg)
     {
         MsgTxt.text = _msg;
+    }
+    public void UpdateUI()
+    {
+        startGameBtn.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance.languageManager.GetSentence("start_game");
     }
 }

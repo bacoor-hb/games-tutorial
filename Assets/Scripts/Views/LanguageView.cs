@@ -8,6 +8,11 @@ using TMPro;
 
 public class LanguageView : MonoBehaviour
 {
+    public delegate void OnButtonCliked();
+    public OnButtonCliked OnCloseClicked;
+    public OnButtonCliked OnEnglishClicked;
+    public OnButtonCliked OnJapaneseClicked;
+
     [SerializeField]
     private GameObject LanguageCanvas;
     [SerializeField]
@@ -48,10 +53,24 @@ private Button BtnEnglish;
         }
     }
     public void UpdateUI(){
+        Language lang = GlobalManager.Instance.languageManager.GetLanguage();
+        if (Language.English.Value == lang.Value)
+        {
+            //change color of button
+            BtnEnglish.GetComponent<Image>().color = Color.green;
+        }else{
+            BtnEnglish.GetComponent<Image>().color = Color.white;
+        }
+         if(Language.Japanese.Value == lang.Value){
+            BtnJapanese.GetComponent<Image>().color = Color.green;
+        }else{
+            BtnJapanese.GetComponent<Image>().color = Color.white;
+        }
+        
         LanguageText.text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.LANGUAGE);
         BtnEnglish.GetComponentInChildren<TextMeshProUGUI>().text=GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.ENGLISH);
         BtnJapanese.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.JAPANESE);
-
+BtnClose.GetComponentInChildren<TextMeshProUGUI>().text = GlobalManager.Instance.languageManager.GetSentence(TEXT_UI.CLOSE);
 
     }
     public void SetBtnEvent(){
@@ -64,15 +83,16 @@ private Button BtnEnglish;
        
     }
     void OnEnglish(){
-        GlobalManager.Instance.languageManager.SetLanguage(Language.English);
-        UpdateUI();
+        OnEnglishClicked?.Invoke();
+       
     }
     void OnJapanese(){
-        GlobalManager.Instance.languageManager.SetLanguage(Language.Japanese);
-        UpdateUI();
+        OnJapaneseClicked?.Invoke();
+      
+          
     }
     void OnClose()
     {
-        SetCanvasStatus(false);
+        OnCloseClicked?.Invoke();
     }
 }

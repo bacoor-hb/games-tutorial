@@ -33,15 +33,20 @@ public class LoadingManager : MonoBehaviour
             Debug.Log("ProgressB :" + asyncOperation.progress);
             LoadingView.IncrementProgess(asyncOperation.progress);
             LoadingView.SetMessage(asyncOperation.progress * 100 + "%");
-            if (asyncOperation.progress >= 0.9f)
+            if (GlobalManager.Instance.languageManager.isFinishLoadLanguage)
             {
-                LoadingView.SetMessage("Press the space bar to continue...");
-                if (Input.GetKeyDown(KeyCode.Space))
+
+                if (asyncOperation.progress >= 0.9f)
                 {
-                    asyncOperation.allowSceneActivation = true;
-                    LoadingView.SetCanvasStatus(false);
-                }                    
+                    LoadingView.SetMessage("Press the space bar to continue...");
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        asyncOperation.allowSceneActivation = true;
+                        LoadingView.SetCanvasStatus(false);
+                    }
+                }
             }
+           
 
             yield return null;
         }

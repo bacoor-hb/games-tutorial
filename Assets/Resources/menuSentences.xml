@@ -59,9 +59,13 @@ Você tem certeza de que deseja iniciar um novo jogo?</string>
 	</Spanish>
 
 	<English>
+
+
 		<string name="Language">Language En</string>
 		<string name="English">English En</string>
 		<string name="Japanese">Japanese En</string>
+		<string name="Close">Close En</string>
+
 
 
 		<string name="on">On</string>
@@ -90,7 +94,7 @@ Você tem certeza de que deseja iniciar um novo jogo?</string>
 		<string name="confirm_new_game">If you start a new game the existing save will be deleted.
 
 Are you sure you want to start a new game?</string>
-		<string name="start_game">Start Gamp EN</string>
+		<string name="start_game">Start Game EN</string>
 		<string name="press_start_to_play_game">press start to play game EN</string>
 		<string name="Press_the_space_bar_to_continue">Press the space bar to continue... EN</string>
 
@@ -100,9 +104,13 @@ Are you sure you want to start a new game?</string>
 	</English>
 
 	<Japanese>
+		<string name="start_game">Start Game Jp</string>
+
 		<string name="Language">Language Jp</string>
 		<string name="English">English Jp</string>
 		<string name="Japanese">Japanese Jp</string>
+		<string name="Close">Close Jp</string>
+
 		<string name="on">有効</string>
 		<string name="off">無効</string>
 		<string name="exit">終了</string>
@@ -129,7 +137,6 @@ Are you sure you want to start a new game?</string>
 		<string name="confirm_new_game">新しいゲームが開始された場合、既に保存された進捗状況は失われます。
 
 新しいゲームを開始してもよろしいですか？</string>
-<string name="start_game">Start Gamp JP</string>
 		<string name="press_start_to_play_game">press start to play game JP</string>
 		<string name="Press_the_space_bar_to_continue">Press the space bar to continue... JP</string>
 
