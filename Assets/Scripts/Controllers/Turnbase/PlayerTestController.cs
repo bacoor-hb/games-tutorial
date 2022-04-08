@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class PlayerTestController : MonoBehaviour, IPlayer
 {
+    [SerializeField]
     public int id;
 
     public void SetPlayerID(int _id)
@@ -41,18 +42,19 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     public Action GetAction(ACTION_TYPE actionType)
     {
         Action action = new Action(actionType);
-        if (actionType == ACTION_TYPE.PURCHASE)
-        {
-            action.EventStartAction += OnPurchaseStart;
-            action.EventEndAction += OnPurchaseEnd;
-            action.EventAction += OnPurchase;
-        }
-        if (actionType == ACTION_TYPE.AUCTION)
-        {
-            action.EventStartAction += OnAunctionStart;
-            action.EventEndAction += OnAunctionEnd;
-            action.EventAction += OnAunction;
-        }
+
+        //if (actionType == ACTION_TYPE.PURCHASE)
+        //{
+        //    action.EventStartAction += OnPurchaseStart;
+        //    action.EventEndAction += OnPurchaseEnd;
+        //    action.EventAction += OnPurchase;
+        //}
+        //if (actionType == ACTION_TYPE.AUCTION)
+        //{
+        //    action.EventStartAction += OnAunctionStart;
+        //    action.EventEndAction += OnAunctionEnd;
+        //    action.EventAction += OnAunction;
+        //}
 
         return action;
     }

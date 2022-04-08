@@ -10,6 +10,9 @@ public class LocalGameController : MonoBehaviour
     [SerializeField]
     private TurnBaseController turnBaseController;
 
+    [SerializeField]
+    private TestGraph testGraph;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,7 @@ public class LocalGameController : MonoBehaviour
             players[i].SetPlayerID(i);
             turnBaseController.Register(players[i]);
         }
+        turnBaseController.StartGame();
     }
 
     // Update is called once per frame
@@ -33,6 +37,11 @@ public class LocalGameController : MonoBehaviour
         {
             int currentPlayer = turnBaseController.currentPlayer;
             turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.AUCTION));
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            int currentPlayer = turnBaseController.currentPlayer;
+            turnBaseController.AddAction(players[currentPlayer], testGraph.GetAction());
         }
         if (Input.GetKeyDown(KeyCode.D))
         {

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class TestGraph : MonoBehaviour
 {
@@ -41,16 +43,8 @@ public class TestGraph : MonoBehaviour
     private void Start()
     {
         board = GetComponent<Graph>();
-
         board.GenerateBoard(nodeList);
-        if (useStep)
-        {
-            StartCoroutine(StartMoveByStep());
-        }
-        if (useTargetNode)
-        {
-            StartCoroutine(StartMoveByTarget());
-        }
+
     }
 
     private void Update()
@@ -61,7 +55,57 @@ public class TestGraph : MonoBehaviour
         }
     }
 
-    private IEnumerator StartMoveByTarget()
+    public Action GetAction()
+    {
+        Action action = new Action(ACTION_TYPE.MOVING);
+        action.EventStartAction += OnMovingStart;
+        action.EventAction += OnMoving;
+        action.EventEndAction += OnActionEnd;
+        return action;
+    }
+
+    private void OnMovingStart()
+    {
+        Debug.Log("moving ");
+    }
+
+    private IEnumerator OnMoving()
+    {
+        yield return StartCoroutine(GetRequest("https://www.randomnumberapi.com/api/v1.0/random?min=1&max=6&count=1"));
+    }
+
+    private void OnActionEnd()
+    {
+        Debug.Log("end moving");
+    }
+
+    public IEnumerator GetRequest(string uri)
+    {
+        using(UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                string[] results = webRequest.downloadHandler.text.Split('[', ']');
+                Debug.Log(results[1]);
+                int step1 = System.Int32.Parse(results[1].ToString());
+                var nodes = board.GetNodeList();
+                List<GraphNode> listNodes1 = board.GetNodesByStep(nodes[0], step1);
+                listNodes1.Insert(0, nodes[0]);
+                coroutine1 = Move1(0.5f, listNodes1);
+                yield return StartCoroutine(coroutine1);
+            }
+        }
+    }
+
+    public IEnumerator StartMoveByTarget()
     {
         GraphNode targetNode1 = board.GetNode(targetNodeGameObj1.NodeID);
         GraphNode targetNode2 = board.GetNode(targetNodeGameObj2.NodeID);
@@ -69,13 +113,13 @@ public class TestGraph : MonoBehaviour
 
         List<GraphNode> listNodes1 = board.GetNodesByTargetNode(nodes[0], targetNode1);
         List<GraphNode> listNodes2 = board.GetNodesByTargetNode(nodes[0], targetNode2);
-
         listNodes1.Insert(0, nodes[0]);
         listNodes2.Insert(0, nodes[0]);
         coroutine1 = Move1(0.5f, listNodes1);
         yield return StartCoroutine(coroutine1);
-        coroutine2 = Move2(0.5f, listNodes2);
-        StartCoroutine(coroutine2);
+        //coroutine2 = Move2(0.5f, listNodes2);
+        //StartCoroutine(coroutine2);
+        //yield return StartCoroutine(coroutine2);
     }
 
     private IEnumerator StartMoveByStep()

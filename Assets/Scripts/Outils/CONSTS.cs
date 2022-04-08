@@ -30,6 +30,7 @@ public enum ACTION_TYPE
     BUILDING,
     AUCTION,
     END_TURN,
+    MOVING,
 }
 
 public class TEXT_UI
