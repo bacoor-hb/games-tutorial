@@ -51,6 +51,7 @@ public class PlayerTestController : MonoBehaviour, IPlayer
         {
             action.EventStartAction += OnAunctionStart;
             action.EventEndAction += OnAunctionEnd;
+            action.EventAction += OnAunction2;
             action.EventAction += OnAunction;
         }
 
@@ -66,10 +67,11 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         Debug.Log("EndAction:OnPurchase | id: " + id);
     }
-    public void OnPurchase()
+    public IEnumerator OnPurchase(TurnBaseController.Callback callback)
     {
         Debug.Log("Action:OnPurchase | id: " + id);
-
+        yield return new WaitForSeconds(5);
+        callback?.Invoke();
     }
     #endregion
 
@@ -82,9 +84,21 @@ public class PlayerTestController : MonoBehaviour, IPlayer
     {
         Debug.Log("EndAction:OnAunction | id: " + id);
     }
-    public void OnAunction()
+    public IEnumerator OnAunction(TurnBaseController.Callback callback)
     {
+        Debug.Log("Start:10s: " + id);
         Debug.Log("Action:OnAunction | id: " + id);
+        yield return new WaitForSeconds(10);
+        Debug.Log("10s: " + id);
+        callback?.Invoke();
+    }
+    public IEnumerator OnAunction2(TurnBaseController.Callback callback)
+    {
+        Debug.Log("Start:15s: " + id);
+        Debug.Log("Action:OnAunction | id: " + id);
+        yield return new WaitForSeconds(15);
+        Debug.Log("15s: " + id);
+        callback?.Invoke();
     }
     #endregion
 }

@@ -87,7 +87,7 @@ public class TurnBaseController : MonoBehaviour
     private void OnAction()
     {
         isWaiting = true;
-        currentAction.OnAction(OnStepStatus);
+        StartCoroutine(currentAction.OnAction(OnStepStatus));
     }
 
     /// <summary>

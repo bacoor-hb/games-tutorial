@@ -5,8 +5,10 @@ public class Action
 {
     public delegate void Event();
     public Event EventStartAction;
-    public Event EventAction;
     public Event EventEndAction;
+
+    public delegate void EventEnumerable<T>(T data);
+    public EventEnumerable<TurnBaseController.Callback> EventAction;
 
     private ACTION_TYPE actionType;
 
@@ -27,8 +29,7 @@ public class Action
 
     public virtual void OnAction(TurnBaseController.Callback OnStepStatus)
     {
-        EventAction?.Invoke();
-        OnStepStatus();
+        EventAction?.Invoke(OnStepStatus);
     }
 
     public virtual void OnEndAction()
