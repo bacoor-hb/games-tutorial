@@ -5,15 +5,26 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using Newtonsoft.Json;
 
 //
 public class LanguageManager : MonoBehaviour
 {
+    public class classID
+    {
+        public string idClass;
+    }
+    public class FakeData
+    { 
+        public string name;
+        public List<classID> List;
+       
+    }
     const string pathLanguage = "https://raw.githubusercontent.com/bacoor-hb/games-tutorial/duc/multiLanguage%2BManager/Assets/Resources/menuSentences.xml";
     public LanguageView languageView;
     //THE language manager
     LanguageReader langReader;
-
+    const string apiTest = "https://mocki.io/v1/e29677d8-b01d-4a31-b63c-3205cd282cd4";
     //Game language
     Language lang = Language.English;
 
@@ -41,8 +52,12 @@ public class LanguageManager : MonoBehaviour
                     Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
                     break;
                 case UnityWebRequest.Result.Success:
+                    var Rates = JsonConvert.DeserializeObject<FakeData>(webRequest.downloadHandler.text);
+
                     Debug.LogWarning(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
-                   // EditorUtility.DisplayDialog("JSON", webRequest.downloadHandler.text.ToString(), "Ok");
+                    Debug.LogWarning(pages[page] + ":\nRates: " + Rates.List.Count);
+                    //EditorUtility.DisplayDialog("JSON", JsonUtility.ToJson(Rates, true), "Ok");
+                    // EditorUtility.DisplayDialog("JSON", webRequest.downloadHandler.text.ToString(), "Ok");
                     break;
             }
         }
@@ -103,7 +118,8 @@ public class LanguageManager : MonoBehaviour
 
         //load from server
         //StartCoroutine(LoadFileWeb(pathLanguage));
-        StartCoroutine(GetRequest("https://api.github.com/users/octocat/repos"));
+        //StartCoroutine(GetRequest("https://api.github.com/users/octocat/repos"));
+        StartCoroutine(GetRequest(apiTest));
     }
 
 
