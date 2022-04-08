@@ -472,6 +472,7 @@ GameObject:
   - component: {fileID: 302224693}
   - component: {fileID: 302224695}
   - component: {fileID: 302224696}
+  - component: {fileID: 302224697}
   m_Layer: 0
   m_Name: LocalManager
   m_TagString: Untagged
@@ -573,7 +574,7 @@ MonoBehaviour:
   - {fileID: 1772501397}
   - {fileID: 488952320}
   graphEvent: {fileID: 302224694}
-  currentNode: {fileID: 1345884403}
+  reactManager: {fileID: 302224697}
 --- !u!114 &302224694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,6 +617,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStarting: 0
+--- !u!114 &302224697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302224690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42a59cca94ef44b6beb44d919007ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &488952314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8675660419491173655, guid: be436e2a945ba4c8c9eaeda7a963b5ba, type: 3}

@@ -34,6 +34,8 @@ public class TestGraph : MonoBehaviour
     private GraphNode[] nodeList;
     [SerializeField]
     private GraphEventManager graphEvent;
+    [SerializeField]
+    private ReactManager reactManager;
 
     private int currentIndex2 = 0;
     private IEnumerator coroutine1;
@@ -44,7 +46,7 @@ public class TestGraph : MonoBehaviour
     {
         board = GetComponent<Graph>();
         board.GenerateBoard(nodeList);
-
+        reactManager.OnRollSuccess += OnRoleSuccess;
     }
 
     private void Update()
@@ -53,6 +55,15 @@ public class TestGraph : MonoBehaviour
         {
             useTargetNode = false;
         }
+    }
+
+    private void OnRoleSuccess(int value)
+    {
+        var nodes = board.GetNodeList();
+        List<GraphNode> listNodes1 = board.GetNodesByStep(nodes[0], value);
+        listNodes1.Insert(0, nodes[0]);
+        coroutine1 = Move1(0.5f, listNodes1);
+        StartCoroutine(coroutine1);
     }
 
     public Action GetAction()
