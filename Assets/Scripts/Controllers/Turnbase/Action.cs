@@ -7,7 +7,7 @@ public class Action
     public Event EventStartAction;
     public Event EventEndAction;
 
-    public delegate void EventEnumerable<T>(T data);
+    public delegate IEnumerator EventEnumerable<T>(T data);
     public EventEnumerable<TurnBaseController.Callback> EventAction;
 
     private ACTION_TYPE actionType;
