@@ -7,8 +7,8 @@ public class Action
     public Event EventStartAction;
     public Event EventEndAction;
 
-    public delegate IEnumerator EventEnumerable();
-    public EventEnumerable EventAction;
+    public delegate void EventEnumerable<T>(T data);
+    public EventEnumerable<TurnBaseController.Callback> EventAction;
 
     private ACTION_TYPE actionType;
 
@@ -27,12 +27,9 @@ public class Action
         EventStartAction?.Invoke();
     }
 
-    public virtual IEnumerator OnAction(TurnBaseController.Callback OnStepStatus)
+    public virtual void OnAction(TurnBaseController.Callback OnStepStatus)
     {
-        
-        yield return EventAction?.Invoke();
-
-        OnStepStatus();
+        EventAction?.Invoke(OnStepStatus);
     }
 
     public virtual void OnEndAction()
