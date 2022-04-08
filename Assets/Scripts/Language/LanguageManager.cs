@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-
+using UnityEditor;
 
 //
 public class LanguageManager : MonoBehaviour
@@ -21,6 +21,32 @@ public class LanguageManager : MonoBehaviour
     string langFilePath = "Resources/menuSentences.xml";
     public bool isFinishLoadLanguage = false;
     string StoryTellingFilePath = "Resources/storyTelling.xml";
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.LogWarning(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                   // EditorUtility.DisplayDialog("JSON", webRequest.downloadHandler.text.ToString(), "Ok");
+                    break;
+            }
+        }
+    }
 
 
     IEnumerator LoadFileWeb(string url)
@@ -77,7 +103,7 @@ public class LanguageManager : MonoBehaviour
 
         //load from server
         //StartCoroutine(LoadFileWeb(pathLanguage));
-
+        StartCoroutine(GetRequest("https://api.github.com/users/octocat/repos"));
     }
 
 
@@ -131,7 +157,7 @@ public class LanguageManager : MonoBehaviour
         langReader.LoadMoreFilePathLocal(Path.Combine(Application.dataPath, filePath), lang.Value);
 
     }
- 
+
 
 
     void OnStartLoadingLanguageFile()
