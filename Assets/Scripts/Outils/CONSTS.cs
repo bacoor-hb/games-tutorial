@@ -32,6 +32,15 @@ public enum ACTION_TYPE
     END_TURN,
 }
 
+public enum CHANCE_CARD_TYPE
+{
+    GET_CARD,
+    TO_A_POSITION,
+    PAY_RECEIVE_MONEY_AMOUNT,
+    PAY_REPAIR_HOME,
+    PRISON,
+}
+
 public class TEXT_UI
 {
     public const string LANGUAGE = "Language";
