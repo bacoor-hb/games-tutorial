@@ -1,38 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Action
+public class Action : MonoBehaviour
 {
     public delegate void Event();
-    public Event EventStartAction;
+    public Event StartAction;
+    public Event EndAction;
     public Event EventAction;
-    public Event EventEndAction;
 
-    private ACTION_TYPE actionType;
+    [SerializeField]
+    protected ACTION_TYPE actionType;
+    protected int userId;
 
-    public Action(ACTION_TYPE action)
+    public virtual void InitAction(int _userId)
     {
-        this.actionType = action;
+        userId = _userId;
+        ClearEvent();
     }
 
     public ACTION_TYPE GetAction()
     {
-        return this.actionType;
+        return actionType;
+    }
+
+    /// <summary>
+    /// Clear all event of this action
+    /// </summary>
+    public virtual void ClearEvent()
+    {
+        StartAction = null;
+        EndAction = null;
+        EventAction = null;
     }
 
     public virtual void OnStartAction()
     {
-        EventStartAction?.Invoke();
+        StartAction?.Invoke();
     }
 
-    public virtual void OnAction(TurnBaseController.Callback OnStepStatus)
+    public virtual void OnAction()
     {
         EventAction?.Invoke();
-        OnStepStatus();
     }
 
     public virtual void OnEndAction()
     {
-        EventEndAction?.Invoke();
+        EndAction?.Invoke();
     }
 }

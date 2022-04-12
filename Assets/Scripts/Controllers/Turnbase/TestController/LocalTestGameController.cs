@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalGameController : MonoBehaviour
+public class LocalTestGameController : MonoBehaviour
 {
     [SerializeField]
     private List<PlayerTestController> players;
@@ -16,7 +16,7 @@ public class LocalGameController : MonoBehaviour
         //Set Player id ~ The turn order
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].SetPlayerID(i);
+            players[i].InitPlayer(i);
             turnBaseController.Register(players[i]);
         }
     }
@@ -24,20 +24,18 @@ public class LocalGameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var currentPlayer = players[turnBaseController.currentPlayer];
         if (Input.GetKeyDown(KeyCode.A))
-        {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.PURCHASE));
+        {            
+            turnBaseController.AddAction(currentPlayer, currentPlayer.GetAction(ACTION_TYPE.PURCHASE));
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.AUCTION));
+            turnBaseController.AddAction(currentPlayer, currentPlayer.GetAction(ACTION_TYPE.AUCTION));
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.END_TURN));
+            turnBaseController.AddAction(currentPlayer, currentPlayer.GetAction(ACTION_TYPE.END_TURN));
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
