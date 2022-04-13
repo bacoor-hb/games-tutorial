@@ -9,8 +9,6 @@ public class TurnBaseController : MonoBehaviour
     public Event<int> OnEndGame;
     public Event<int> OnStartTurn;
     public Event<int> OnEndTurn;
-    public Event<ACTION_TYPE> OnStartAction;
-    public Event<ACTION_TYPE> OnEndAction;
     public Event<int> OnChangePlayer;
 
     public delegate void Callback();
@@ -32,7 +30,7 @@ public class TurnBaseController : MonoBehaviour
     private void Start()
     {
         isStarting = false;
-        OnStepStatus = StepCycleTurn;
+        OnStepStatus = NextStep;
     }
 
     private void Update()
@@ -87,7 +85,7 @@ public class TurnBaseController : MonoBehaviour
     private void OnAction()
     {
         isWaiting = true;
-        StartCoroutine(currentAction.OnAction(OnStepStatus));
+        NextStep();
     }
 
     /// <summary>
@@ -98,12 +96,9 @@ public class TurnBaseController : MonoBehaviour
         if (queueActionList.Count > 0)
         {
             currentAction = queueActionList.Dequeue();
-
-            OnStartAction?.Invoke(currentAction.GetAction());
-            playerList[currentPlayer].StartAction();
             currentAction.OnStartAction();
 
-            StepCycleTurn();
+            NextStep();
         }
     }
 
@@ -112,11 +107,8 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void EndAction()
     {
-        OnEndAction?.Invoke(currentAction.GetAction());
-        playerList[currentPlayer].EndAction();
         currentAction.OnEndAction();
-
-        StepCycleTurn();
+        NextStep();
     }
     #endregion
 
@@ -124,7 +116,7 @@ public class TurnBaseController : MonoBehaviour
     /// <summary>
     ///  Step cycle turn
     /// </summary>
-    private void StepCycleTurn()
+    private void NextStep()
     {
         isWaiting = false;
         switch (status)
@@ -195,7 +187,7 @@ public class TurnBaseController : MonoBehaviour
         playerList[currentPlayer].StartTurn();
         OnStartTurn?.Invoke(currentPlayer);
 
-        StepCycleTurn();
+        NextStep();
     }
 
 
@@ -213,7 +205,7 @@ public class TurnBaseController : MonoBehaviour
         {
             ChangePlayer();
         }
-        StepCycleTurn();
+        NextStep();
     }
 
     /// <summary>

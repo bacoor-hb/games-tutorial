@@ -19,7 +19,7 @@ public class LocalGameController : MonoBehaviour
         //Set Player id ~ The turn order
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].SetPlayerID(i);
+            players[i].InitPlayer(i);
             turnBaseController.Register(players[i]);
         }
         turnBaseController.StartGame();

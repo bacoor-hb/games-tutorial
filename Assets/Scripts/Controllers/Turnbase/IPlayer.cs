@@ -1,8 +1,10 @@
 ﻿using System;
-public interface IPlayer
+using UnityEngine;
+
+public abstract class IPlayer: MonoBehaviour
 {
-    public void StartTurn();
-    public void EndTurn();
-    public void StartAction();
-    public void EndAction();
+    public int id;
+
+    public abstract void StartTurn();
+    public abstract void EndTurn();
 }
