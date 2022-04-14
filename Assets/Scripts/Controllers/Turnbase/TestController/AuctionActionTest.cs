@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class AuctionActionTest : Action
 {
-    public override void InitAction(int _userId)
+    public override void InitAction(int _userId, TurnBaseController _controller)
     {
-        base.InitAction(_userId);
+        base.InitAction(_userId, _controller);
     }
 
     public override void ClearEvent()
     {
         base.ClearEvent();
-    }
-
-    public override void OnAction()
-    {
-        base.OnAction();
     }
 
     public override void OnEndAction()
@@ -39,23 +34,23 @@ public class AuctionActionTest : Action
 
     public IEnumerator OnAunction1()
     {
-        Debug.Log("Start:10s: " + userId);
-        Debug.Log("Action:OnAunction | id: " + userId);
+        Debug.Log("[OnAunction1] Start:10s: " + userId);
+        Debug.Log("[OnAunction1] Action:OnAunction | id: " + userId);
         yield return new WaitForSeconds(10);
-        Debug.Log("10s: " + userId);
+        Debug.Log("[OnAunction1] 10s: " + userId);
         auctionActionFlag++;
     }
     public IEnumerator OnAunction2()
     {
-        Debug.Log("Start:15s: " + userId);
-        Debug.Log("Action:OnAunction | id: " + userId);
+        Debug.Log("[OnAunction2] Start:15s: " + userId);
+        Debug.Log("[OnAunction2] Action:OnAunction | id: " + userId);
         yield return new WaitForSeconds(15);
-        Debug.Log("15s: " + userId);
+        Debug.Log("[OnAunction2] 15s: " + userId);
 
         while (auctionActionFlag <= 0)
         {
             yield return new WaitForEndOfFrame();
         }
-        EndAction?.Invoke();
+        turnBaseController.EndAction();
     }
 }

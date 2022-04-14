@@ -16,7 +16,7 @@ public class LocalTestGameController : MonoBehaviour
         //Set Player id ~ The turn order
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].InitPlayer(i);
+            players[i].InitPlayer(i, turnBaseController);
             turnBaseController.Register(players[i]);
         }
     }

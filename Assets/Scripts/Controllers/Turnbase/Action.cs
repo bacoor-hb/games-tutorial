@@ -12,9 +12,11 @@ public class Action : MonoBehaviour
     protected ACTION_TYPE actionType;
     protected int userId;
 
-    public virtual void InitAction(int _userId)
+    protected TurnBaseController turnBaseController;
+    public virtual void InitAction(int _userId, TurnBaseController _controller)
     {
         userId = _userId;
+        turnBaseController = _controller;
         ClearEvent();
     }
 
@@ -36,11 +38,6 @@ public class Action : MonoBehaviour
     public virtual void OnStartAction()
     {
         StartAction?.Invoke();
-    }
-
-    public virtual void OnAction()
-    {
-        EventAction?.Invoke();
     }
 
     public virtual void OnEndAction()

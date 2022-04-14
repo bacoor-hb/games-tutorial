@@ -11,11 +11,6 @@ public class TurnBaseController : MonoBehaviour
     public Event<int> OnEndTurn;
     public Event<int> OnChangePlayer;
 
-    public delegate void Callback();
-    public Callback OnStepStatus;
-
-
-
     public bool isStarting = false;
     public int currentPlayer { get; private set; }
     public List<IPlayer> playerList = new List<IPlayer>();
@@ -30,7 +25,6 @@ public class TurnBaseController : MonoBehaviour
     private void Start()
     {
         isStarting = false;
-        OnStepStatus = NextStep;
     }
 
     private void Update()
@@ -43,14 +37,14 @@ public class TurnBaseController : MonoBehaviour
                 case CYCLE_TURN.START_TURN:
                     StartTurn();
                     break;
-                case CYCLE_TURN.START_ACTION:
-                    StartAction();
+                case CYCLE_TURN.WAITING_ACTION:
+                    CheckActionInQueue();
                     break;
-                case CYCLE_TURN.ON_ACTION:
+                case CYCLE_TURN.START_ACTION:
                     OnAction();
                     break;
                 case CYCLE_TURN.END_ACTION:
-                    EndAction();
+                    NextStep();
                     break;
                 case CYCLE_TURN.END_TURN:
                     EndTurn();
@@ -84,18 +78,19 @@ public class TurnBaseController : MonoBehaviour
     /// </summary>
     private void OnAction()
     {
-        isWaiting = true;
-        NextStep();
+        isWaiting = true;        
     }
 
     /// <summary>
-    ///  Script run before excute action
+    ///  Execute the Action in the Queue.
     /// </summary>
-    private void StartAction()
+    private void CheckActionInQueue()
     {
         if (queueActionList.Count > 0)
         {
             currentAction = queueActionList.Dequeue();
+
+            Debug.Log("[TurnbaseController][CheckActionInQueue] Start Action: " + status.ToString());
             currentAction.OnStartAction();
 
             NextStep();
@@ -105,8 +100,9 @@ public class TurnBaseController : MonoBehaviour
     /// <summary>
     ///  Script run after excute action
     /// </summary>
-    private void EndAction()
+    public void EndAction()
     {
+        Debug.Log("[TurnbaseController][EndAction] Current State: " + status.ToString());
         currentAction.OnEndAction();
         NextStep();
     }
@@ -119,15 +115,16 @@ public class TurnBaseController : MonoBehaviour
     private void NextStep()
     {
         isWaiting = false;
+        Debug.Log("[NextStep] current step: " + status.ToString());
         switch (status)
         {
             case CYCLE_TURN.START_TURN:
+                status = CYCLE_TURN.WAITING_ACTION;
+                break;
+            case CYCLE_TURN.WAITING_ACTION:
                 status = CYCLE_TURN.START_ACTION;
                 break;
             case CYCLE_TURN.START_ACTION:
-                status = CYCLE_TURN.ON_ACTION;
-                break;
-            case CYCLE_TURN.ON_ACTION:
                 status = CYCLE_TURN.END_ACTION;
                 break;
             case CYCLE_TURN.END_ACTION:
@@ -137,13 +134,14 @@ public class TurnBaseController : MonoBehaviour
                 }
                 else
                 {
-                    status = CYCLE_TURN.START_ACTION;
+                    status = CYCLE_TURN.WAITING_ACTION;
                 }
                 break;
             case CYCLE_TURN.END_TURN:
                 status = CYCLE_TURN.START_TURN;
                 break;
         }
+        Debug.Log("[NextStep] next step: " + status.ToString());
     }
 
     /// <summary>
@@ -189,7 +187,6 @@ public class TurnBaseController : MonoBehaviour
 
         NextStep();
     }
-
 
     /// <summary>
     ///  Script run after end turn
