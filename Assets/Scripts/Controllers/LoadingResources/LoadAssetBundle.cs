@@ -43,30 +43,77 @@ public class LoadAssetBundle : MonoBehaviour
     //        Debug.Log(www.error);
     //    }
     //}
+    ///////////////////////////////////////
+    //public void Load()
+    //{
+
+    //    Debug.Log("Application.persistentDataPath " + Application.persistentDataPath);
+    //    StartCoroutine(LoadAB());
+    //}
+    //IEnumerator LoadAB()
+    //{
+    //    while (!Caching.ready)
+    //        yield return null;
+
+
+    //    using (var www = WWW.LoadFromCacheOrDownload(url, 5))
+    //    {
+    //        yield return www;
+    //        if (!string.IsNullOrEmpty(www.error))
+    //        {
+    //            Debug.Log(www.error);
+    //            yield return null;
+    //        }
+    //        var myLoadedAssetBundle = www.assetBundle;
+
+    //        var asset = myLoadedAssetBundle.mainAsset;
+    //        GameObject obj = (GameObject)myLoadedAssetBundle.LoadAsset("board");
+    //            Instantiate(obj);
+
+    //    }
+    //}
+    ///////////////////////////////////////
+    AssetBundle assetBundle;
     public void Load()
     {
-        StartCoroutine(LoadAB());
+        //var myLoadedAssetBundle
+        //   = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/ab"));
+        //if (myLoadedAssetBundle == null)
+        //{
+        //    Debug.Log("Failed to load AssetBundle!");
+        //    return;
+        //}
+        //var prefab = myLoadedAssetBundle.LoadAsset<GameObject>("Cube");
+        //Instantiate(prefab);
+        //Debug.Log(Application.streamingAssetsPath);
+        StartCoroutine(DownLoadAsset());
     }
-    IEnumerator LoadAB()
+    public IEnumerator DownLoadAsset()
     {
-        while (!Caching.ready)
-            yield return null;
-        Debug.LogError(Application.persistentDataPath);
-
-        using (var www = WWW.LoadFromCacheOrDownload(url, 5))
+        Debug.Log("Application.persistentDataPath" + Application.persistentDataPath);   
+        string url = "https://raw.githubusercontent.com/HoDienCong12c5/serverBundle/main/ab";
+        //if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB")))
+        //{
+        //    Directory.CreateDirectory(Application.persistentDataPath + "/AB");
+        //}
+        if (!File.Exists(Path.Combine(Application.persistentDataPath, "ab")))
         {
-            yield return www;
-            if (!string.IsNullOrEmpty(www.error))
-            {
-                Debug.Log(www.error);
+          
+            Uri uri = new Uri(url);
+
+            WebClient client = new WebClient();
+
+            client.DownloadFileAsync(uri, Application.persistentDataPath + "/ab");
+
+            while (client.IsBusy)   // Wait until the file download is complete
                 yield return null;
-            }
-            var myLoadedAssetBundle = www.assetBundle;
-
-            var asset = myLoadedAssetBundle.mainAsset;
-            GameObject obj = (GameObject)myLoadedAssetBundle.LoadAsset("board");
-                Instantiate(obj);
-
+            Debug.Log("download");
         }
+
+
+        assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "ab"));
+        var prefab = assetBundle.LoadAsset<GameObject>("Assault_Rifle_01");
+        Instantiate(prefab);
+
     }
 }
