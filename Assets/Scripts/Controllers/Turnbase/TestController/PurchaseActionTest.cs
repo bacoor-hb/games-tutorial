@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class PurchaseActionTest : Action
 {
-    public override void InitAction(int _userId)
+
+    public override void InitAction(int _userId, TurnBaseController _controller)
     {
-        base.InitAction(_userId);
+        base.InitAction(_userId, _controller);
     }
     public override void ClearEvent()
     {
         base.ClearEvent();
-    }
-
-    public override void OnAction()
-    {
-        base.OnAction();
     }
 
     public override void OnEndAction()
@@ -31,9 +27,9 @@ public class PurchaseActionTest : Action
 
     private IEnumerator OnPurchase()
     {
-        Debug.Log("OnPurchase | Waiting for Data | id: " + userId);
+        Debug.Log("[OnPurchase] Waiting for Data | id: " + userId);
         yield return new WaitForSeconds(5);
-        Debug.Log("OnPurchase | Get data success | id: " + userId);
-        EndAction?.Invoke();
+        Debug.Log("[OnPurchase] Get data success | id: " + userId);
+        turnBaseController.EndAction();
     }
 }

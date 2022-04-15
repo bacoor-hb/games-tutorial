@@ -11,31 +11,35 @@ public class PlayerTestController : IPlayer
     [SerializeField]
     private Action EndTurnAction;
 
+    private TurnBaseController turnBaseController;
+
     /// <summary>
     /// Initialize the Player and all of his Actions
     /// </summary>
     /// <param name="_id"></param>
-    public void InitPlayer(int _id)
+    public void InitPlayer(int _id, TurnBaseController _controller)
     {
         id = _id;
-        InitPlayerAction();
+        InitPlayerAction(_controller);
     }
 
     /// <summary>
     /// Initialize the player Actions
     /// </summary>
-    private void InitPlayerAction()
+    private void InitPlayerAction(TurnBaseController _controller)
     {
-        PurchaseAction.InitAction(id);
+        turnBaseController = _controller;
+
+        PurchaseAction.InitAction(id, _controller);
         PurchaseAction.StartAction += OnPurchaseStart;
         PurchaseAction.EndAction += OnPurchaseEnd;
 
-        AuctionAction.InitAction(id);
+        AuctionAction.InitAction(id, _controller);
         AuctionAction.StartAction += OnAuctionStart;
         AuctionAction.EndAction += OnAuctionEnd;
-        AuctionAction.EventAction += OnAuction;
 
-        EndTurnAction.InitAction(id);
+        EndTurnAction.InitAction(id, _controller);
+
     }
 
     #region Turn Management
@@ -72,11 +76,11 @@ public class PlayerTestController : IPlayer
     #region OnPurchase
     public void OnPurchaseStart()
     {
-        Debug.Log("StartAction on PLayer: OnPurchase | id: " + id);        
+        Debug.Log("[OnPurchaseStart] OnPurchase on PLayer: OnPurchase | id: " + id);        
     }
     public void OnPurchaseEnd()
     {
-        Debug.Log("EndAction:OnPurchase on PLayer | id: " + id);
+        Debug.Log("[OnPurchaseEnd] OnPurchase on PLayer | id: " + id);
     }
 
     
@@ -86,10 +90,6 @@ public class PlayerTestController : IPlayer
     public void OnAuctionStart()
     {
         Debug.Log("StartAction:OnAunction | id: " + id);
-    }
-    public void OnAuction()
-    {
-        Debug.Log("Action:OnAunction | id: " + id);
     }
     public void OnAuctionEnd()
     {

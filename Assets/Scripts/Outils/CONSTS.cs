@@ -15,8 +15,8 @@ public enum SCENE_NAME
 public enum CYCLE_TURN 
 {
     START_TURN,
+    WAITING_ACTION,
     START_ACTION,
-    ON_ACTION,
     END_ACTION,
     END_TURN,
 }

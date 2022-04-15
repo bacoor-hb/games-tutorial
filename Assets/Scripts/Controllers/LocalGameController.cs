@@ -16,7 +16,7 @@ public class LocalGameController : MonoBehaviour
         //Set Player id ~ The turn order
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].InitPlayer(i);
+            players[i].InitPlayer(i, turnBaseController);
             turnBaseController.Register(players[i]);
         }
     }
@@ -24,32 +24,6 @@ public class LocalGameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.PURCHASE));
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.AUCTION));
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            int currentPlayer = turnBaseController.currentPlayer;
-            turnBaseController.AddAction(players[currentPlayer], players[currentPlayer].GetAction(ACTION_TYPE.END_TURN));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (turnBaseController.isStarting)
-            {
-                turnBaseController.EndGame();
-            }
-            else
-            {
-                turnBaseController.StartGame();
-            }
-        }
+       
     }
 }
