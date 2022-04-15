@@ -64,7 +64,7 @@ public class LoadAssetBundle : MonoBehaviour
             var myLoadedAssetBundle = www.assetBundle;
 
             var asset = myLoadedAssetBundle.mainAsset;
-            GameObject obj = (GameObject)myLoadedAssetBundle.LoadAsset("Assault_Rifle_01");
+            GameObject obj = (GameObject)myLoadedAssetBundle.LoadAsset("board");
                 Instantiate(obj);
 
         }
