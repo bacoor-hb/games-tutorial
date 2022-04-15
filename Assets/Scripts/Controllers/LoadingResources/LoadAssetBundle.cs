@@ -8,38 +8,65 @@ using UnityEngine.SceneManagement;
 
 public class LoadAssetBundle : MonoBehaviour
 {
-    // Start is called before the first frame update
-    string url = "https://drive.google.com/uc?export=download&id=1f0xeIgP3L3ZVNC9PKVW3qzo59N_5AQHU";
-   public void Load()
-    {
-        WWW www = new WWW(url);
-        // while (!www.isDone)
-        // {
-        //     Debug.Log("Loading..." + www.progress);
-        // }
-        // Debug.Log("Loaded");
-        StartCoroutine(webReq(www));
+    string url = "http://192.168.50.165:3000";
 
-        // Update is called once per frame
-      
-        IEnumerator webReq(WWW www)
+    //public void Load()
+    //{
+    //    Debug.Log("Application.dataPath" + Application.dataPath);
+    //    WWW www = new WWW(url);
+    //    // while (!www.isDone)
+    //    // {
+    //    //     Debug.Log("Loading..." + www.progress);
+    //    // }
+    //    // Debug.Log("Loaded");
+    //    StartCoroutine(webReq(www));
+
+    //    // Update is called once per frame
+    //}
+    //IEnumerator webReq(WWW www)
+    //{
+    //    yield return www;
+
+    //    while (www.isDone == false)
+    //    {
+    //        yield return null;
+
+    //    }
+    //    AssetBundle bundle = www.assetBundle;
+    //    if (www.error == null)
+    //    {
+    //        GameObject obj = (GameObject)bundle.LoadAsset("board");
+    //        Instantiate(obj);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log(www.error);
+    //    }
+    //}
+    public void Load()
+    {
+        StartCoroutine(LoadAB());
+    }
+    IEnumerator LoadAB()
+    {
+        while (!Caching.ready)
+            yield return null;
+        Debug.LogError(Application.persistentDataPath);
+
+        using (var www = WWW.LoadFromCacheOrDownload(url, 5))
         {
             yield return www;
-            while (www.isDone == false)
-            {
-                yield return null;
-
-            }
-            AssetBundle bundle = www.assetBundle;
-            if (www.error == null)
-            {
-                GameObject obj = (GameObject)bundle.LoadAsset("board");
-                Instantiate(obj);
-            }
-            else
+            if (!string.IsNullOrEmpty(www.error))
             {
                 Debug.Log(www.error);
+                yield return null;
             }
+            var myLoadedAssetBundle = www.assetBundle;
+
+            var asset = myLoadedAssetBundle.mainAsset;
+            GameObject obj = (GameObject)myLoadedAssetBundle.LoadAsset("Assault_Rifle_01");
+                Instantiate(obj);
+
         }
     }
 }
