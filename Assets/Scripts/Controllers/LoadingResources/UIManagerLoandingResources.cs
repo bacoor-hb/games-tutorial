@@ -11,6 +11,8 @@ public class UIManagerLoandingResources : MonoBehaviour
     Button buttonResourcesFolder;
     [SerializeField]
     Button buttonAssetBundle;
+    [SerializeField]
+    Button buttonClear;
     void Start()
     {
         buttonResourcesFolder.onClick.AddListener(() =>
@@ -23,6 +25,11 @@ public class UIManagerLoandingResources : MonoBehaviour
             LoadingResourcesManager.Instance.LoadAssetBundle();
         }
         );
+        buttonClear.onClick.AddListener(() =>
+        {
+            LoadingResourcesManager.Instance.ClearCacheIndexedDB();
+        }
+       );
     }
 
     // Update is called once per frame
