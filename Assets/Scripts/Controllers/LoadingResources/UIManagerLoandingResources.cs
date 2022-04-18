@@ -17,7 +17,7 @@ public class UIManagerLoandingResources : MonoBehaviour
     {
         buttonResourcesFolder.onClick.AddListener(() =>
         {
-           Instantiate( LoadingResourcesManager.Instance.LoadcharacterResourcesFolder("Dice") as GameObject);
+            Instantiate(LoadingResourcesManager.Instance.LoadcharacterResourcesFolder("Dice") as GameObject);
         }
         );
         buttonAssetBundle.onClick.AddListener(() =>

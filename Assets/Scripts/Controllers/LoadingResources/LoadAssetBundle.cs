@@ -5,9 +5,13 @@ using System.IO;
 using System.Net;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices;
 
 public class LoadAssetBundle : MonoBehaviour
 {
+
+    [DllImport("__Internal")]
+    private static extern void Hello();
     AssetBundle myLoadedAssetBundle;
     string url = "https://raw.githubusercontent.com/HoDienCong12c5/serverBundle/main/ab";
     //string url = "https://raw.githubusercontent.com/Hungduc123/AssetBundle/master/objectbundle";
@@ -50,6 +54,7 @@ public class LoadAssetBundle : MonoBehaviour
     ///////////////////////////////////////
     public void Load()
     {
+        Hello();
         StartCoroutine(LoadAB());
     }
     IEnumerator LoadAB()
@@ -82,10 +87,6 @@ public class LoadAssetBundle : MonoBehaviour
             //Instantiate(obj2);
             //Instantiate(obj3);
             //Instantiate(obj4);
-
-
-
-
         }
     }
     ///////////////////////////////////////
