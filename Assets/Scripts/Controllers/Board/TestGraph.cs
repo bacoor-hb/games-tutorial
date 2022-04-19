@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+
 
 public class TestGraph : MonoBehaviour
 {
+    [SerializeField]
+    private UIManagerBoard _UIManagerBoard;
     [SerializeField]
     private GraphNode imprisonNode;
     [SerializeField]
@@ -38,19 +44,22 @@ public class TestGraph : MonoBehaviour
     private IEnumerator coroutine2;
     private Graph board;
 
+    private int currentPos = 0;
+    private int diceValue = 0;
     private void Start()
     {
+        _UIManagerBoard.onClickEnter += OnClickEnter;
         board = GetComponent<Graph>();
 
         board.GenerateBoard(nodeList);
-        if (useStep)
-        {
-            StartCoroutine(StartMoveByStep());
-        }
-        if (useTargetNode)
-        {
-            StartCoroutine(StartMoveByTarget());
-        }
+        // if (useStep)
+        // {
+        //     StartCoroutine(StartMoveByStep());
+        // }
+        // if (useTargetNode)
+        // {
+        //     StartCoroutine(StartMoveByTarget());
+        // }
     }
 
     private void Update()
@@ -77,6 +86,25 @@ public class TestGraph : MonoBehaviour
         coroutine2 = Move2(0.5f, listNodes2);
         StartCoroutine(coroutine2);
     }
+    private IEnumerator StartMoveByTarget(int target)
+    {
+        GraphNode targetNode1 = board.GetNode(target);
+        Debug.Log("targetNode1.NodeID");
+        Debug.Log(targetNode1.NodeID);
+
+        var nodes = board.GetNodeList();
+
+        List<GraphNode> listNodes1 = board.GetNodesByTargetNode(nodes[0], targetNode1);
+
+        listNodes1.Insert(0, nodes[0]);
+
+        coroutine1 = Move1(0.5f, listNodes1);
+        yield return StartCoroutine(coroutine1);
+
+
+
+
+    }
 
     private IEnumerator StartMoveByStep()
     {
@@ -89,6 +117,20 @@ public class TestGraph : MonoBehaviour
         listNodes2.Insert(0, nodes[0]);
         coroutine2 = Move2(0.5f, listNodes2);
         StartCoroutine(coroutine2);
+    }
+    private IEnumerator StartMoveByStep(int diceValue)
+    {
+        var nodes = board.GetNodeList();
+        List<GraphNode> listNodes1 = board.GetNodesByStep(nodes[currentPos], diceValue);
+        listNodes1.Insert(0, nodes[currentPos]);
+        coroutine1 = Move1(0.5f, listNodes1);
+        yield return StartCoroutine(coroutine1);
+        currentPos += diceValue;
+        // change scene to testAttack
+        SceneManager.LoadScene("Scenes/Test Scene/testAttack");
+
+
+
     }
 
     private IEnumerator Move1(float waitTime, List<GraphNode> nodes)
@@ -129,4 +171,36 @@ public class TestGraph : MonoBehaviour
 
         }
     }
+    void OnClickEnter()
+    {
+        StartCoroutine(getApi("http://192.168.50.165:5000/users/lehoangvuvt/roll"));
+    }
+    private IEnumerator getApi(string url)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+            if (webRequest.isNetworkError || webRequest.isHttpError)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+
+                string json = webRequest.downloadHandler.text;
+                Debug.Log(json);
+                //DataApi data = JsonUtility.FromJson<DataApi>(json);
+                DataApi data = JsonConvert.DeserializeObject<DataApi>(json);
+                StaticDataApi.dataApi = data;
+                diceValue = data.diceValue;
+                Debug.Log("data.diceValue: " + diceValue);
+                StartCoroutine(StartMoveByStep(diceValue));
+
+            }
+        }
+    }
+
+
+
+
 }
