@@ -9,6 +9,10 @@ public class LoadingResourcesManager : Singleton<LoadingResourcesManager>
     // Start is called before the first frame update
     [SerializeField]
     private LoadAssetBundle loadAssetBundle;
+    [SerializeField]
+
+    private LoadAddressables loadAddressables;
+
     void Start()
     {
 
@@ -39,7 +43,11 @@ public class LoadingResourcesManager : Singleton<LoadingResourcesManager>
             Debug.Log("folder existed");
         }
     }
-    
+    public void LoadAddressables()
+    {
+        loadAddressables.Load();
+    }
 
-   
+
+
 }

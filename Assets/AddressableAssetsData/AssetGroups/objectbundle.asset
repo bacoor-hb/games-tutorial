@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: objectbundle
+  m_EditorClassIdentifier: 
+  m_GroupName: objectbundle
+  m_Data:
+    m_SerializedData: []
+  m_GUID: af9d7bdc019f84d06b9f0ef7cccf4bfc
+  m_SerializeEntries:
+  - m_GUID: be436e2a945ba4c8c9eaeda7a963b5ba
+    m_Address: Assets/Assets/Board/board.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 75e84af763385c043b142083694ffa32
+    m_Address: Assets/Prefabs/DIce Module/Dice.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 942e29307d31546bda0a638fb556a093, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: baf148bbbc830442d88187078693a3b3, type: 2}
+    - {fileID: 11400000, guid: 44763b9f2d5cd4f91890a7766bee075d, type: 2}
