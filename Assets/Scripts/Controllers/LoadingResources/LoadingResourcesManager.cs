@@ -14,7 +14,7 @@ public class LoadingResourcesManager : Singleton<LoadingResourcesManager>
     private LoadAssetBundle loadAssetBundle;
 
     [DllImport("__Internal")]
-    private static extern void Clear();
+    private static extern void Clear(string nameDB, string pathDB);
 
     void Start()
     {
@@ -32,26 +32,9 @@ public class LoadingResourcesManager : Singleton<LoadingResourcesManager>
 
 
     }
-    public void ClearCacheIndexedDB()
+    public void ClearCacheIndexedDB(string nameFile)
     {
-        // Debug.Log("aaa");
-        // //check folder has existed
-        // if (!Directory.Exists(Application.persistentDataPath))
-        // {
-        //     // Directory.CreateDirectory(Application.persistentDataPath + "/AssetBundles");
-        //     Debug.Log("folder not existed");
-        // }
-        // else
-        // {
-        //     //delete folder
-        //     //Directory.Delete(Application.persistentDataPath + "/UnityCache/Shared/objectbundle", true);
-        //     UnityWebRequest.ClearCookieCache();
-        //     Debug.Log("folder existed");
-        // }
-
-        Clear();
+        Clear("/idbfs", Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}");
     }
-
-
 
 }

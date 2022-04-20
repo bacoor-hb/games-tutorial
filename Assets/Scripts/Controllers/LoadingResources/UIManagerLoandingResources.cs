@@ -27,7 +27,7 @@ public class UIManagerLoandingResources : MonoBehaviour
         );
         buttonClear.onClick.AddListener(() =>
         {
-            LoadingResourcesManager.Instance.ClearCacheIndexedDB();
+            LoadingResourcesManager.Instance.ClearCacheIndexedDB("ab");
         }
        );
     }

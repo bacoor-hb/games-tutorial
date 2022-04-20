@@ -54,17 +54,12 @@ public class LoadAssetBundle : MonoBehaviour
     ///////////////////////////////////////
     public void Load()
     {
-        Hello();
         StartCoroutine(LoadAB());
     }
     IEnumerator LoadAB()
     {
         while (!Caching.ready)
             yield return null;
-
-
-
-
         using (var www = WWW.LoadFromCacheOrDownload(url, 5))
         {
             yield return www;
