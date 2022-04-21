@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Main Scene/Credit_Scene.unity
     guid: 41d98b24c449b4700954889f6eb8c9f3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test Scene/BoardTest.unity
     guid: 50f0d5463437749c489a82002f92edf4
   - enabled: 1

@@ -16,8 +16,12 @@ public class LocalManagerTestAttack : MonoBehaviour
     {
         _UIManagerTestAttack.OnAttackButtonClicked += () =>
         {
-        
+
             _socketIOTestAttack.Emit("attack");
+        };
+        _socketIOTestAttack.onUpdateUI += (dataUserAttack) =>
+        {
+            _UIManagerTestAttack.UpdateUI(dataUserAttack);
         };
     }
 

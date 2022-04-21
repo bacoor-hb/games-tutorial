@@ -9,8 +9,9 @@ public class SocketIOTestAttack : MonoBehaviour
 {
     private QSocket socket;
 
-    public delegate void Event();
+    public delegate void Event(DataUserAttack dataUserAttack);
     public Event onUpdateUI;
+    public DataUserAttack dataUserAttack;
     void Start()
     {
         socket = IO.Socket("http://192.168.50.165:3000");
@@ -25,16 +26,19 @@ public class SocketIOTestAttack : MonoBehaviour
             Debug.Log(dataJson);
 
 
-            DataUserAttack dataUserAttack = JsonConvert.DeserializeObject<DataUserAttack>(dataJson.ToString());
-            Debug.Log(dataUserAttack.topic.username);
-            onUpdateUI?.Invoke();
+             dataUserAttack = JsonConvert.DeserializeObject<DataUserAttack>(dataJson.ToString());
+
+            UpdateUI(dataUserAttack);
         });
         socket.On("sendData", (data) =>
         {
             Debug.Log("updated");
             Debug.Log(data);
+            dataUserAttack = JsonConvert.DeserializeObject<DataUserAttack>(data.ToString());
 
             //monster.transform.position = monster.transform.position + new Vector3(1 * 5f * Time.deltaTime, 1 * 5f * Time.deltaTime, 0);
+            UpdateUI(dataUserAttack);
+
         });
     }
     private void OnDestroy()
@@ -46,5 +50,9 @@ public class SocketIOTestAttack : MonoBehaviour
         socket.Emit(nameEmit);
         Debug.Log("emit " + nameEmit);
 
+    }
+    private void UpdateUI(DataUserAttack dataUserAttack)
+    {
+        onUpdateUI?.Invoke(dataUserAttack);
     }
 }
