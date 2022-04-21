@@ -7,6 +7,9 @@ public class WalletManager : MonoBehaviour
     public delegate void EventHaveProps<T>(T data);
     public EventHaveProps<long> OnChangeMoney;
     public EventHaveProps<long> OnChangeMoneyWeb3;
+    /// <summary>
+    /// cuntructor Wallet for user
+    /// </summary>
     public WalletData _walletData = new WalletData(); 
     void Start()
     {
@@ -26,6 +29,10 @@ public class WalletManager : MonoBehaviour
             OnChangeMoney?.Invoke(money);
         }
     }
+    /// <summary>
+    /// Change money at wweb3
+    /// </summary>
+    /// <param name="money"></param>
     void OnChangeMoneyWeb3Event(long money)
     {
         if (OnChangeMoney != null)

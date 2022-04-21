@@ -9,13 +9,11 @@ public class ViewManagerTest : MonoBehaviour
     public InputField inputField;
     public Text result;
     public Text moneyUserStart;
-    private UserManager userManager = new UserManager();
+    public UserManager userManager;
     private void Awake()
     {
-        User user = new User("12", "cong", 10, null, null, null);
-        moneyUserStart.text = "10";
-        userManager.setUserManager(user);
-        Debug.Log(userManager.walletManager._walletData.Money);
+        moneyUserStart.text = userManager.userData.Money.ToString();
+
     }
     void Start()
     {
@@ -33,14 +31,25 @@ public class ViewManagerTest : MonoBehaviour
     {
         string money = inputField.text.ToString(); 
         long moneyChange = long.Parse(money);
-        if (userManager.isCheckEnoughtMoney(moneyChange))
+        if(moneyChange >= 0)
         {
+            userManager.OnChangeMoney(moneyChange);
             moneyUserStart.text = userManager.walletManager._walletData.Money.ToString();
             result.text = "true";
         }
         else
         {
-            result.text = "So tien tru qua nhieu";
+            if (userManager.IsCheckEnoughMoney(moneyChange))
+            {
+                userManager.OnChangeMoney(moneyChange);
+                moneyUserStart.text = userManager.walletManager._walletData.Money.ToString();
+                result.text = "true";
+            }
+            else
+            {
+                result.text = "So tien tru qua nhieu";
+            }
         }
+       
     }
 }

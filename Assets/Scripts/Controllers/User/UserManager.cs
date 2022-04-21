@@ -6,14 +6,16 @@ public class UserManager : MonoBehaviour
 {
     public delegate void EventHaveProp<T>(T data);
     public string id;
-    public User userData;
-    public WalletManager walletManager = new WalletManager(); 
+    public User userData =  new User();
+    public WalletManager walletManager;
     
     
     // Start is called before the first frame update
     private void Awake()
-    { 
-        walletManager.setWalletUer(id, userData.Address, userData.Money);
+    {
+        User user = new User("12", "cong", 10, null, null, null);
+
+        setUserManager(user); 
     }
     void Start()
     {
@@ -29,83 +31,49 @@ public class UserManager : MonoBehaviour
     public void setUserManager(User user)
     {
         userData = user;
-        walletManager.setWalletUer(id, user.Address, user.Money);
+      //  Debug.Log(userData.Address);
+        walletManager.setWalletUer(id, userData.Address, userData.Money);
 
     }
-    public bool isCheckEnoughtMoney(long money)
-    {
 
-        long total = userData.Money + money;
-        Debug.Log("total : " + total);
-        if (total >= 0)
-        {
-            OnChangeMoney(money);
-            return true;
-        }
-        return false;
+    /// <summary>
+    /// Check Enough Money User
+    /// </summary>
+    /// <param name="money"></param>
+    /// <returns></returns>
+    public bool IsCheckEnoughMoney(long money)
+    {
+        long total = userData.Money - (long)Mathf.Abs(money);
+        return total >= 0;
     }
     public void OnChangeMoney(long money)
     {
-        walletManager.OnChangeMoney = OnCangeMoneyEnevt;
-        walletManager.OnChangeMoneyWeb3 = OnCangeMoneyWeb3Event;
+        walletManager.OnChangeMoney = OnChangeMoneyEnevt;
+        walletManager.OnChangeMoneyWeb3 = OnChangeMoneyWeb3Event;
         walletManager.OnChangeMoneyEvent(money);
 
     }
-    public void OnCangeMoneyEnevt(long money)
+    public void OnChangeMoneyEnevt(long money)
     {
         
         userData.Money += money;
     }
 
-    public void OnCangeMoneyWeb3Event(long money)
+    public void OnChangeMoneyWeb3Event(long money)
     {
 
          
     }
+
+    /// <summary>
+    /// Change money at Web3 form userMananger
+    /// </summary>
+    /// <param name="money"></param>
+    /// <returns></returns>
     IEnumerable OnChangeMoneyWeb3(long money)
     {
         yield return null;
     }
 
-    //public bool isCheckBuildHouse(Property _property)
-    //{
-    //    int count = 0;
-    //    if (userData.GetProperties().Count < 2) return false;
-
-    //    for (int i = 0; i < userData.GetProperties().Count; i++)
-    //    {
-    //        Property property = userData.GetProperties()[i];
-    //        if (_property.data.typeId == property.data.typeId)
-    //        {
-    //            count++;
-    //        }
-    //    }
-
-
-    //    // get count colors in board
-    //    //int countColor = graph.GetType();
-    //    int countColor = 2;
-    //    if (countColor == count) return true;
-    //    return false;
-    //}
-
-    //public Property GetPropertyUser(Property _property)
-    //{
-    //    foreach(Property temp in user.GetProperties())
-    //    {
-    //        if(temp.data.id == _property.data.id)
-    //        {
-    //            return temp;
-    //        }
-    //    }
-    //    return null;
-    //}  
-    //public bool checkIsMyProperty(Property property)
-    //{
-    //    return user.GetProperties().Contains(property);
-    //}
-
-
-
-
+   
 }

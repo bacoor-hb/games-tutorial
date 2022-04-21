@@ -731,6 +731,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663895549}
   m_CullTransparentMesh: 1
+--- !u!1 &664381844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664381846}
+  - component: {fileID: 664381845}
+  m_Layer: 0
+  m_Name: WalletManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &664381845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664381844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2f3cda22c2c4f20a4dc330ff908772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &664381846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664381844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 70.18284, y: 64.48159, z: 2.3792648}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1026313535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,8 +1238,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1516268929}
+  - component: {fileID: 1516268930}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: UserManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1216,6 +1260,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1516268930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516268928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b83c9ac7e1f2412e8e3d43c95344bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 12
+  walletManager: {fileID: 664381845}
 --- !u!1 &1533524406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1320,8 @@ MonoBehaviour:
   btnChange: {fileID: 1098490301}
   inputField: {fileID: 404601810}
   result: {fileID: 1868558887}
-  moneyUserStart: {fileID: 0}
+  moneyUserStart: {fileID: 505255581}
+  userManager: {fileID: 1516268930}
 --- !u!1 &1819410553
 GameObject:
   m_ObjectHideFlags: 0
