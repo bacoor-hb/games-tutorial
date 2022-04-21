@@ -15,7 +15,6 @@ public class UIManagerTestAttack : MonoBehaviour
     {
         _attackButton.onClick.AddListener(() =>
         {
-          
             OnAttackButtonClicked?.Invoke();
         });
     }
