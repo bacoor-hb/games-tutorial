@@ -1,33 +1,33 @@
-using UnityEngine;
-using UnityEditor.Animations;
+//using UnityEngine;
+//using UnityEditor.Animations;
 
-public class RecordAnimation : MonoBehaviour
-{
-    public AnimationClip clip;
+//public class RecordAnimation : MonoBehaviour
+//{
+//    public AnimationClip clip;
 
-    private GameObjectRecorder gameObjectRecorder;
+//    private GameObjectRecorder gameObjectRecorder;
 
-    void Start()
-    {
-        gameObjectRecorder = new GameObjectRecorder(gameObject);
-        gameObjectRecorder.BindComponentsOfType<Transform>(gameObject, true);
-    }
+//    void Start()
+//    {
+//        gameObjectRecorder = new GameObjectRecorder(gameObject);
+//        gameObjectRecorder.BindComponentsOfType<Transform>(gameObject, true);
+//    }
 
-    void LateUpdate()
-    {
-        if (clip == null)
-            return;
-        gameObjectRecorder.TakeSnapshot(Time.deltaTime);
-    }
+//    void LateUpdate()
+//    {
+//        if (clip == null)
+//            return;
+//        gameObjectRecorder.TakeSnapshot(Time.deltaTime);
+//    }
 
-    void OnDisable()
-    {
-        if (clip == null)
-            return;
+//    void OnDisable()
+//    {
+//        if (clip == null)
+//            return;
 
-        if (gameObjectRecorder.isRecording)
-        {
-            gameObjectRecorder.SaveToClip(clip);
-        }
-    }
-}
+//        if (gameObjectRecorder.isRecording)
+//        {
+//            gameObjectRecorder.SaveToClip(clip);
+//        }
+//    }
+//}

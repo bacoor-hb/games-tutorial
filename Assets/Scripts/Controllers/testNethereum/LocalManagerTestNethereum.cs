@@ -20,8 +20,10 @@ public class LocalManagerTestNethereum : MonoBehaviour
         var web3 = new Nethereum.Web3.Web3("https://kovan.infura.io/v3/0e0703a9c74742678b09d56e28e339a7");
         //var txCount = await web3.Eth.Transactions.GetTransactionCount.SendRequestAsync(publicKey);
         var balance = web3.Eth.GetBalance.SendRequestAsync(publicKey);
+        yield return balance;
         var price = balance.Result.ToString();
         var etherAmount = Web3.Convert.FromWei(long.Parse(price));
+        yield return etherAmount;
 
         Debug.Log(price);
         Debug.Log("Get txCount " + etherAmount);
