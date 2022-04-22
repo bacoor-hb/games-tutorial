@@ -1,0 +1,9 @@
+<linker>
+	<assembly fullname="Nethereum.JsonRpc.Client">
+		<type fullname="Nethereum.JsonRpc.Client.RpcMessages.RpcParametersJsonConverter" preserve="all"/>
+	</assembly>
+
+	<assembly fullname="Nethereum.Unity">
+		<type fullname="Nethereum.Unity.RpcModel.RpcParametersJsonConverter" preserve="all"/>
+	</assembly>
+</linker>
