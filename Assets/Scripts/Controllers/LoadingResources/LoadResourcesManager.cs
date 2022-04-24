@@ -18,10 +18,6 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
 
     //dictionary AssetBundle
     public Dictionary<string, AssetBundle> assetBundleDictionary = new Dictionary<string, AssetBundle>();
-    void Start()
-    {
-
-    }
 
     public Object LoadcharacterResourcesFolder(string path)
     {
