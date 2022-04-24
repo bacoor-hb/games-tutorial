@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class UIManagerLoandingResources : MonoBehaviour
+public class UIManagerLoadResources : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
@@ -13,23 +13,30 @@ public class UIManagerLoandingResources : MonoBehaviour
     Button buttonAssetBundle;
     [SerializeField]
     Button buttonClear;
+    [SerializeField]
+    Button buttonLoad;
     void Start()
     {
         buttonResourcesFolder.onClick.AddListener(() =>
         {
-            Instantiate(LoadingResourcesManager.Instance.LoadcharacterResourcesFolder("Dice") as GameObject);
+            Instantiate(LoadResourcesManager.Instance.LoadcharacterResourcesFolder("Dice") as GameObject);
         }
         );
         buttonAssetBundle.onClick.AddListener(() =>
         {
-            LoadingResourcesManager.Instance.LoadAssetBundle();
+            LoadResourcesManager.Instance.LoadAssetBundle("ab");
         }
         );
         buttonClear.onClick.AddListener(() =>
         {
-            LoadingResourcesManager.Instance.ClearCacheIndexedDB("ab");
+            LoadResourcesManager.Instance.ClearCacheIndexedDB("ab");
+
+        });
+        buttonLoad.onClick.AddListener(() =>
+        {
+            LoadResourcesManager.Instance.LoadAssetAsyncFromAssetBundleDictionary("ab", "Assault_Rifle_01");
         }
-       );
+    );
     }
 
     // Update is called once per frame
