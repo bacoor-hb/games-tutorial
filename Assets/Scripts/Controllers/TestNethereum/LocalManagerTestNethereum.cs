@@ -1,6 +1,7 @@
 using Nethereum.Web3;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class LocalManagerTestNethereum : MonoBehaviour
@@ -8,7 +9,9 @@ public class LocalManagerTestNethereum : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateBalaceAsync("0x4281eCF07378Ee595C564a59048801330f3084eE");
+        System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+
+        UpdateBalaceAsync("0xac0E15a038eedfc68ba3C35c73feD5bE4A07afB5");
     }
 
     // Update is called once per frame
@@ -18,8 +21,9 @@ public class LocalManagerTestNethereum : MonoBehaviour
     }
     private async void UpdateBalaceAsync(string account)
     {
+
         Debug.Log(account);
-        Web3 web3 = new Web3("https://kovan.infura.io/v3/0e0703a9c74742678b09d56e28e339a7");
+        Web3 web3 = new Web3("https://bsc-dataseed.binance.org/");
         var balance = await web3.Eth.GetBalance.SendRequestAsync(account);
         var ethBalance = Web3.Convert.FromWei(balance.Value);
         Debug.Log("Balance: " + balance);
