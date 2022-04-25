@@ -41,26 +41,12 @@ public class TestGraph : MonoBehaviour
     private void Start()
     {
         board = GetComponent<Graph>();
-
         board.GenerateBoard(nodeList);
-        if (useStep)
-        {
-            StartCoroutine(StartMoveByStep());
-        }
-        if (useTargetNode)
-        {
-            StartCoroutine(StartMoveByTarget());
-        }
     }
 
     private void Update()
     {
-        if (useStep == true)
-        {
-            useTargetNode = false;
-        }
     }
-
     private IEnumerator StartMoveByTarget()
     {
         GraphNode targetNode1 = board.GetNode(targetNodeGameObj1.NodeID);
