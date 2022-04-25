@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-public class CreateAssetBundles
+public class NewBehaviourScripts
 {
 #if UNITY_EDITOR
     [MenuItem("Assets/Build New AssetBundles")]
