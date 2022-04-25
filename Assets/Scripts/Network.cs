@@ -87,6 +87,7 @@ public class Network : MonoBehaviour
 
     public async void JoinLobby()
     {
+        string token = "123";
         var options = new Dictionary<string, object>();
         options.Add("authorization", new { token = token });
         lobbyRoom = await client.JoinOrCreate<IndexedDictionary<string, object>>("lobby", options);
