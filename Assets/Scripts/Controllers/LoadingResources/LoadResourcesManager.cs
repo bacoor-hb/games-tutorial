@@ -19,31 +19,74 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
     //dictionary AssetBundle
     public Dictionary<string, AssetBundle> assetBundleDictionary = new Dictionary<string, AssetBundle>();
 
-    public Object LoadcharacterResourcesFolder(string path)
+    /// <summary>
+    /// Tai asset bunble tu folder resource
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public Object LoadAssetBundleFromFolder(string path)
     {
         Object ojb = Resources.Load<Object>(path);
         return ojb;
     }
-    public void LoadAssetBundle(string nameFile)
+    /// <summary>
+    /// Tai asset bundle tu url bang ten file(tag)
+    /// </summary>
+    /// <param name="nameFile"></param>
+    public bool LoadAssetBundleFromUrlByName(string nameFile)
     {
-        loadAssetBundle.Load(nameFile);
+        try
+        {
+            loadAssetBundle.Load(nameFile);
+            return true;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError(ex.Message);
+            return false;
+        }
+        
 
-
+      
     }
-    public void ClearCacheIndexedDB(string nameFile)
+    /// <summary>
+    /// xoa cache asset bundle tu web
+    /// </summary>
+    /// <param name="nameFile"></param>
+    public bool ClearCacheIndexedDB(string nameFile)
     {
-        Clear("/idbfs", Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}");
+        // try catch function Clear
+        try
+        {
+      
+            Clear("/idbfs", Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}");
+            return true;
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Error Clear Cache IndexedDB");
+            return false;
+        }
+
+      
     }
-    public void LoadAssetAsyncFromAssetBundleDictionary(string nameFile, string nameAsset)
+    /// <summary>
+    /// Load Asset Async From Asset Bundle Cache(IndexedDB)
+    /// </summary>
+    /// <param name="nameFile"></param>
+    /// <param name="nameAsset"></param>
+    public bool LoadAssetAsyncFromAssetBundleDictionary(string nameFile, string nameAsset)
     {
         if (assetBundleDictionary.ContainsKey(nameFile))
         {
             Object ojb = assetBundleDictionary[nameFile].LoadAsset(nameAsset);
             Instantiate(ojb);
+            return true;
         }
         else
         {
             Debug.Log("chua tai asset Bundle");
+            return false;
         }
 
 

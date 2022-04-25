@@ -19,12 +19,12 @@ public class UIManagerLoadResources : MonoBehaviour
     {
         buttonResourcesFolder.onClick.AddListener(() =>
         {
-            Instantiate(LoadResourcesManager.Instance.LoadcharacterResourcesFolder("Dice") as GameObject);
+            Instantiate(LoadResourcesManager.Instance.LoadAssetBundleFromFolder("Dice") as GameObject);
         }
         );
         buttonAssetBundle.onClick.AddListener(() =>
         {
-            LoadResourcesManager.Instance.LoadAssetBundle("ab");
+            LoadResourcesManager.Instance.LoadAssetBundleFromUrlByName("ab");
         }
         );
         buttonClear.onClick.AddListener(() =>
