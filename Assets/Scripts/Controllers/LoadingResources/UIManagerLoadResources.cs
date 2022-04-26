@@ -19,6 +19,8 @@ public class UIManagerLoadResources : MonoBehaviour
     Button buttonCheck;
     [SerializeField]
     Button buttonGetList;
+    [SerializeField]
+    Button buttonAssetBundle2;
     void Start()
     {
         buttonResourcesFolder.onClick.AddListener(() =>
@@ -54,6 +56,12 @@ public class UIManagerLoadResources : MonoBehaviour
 
          }
          );
+        buttonAssetBundle2.onClick.AddListener(() =>
+        {
+            LoadResourcesManager.Instance.LoadAssetBundleFromUrlByName("objectbundle");
+
+        }
+       );
 
     }
 

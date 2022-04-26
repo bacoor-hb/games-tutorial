@@ -27,6 +27,7 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
     private LoadAssetBundle loadAssetBundle;
 
     [DllImport("__Internal")]
+    
     private static extern void Clear(string nameDB, string pathDB);
     [DllImport("__Internal")]
     private static extern string GetAllCacheAssetBundle(string nameDB);

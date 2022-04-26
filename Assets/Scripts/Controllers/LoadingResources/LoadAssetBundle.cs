@@ -20,11 +20,18 @@ public class LoadAssetBundle : MonoBehaviour
     {
         while (!Caching.ready)
             yield return null;
-
-
-        using (var www = WWW.LoadFromCacheOrDownload($"https://raw.githubusercontent.com/HoDienCong12c5/serverBundle/main/{nameFile}", 5))
+  
+ 
+        using (var www = WWW.LoadFromCacheOrDownload($"https://raw.githubusercontent.com/Hungduc123/AssetBundle/master/{nameFile}", 5))
         {
-            yield return www;
+
+            //log percent download
+            while (!www.isDone)
+            {
+                Debug.Log(www.progress);
+                yield return null;
+            }
+            
             if (!string.IsNullOrEmpty(www.error))
             {
                 Debug.Log(www.error);
