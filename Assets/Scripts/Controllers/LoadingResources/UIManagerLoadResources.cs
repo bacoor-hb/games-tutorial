@@ -15,11 +15,16 @@ public class UIManagerLoadResources : MonoBehaviour
     Button buttonClear;
     [SerializeField]
     Button buttonLoad;
+    [SerializeField]
+    Button buttonCheck;
+    [SerializeField]
+    Button buttonGetList;
     void Start()
     {
         buttonResourcesFolder.onClick.AddListener(() =>
         {
             Instantiate(LoadResourcesManager.Instance.LoadAssetBundleFromFolder("Dice") as GameObject);
+
         }
         );
         buttonAssetBundle.onClick.AddListener(() =>
@@ -34,11 +39,22 @@ public class UIManagerLoadResources : MonoBehaviour
         });
         buttonLoad.onClick.AddListener(() =>
         {
-            //LoadResourcesManager.Instance.LoadAssetAsyncFromAssetBundleDictionary("ab", "Assault_Rifle_01");
+            LoadResourcesManager.Instance.LoadAssetAsyncFromAssetBundleDictionary("ab", "Assault_Rifle_01");
+            //LoadResourcesManager.Instance.CheckAssetBundleHasInCache("ab");
+
+        });
+        buttonCheck.onClick.AddListener(() =>
+        {
             LoadResourcesManager.Instance.CheckAssetBundleHasInCache("ab");
 
-        }
-    );
+        } );
+        buttonGetList.onClick.AddListener(() =>
+         {
+             LoadResourcesManager.Instance.GetListKey();
+
+         }
+         );
+
     }
 
     // Update is called once per frame

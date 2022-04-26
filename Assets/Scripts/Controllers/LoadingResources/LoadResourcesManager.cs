@@ -4,12 +4,25 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Runtime.InteropServices;
-
-
+using AOT;
+using System;
 
 public class LoadResourcesManager : Singleton<LoadResourcesManager>
 {
-    // Start is called before the first frame update
+    
+    public String[] arrayKeyIndexedDB;
+    delegate bool GetKeyIndexedDBCallbackDelegate(int iteration, string timeString);
+
+    [MonoPInvokeCallback(typeof(GetKeyIndexedDBCallbackDelegate))]
+    private static bool GetKeyIndexedDBCallback(int iteration, string arrayKeyString)
+    {
+        Instance.arrayKeyIndexedDB = arrayKeyString.Split(',');
+        return iteration < 1;
+    }
+
+    [DllImport("__Internal")]
+    private static extern void GetKeyIndexedDB(GetKeyIndexedDBCallbackDelegate getKeyIndexedDBCallback);
+ 
     [SerializeField]
     private LoadAssetBundle loadAssetBundle;
 
@@ -17,8 +30,6 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
     private static extern void Clear(string nameDB, string pathDB);
     [DllImport("__Internal")]
     private static extern string GetAllCacheAssetBundle(string nameDB);
-    [DllImport("__Internal")]
-    private static extern string ReceiveString();
 
     //dictionary AssetBundle
     public Dictionary<string, AssetBundle> assetBundleDictionary = new Dictionary<string, AssetBundle>();
@@ -28,9 +39,9 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public Object LoadAssetBundleFromFolder(string path)
+    public GameObject LoadAssetBundleFromFolder(string path)
     {
-        Object ojb = Resources.Load<Object>(path);
+        GameObject ojb = Resources.Load<GameObject>(path);
         return ojb;
     }
     /// <summary>
@@ -49,9 +60,9 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
             Debug.LogError(ex.Message);
             return false;
         }
-        
 
-      
+
+
     }
     /// <summary>
     /// xoa cache asset bundle tu web
@@ -62,7 +73,7 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
         // try catch function Clear
         try
         {
-      
+
             Clear("/idbfs", Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}");
             return true;
         }
@@ -72,7 +83,7 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
             return false;
         }
 
-      
+
     }
     /// <summary>
     /// Load Asset Async From Asset Bundle Cache(IndexedDB)
@@ -81,41 +92,69 @@ public class LoadResourcesManager : Singleton<LoadResourcesManager>
     /// <param name="nameAsset"></param>
     public bool LoadAssetAsyncFromAssetBundleDictionary(string nameFile, string nameAsset)
     {
-        if (assetBundleDictionary.ContainsKey(nameFile))
-        {
-            Object ojb = assetBundleDictionary[nameFile].LoadAsset(nameAsset);
-            Instantiate(ojb);
-            return true;
+        try {
+            if (assetBundleDictionary.ContainsKey(nameFile))
+            {
+                GameObject ojb = assetBundleDictionary[nameFile].LoadAsset(nameAsset) as GameObject;
+                Instantiate(ojb);
+                return true;
+            }
+            else
+            {
+                Debug.Log("chua tai asset Bundle");
+                return false;
+            }
         }
-        else
+        catch (System.Exception ex)
         {
-            Debug.Log("chua tai asset Bundle");
+            Debug.LogError(ex.Message);
             return false;
         }
+       
 
 
     }
+    /// <summary>
+    ///Check Asset Bundle Has In Cache
+    /// </summary>
+    /// <param name="nameFile"></param>
     public void CheckAssetBundleHasInCache(string nameFile)
     {
-        //string pathAssetBundle = Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}";
-        //Debug.Log(GetAllCacheAssetBundle("/idbfs")) ;
-       Debug.Log("[C#] ReceiveString: " + ReceiveString());
+        try
+        {
+            if (arrayKeyIndexedDB.Length > 0)
+            {
+                for (int i = 0; i < arrayKeyIndexedDB.Length; i++)
+                {
+                    if (arrayKeyIndexedDB[i] == Application.persistentDataPath + $"/UnityCache/Shared/{nameFile}")
+                    {
+                        Debug.Log("AssetBundle da co trong cache");
+                        return;
+                    }
+                }
+                Debug.Log("AssetBundle chua co trong cache");
+
+            }
+            else
+            {
+                Debug.Log("Chua get list key tu IndexedDB hoac IndexedBD dang rong");
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError(ex.Message);
+        }
+       
 
 
-        //foreach (string x in arrayAssetBundle)
-        //{
-        //    if (pathAssetBundle.Contains(x))
-        //    {
-        //        Debug.Log("AssetBundle has in cache");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("AssetBundle not has in cache");
-        //    }
-        //}
 
-
-
+    }
+    /// <summary>
+    ///     Get List Key from IndexedDB
+    /// </summary>
+    public void GetListKey()
+    {
+        GetKeyIndexedDB(GetKeyIndexedDBCallback);
     }
 
 }

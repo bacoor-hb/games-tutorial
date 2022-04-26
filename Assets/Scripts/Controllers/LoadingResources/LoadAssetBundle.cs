@@ -22,7 +22,7 @@ public class LoadAssetBundle : MonoBehaviour
             yield return null;
 
 
-        using (var www = WWW.LoadFromCacheOrDownload(CONST_PATH_FILE_NAME_ASSET_BUNDLE.GetUrl(nameFile), 5))
+        using (var www = WWW.LoadFromCacheOrDownload($"https://raw.githubusercontent.com/HoDienCong12c5/serverBundle/main/{nameFile}", 5))
         {
             yield return www;
             if (!string.IsNullOrEmpty(www.error))

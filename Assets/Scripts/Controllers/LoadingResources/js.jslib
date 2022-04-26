@@ -1,31 +1,4 @@
 mergeInto(LibraryManager.library, {
-
-    GetAllCacheAssetBundle: function (nameDB) {
-        nameDB = UTF8ToString(nameDB);
-        var db = window.indexedDB.open(nameDB);
-        db.onsuccess = function (event) {
-            db = event.target.result;
-            console.log('db clear', db);
-            var transaction = db.transaction(['FILE_DATA'], 'readwrite');
-            var objectStore = transaction.objectStore('FILE_DATA');
-            //get all keys from object store
-            var getAllKeysRequest = objectStore.getAllKeys();
-
-            getAllKeysRequest.onsuccess = function (event) {
-                var keys = event.target.result;
-                console.log('keys', keys);
-                var returnStr = "bla";
-                var bufferSize = lengthBytesUTF8(returnStr) + 1;
-                var buffer = _malloc(bufferSize);
-                stringToUTF8(returnStr, buffer, bufferSize);
-                return buffer;
-
-            }
-
-
-        }
-
-    },
     Clear: function (nameDB, pathDB) {
         nameDB = UTF8ToString(nameDB);
         pathDB = UTF8ToString(pathDB);
@@ -54,20 +27,56 @@ mergeInto(LibraryManager.library, {
         }
 
     },
-    ReceiveString: function () {
-      
-           
-                var str = "A string passed from JavaScript to C#";
-                var bufferSize = lengthBytesUTF8(str) + 1; // calculate the size of null-terminated UTF-8 string
-                var buffer = _malloc(bufferSize); // allocate string buffer on the heap
-                stringToUTF8(str, buffer, bufferSize); // fill the buffer with the string UTF-8 value
-              
-            
-              return buffer; // return the pointer of the allocated string to C#
+    GetKeyIndexedDB: function (pTimerCallback) {
+        console.log("[JavaScript] GetKeyIndexedDB");
 
+        var iteration = 0;
+        var intervalID = setInterval(timerCallback, 1000);
+
+        function timerCallback() {
+            iteration++;
+            var GetKeys = new Promise(function (resolve, reject) {
+                var db = window.indexedDB.open("/idbfs");
+                db.onsuccess = function (event) {
+                    db = event.target.result;
+                    console.log('db clear', db);
+                    var transaction = db.transaction(['FILE_DATA'], 'readwrite');
+                    var objectStore = transaction.objectStore('FILE_DATA');
+                    //get all keys from object store
+                    var getAllKeysRequest = objectStore.getAllKeys();
+
+                    getAllKeysRequest.onsuccess = function (event) {
+                        var keys = event.target.result;
+                        console.log('keys', keys);
+
+                        resolve(keys);
+
+
+                    }
+                }
+
+            });
+            GetKeys.then(function (keys) {
+                var timeString = keys.toString();
+                var bufferSize = lengthBytesUTF8(timeString) + 1;
+                var buffer = _malloc(bufferSize);
+                stringToUTF8(timeString, buffer, bufferSize);
+
+                // _iii signature corresponds to `bool (int, string)`, because
+                // a bool is represented by an integer with value 0 or 1,
+                // and a string is also represented by an integer (a pointer to the allocated string)
+                var continueIterating = dynCall_iii(pTimerCallback, iteration, buffer);
+
+                // free the allocated time string
+                _free(buffer);
+
+                // we can stop iterating depending on the value returned by the callback
+                if (!continueIterating)
+                    clearInterval(intervalID);
+            })
 
         }
-    
     },
+
 
 });
