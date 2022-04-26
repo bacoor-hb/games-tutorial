@@ -34,7 +34,9 @@ public class UIManagerLoadResources : MonoBehaviour
         });
         buttonLoad.onClick.AddListener(() =>
         {
-            LoadResourcesManager.Instance.LoadAssetAsyncFromAssetBundleDictionary("ab", "Assault_Rifle_01");
+            //LoadResourcesManager.Instance.LoadAssetAsyncFromAssetBundleDictionary("ab", "Assault_Rifle_01");
+            LoadResourcesManager.Instance.CheckAssetBundleHasInCache("ab");
+
         }
     );
     }
