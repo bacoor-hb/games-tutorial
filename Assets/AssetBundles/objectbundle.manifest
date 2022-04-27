@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 4151446394
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9773954a159c15b96431aa78011d0219
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1ed490088eb74da002bd015394d36e51
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 03c3a02168cadc14ebdf8dc9f85bc25e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ed1fcecb658b33544bd77b9ed43faaf3, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 134
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Prefabs/DIce Module/Dice.prefab
+- Assets/Assets/Board/board.fbx
+Dependencies: []
