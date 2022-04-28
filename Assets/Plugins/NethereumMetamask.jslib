@@ -3,52 +3,53 @@
         const parsedObjectName = UTF8ToString(gameObjectName);
         const parsedCallback = UTF8ToString(callback);
         const parsedFallback = UTF8ToString(fallback);
-        
+
         try {
-            
+
             const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
             ethereum.autoRefreshOnNetworkChange = false;
-
+            console.log("account[0]", accounts[0]);
             var bufferSize = lengthBytesUTF8(accounts[0]) + 1;
             var buffer = _malloc(bufferSize);
             stringToUTF8(accounts[0], buffer, bufferSize);
-            nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallback, accounts[0]);
+            SendMessage(parsedObjectName, parsedCallback, accounts[0]);
+
             return buffer;
         } catch (error) {
-            nethereumUnityInstance.SendMessage(parsedObjectName, parsedFallback, error.message);
+            SendMessage(parsedObjectName, parsedFallback, error.message);
             return null;
         }
     },
-    EthereumInit: function(gameObjectName, callBackAccountChange, callBackChainChange){
+    EthereumInit: function (gameObjectName, callBackAccountChange, callBackChainChange) {
         const parsedObjectName = UTF8ToString(gameObjectName);
         const parsedCallbackAccountChange = UTF8ToString(callBackAccountChange);
         const parsedCallbackChainChange = UTF8ToString(callBackChainChange);
         console.log("EthereumInit");
-            
+
         ethereum.on("accountsChanged",
-                function (accounts) {
-                    console.log(accounts[0]);
-                    nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallbackAccountChange, accounts[0]);
-                });
+            function (accounts) {
+                console.log(accounts[0]);
+                nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallbackAccountChange, accounts[0]);
+            });
         ethereum.on("chainChanged",
-                function (chainId) {
-                    console.log(chainId);
-                    nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallbackChainChange, chainId.toString());
-                });
+            function (chainId) {
+                console.log(chainId);
+                nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallbackChainChange, chainId.toString());
+            });
     },
-    GetChainId: async function(gameObjectName, callback, fallback) {
-           const parsedObjectName = UTF8ToString(gameObjectName);
-           const parsedCallback = UTF8ToString(callback);
-           const parsedFallback = UTF8ToString(fallback);
-          try {
-           
+    GetChainId: async function (gameObjectName, callback, fallback) {
+        const parsedObjectName = UTF8ToString(gameObjectName);
+        const parsedCallback = UTF8ToString(callback);
+        const parsedFallback = UTF8ToString(fallback);
+        try {
+
             const chainId = await ethereum.request({ method: 'eth_chainId' });
             nethereumUnityInstance.SendMessage(parsedObjectName, parsedCallback, chainId.toString());
 
-          } catch (error) {
+        } catch (error) {
             nethereumUnityInstance.SendMessage(parsedObjectName, parsedFallback, error.message);
             return null;
-         }
+        }
     },
     IsMetamaskAvailable: function () {
         if (window.ethereum) return true;
@@ -56,21 +57,21 @@
     },
     GetSelectedAddress: function () {
         var returnValue = ethereum.selectedAddress;
-        if(returnValue !== null) {
+        if (returnValue !== null) {
             var bufferSize = lengthBytesUTF8(returnValue) + 1;
             var buffer = _malloc(bufferSize);
             stringToUTF8(returnValue, buffer, bufferSize);
             return buffer;
         }
     },
-    Request: async function (message, gameObjectName, callback, fallback ) {
+    Request: async function (message, gameObjectName, callback, fallback) {
         const parsedMessageStr = UTF8ToString(message);
         const parsedObjectName = UTF8ToString(gameObjectName);
         const parsedCallback = UTF8ToString(callback);
         const parsedFallback = UTF8ToString(fallback);
 
         try {
-            
+
             let parsedMessage = JSON.parse(parsedMessageStr);
             console.log(parsedMessage);
             const response = await ethereum.request(parsedMessage);
@@ -128,6 +129,32 @@
 
             });
         });
+    },
+    GetBalance: async function (address, gameObjectName, callback, fallback) {
+        address = UTF8ToString(address);
+        const parsedObjectName = UTF8ToString(gameObjectName);
+
+        const parsedCallback = UTF8ToString(callback);
+        const parsedFallback = UTF8ToString(fallback);
+
+        try {
+        const balance = await ethereum.request({ "jsonrpc": "2.0", "method": "eth_getBalance", "params": [address], "id": 42 });
+
+        console.log("balance", balance);
+            var bufferSize = lengthBytesUTF8(balance) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(balance, buffer, bufferSize);
+            SendMessage(parsedObjectName, parsedCallback, balance);
+            return buffer;
+        } catch (error) {
+            SendMessage(parsedObjectName, parsedFallback, error.message);
+            return null;
+        }
+
+
+
     }
+
+
 
 });
