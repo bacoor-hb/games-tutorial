@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 974065053}
   - component: {fileID: 974065057}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -485,6 +485,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d8887e6c2f844dbe0400d7533dcc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _btnConnect: {fileID: 1935294469}
+  _btnGetBalance: {fileID: 1736967974}
+  _txtAddress: {fileID: 1256297212}
+  _txtBalance: {fileID: 1181948304}
 --- !u!1 &1132129816
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +905,7 @@ GameObject:
   - component: {fileID: 1652004048}
   - component: {fileID: 1652004047}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -921,8 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myAddress: 
   _myBalance: 
-  _btnConnect: {fileID: 1935294469}
-  _btnGetBalance: {fileID: 1736967974}
+  _UIManagerNethereum: {fileID: 974065057}
 --- !u!4 &1652004048
 Transform:
   m_ObjectHideFlags: 0
