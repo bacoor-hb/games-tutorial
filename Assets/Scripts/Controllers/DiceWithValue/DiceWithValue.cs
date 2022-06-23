@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DiceWithValue : MonoBehaviour
 {
-    public delegate void OnEventCalled<T>(T data);
-    public OnEventCalled<int> OnValueChange;
+    public delegate void OnEventCalled();
+    public OnEventCalled OnEnd;
     Animator animator;
     private bool thrown = false;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        animator.SetInteger("diceAnimation", 0);
+        animator.SetFloat("diceAnimation", 0);
+        animator.SetInteger("diceValue", 0);
     }
 
     public void RollDice(int value)
@@ -25,16 +26,27 @@ public class DiceWithValue : MonoBehaviour
 
     IEnumerator RolldiceAnimation(int value)
     {
+        animator.SetBool("drop", false);
         thrown = true;
-        animator.SetInteger("diceAnimation", GetDiceAnimation(value));
-        yield return new WaitForSeconds(5);
-        animator.SetInteger("diceAnimation", 0);
+        animator.SetInteger("diceValue", value);
+        yield return new WaitForSeconds(5f);
         thrown = false;
-        OnValueChange?.Invoke(value);
+        OnEnd?.Invoke();
+        animator.SetInteger("diceValue", 0);
     }
 
-    int GetDiceAnimation (int value)
+    float GetDiceAnimation ()
     {
-        return value * 10 + (Random.Range(1, 3));
+        List<float> listAnimationValue = new List<float> ();
+        listAnimationValue.Add(0);
+        listAnimationValue.Add(0.5f);
+        listAnimationValue.Add(1);
+        return listAnimationValue[Random.Range(0, listAnimationValue.Count - 1)];
+    }
+
+    public void DropDice ()
+    {
+        animator.SetBool("drop", true);
+        animator.SetFloat("diceAnimation", GetDiceAnimation());
     }
 }
